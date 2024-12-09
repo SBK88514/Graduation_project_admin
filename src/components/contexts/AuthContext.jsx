@@ -18,9 +18,20 @@ function AuthProvider({ children }) {
       console.log(error);
     }
   }
+
+  async function handleEmployee(values) {
+    try {
+      const { data } = await axios.post("users/employee/signup", values);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const value = {
     isAuth,
     handleLogin,
+    handleEmployee,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -35,7 +35,14 @@ function App() {
           })}
         />
         <Route
-          path="AddEmployee"
+          path="addmanager"
+          lazy={async () => ({
+            Component: (await import("./components/pages/forms/AddManager"))
+              .default,
+          })}
+        />
+        <Route
+          path="addemployee"
           lazy={async () => ({
             Component: (
               await import("./components/pages/forms/AddEmployeeForm")
