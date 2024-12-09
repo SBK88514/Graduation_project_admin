@@ -1,33 +1,41 @@
-import React, { useContext, useState } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
 
-const initialValue = {
-  user_email: "",
-  user_password: "",
+import React from "react";
+import { ErrorMessage, Formik } from "formik";
+import {LoginSchema} from "../../../schema/Index"
+import {AuthContext} from "../../contexts/AuthContext"
+
+const initialValues = {
+  manager_email: "",
+  manager_password: "",
 };
 
 function Login() {
   const { handleLogin } = useContext(AuthContext);
-  const [values, setValues] = useState(initialValue);
-  console.log(values);
+  // const [values, setValues] = useState(initialValue);
+  // console.log(values);
 
-  function handleChange(e) {
-    const { value, name } = e.target;
-    setValues({ ...values, [name]: value });
-  }
+  // function handleChange(e) {
+  //   const { value, name } = e.target;
+  //   setValues({ ...values, [name]: value });
+  // }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    handleLogin(values);
-  }
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   handleLogin(values);
+  // }
 
   return (
-    <div className="min-h-screen bg-orange-50 flex items-center justify-center p-4 font-sans">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 transition-all duration-300 hover:shadow-2xl">
-        <h2 className="text-4xl font-extrabold text-center mb-8 text-amber-900 tracking-tight">
-          Welcome Back
-        </h2>
-
+    <Formik
+      initialValues={initialValues}
+      validationSchema={LoginSchema}
+      onSubmit={async (values, actions) => {
+       await handleLogin(values)
+        
+        actions.resetForm();
+      }}
+    >
+      {({ handleChange, handleSubmit, values, handleBlur, isSubmitting }) => (
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <label
@@ -38,7 +46,9 @@ function Login() {
             </label>
             <div className="relative">
               <input
+                value={values.manager_email}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 name="manager_email"
                 type="email"
                 id="manager_email"
@@ -46,6 +56,13 @@ function Login() {
                 placeholder="Enter your email"
                 required
               />
+              <ErrorMessage name={"manager_email"}>
+                {(msg) => (
+                    <div className='mt-1'>
+                        <p className='text-red-500 text-base font-semibold'>{msg}</p>
+                    </div>
+                )}
+            </ErrorMessage>
             </div>
           </div>
 
@@ -58,7 +75,9 @@ function Login() {
             </label>
             <div className="relative">
               <input
+                value={values.manager_password}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 name="manager_password"
                 type="password"
                 id="manager_password"
@@ -66,27 +85,25 @@ function Login() {
                 placeholder="Enter your password"
                 required
               />
+               <ErrorMessage name={"manager_password"}>
+                {(msg) => (
+                    <div className='mt-1'>
+                        <p className='text-red-500 text-base font-semibold'>{msg}</p>
+                    </div>
+                )}
+            </ErrorMessage>
             </div>
           </div>
 
-          <button
+          <button disabled={isSubmitting}
             type="submit"
             className="w-full bg-amber-600 text-white rounded-xl py-3 px-4 font-semibold hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg"
           >
-            Sign In
+            {isSubmitting ? "inProcces..." : "Sign In"}
           </button>
         </form>
-
-        <div className="mt-8 text-center">
-          <a
-            href="#"
-            className="text-sm font-medium text-amber-600 hover:text-amber-800 transition-colors duration-200"
-          >
-            Forgot your password?
-          </a>
-        </div>
-      </div>
-    </div>
+      )}
+    </Formik>
   );
 }
 
