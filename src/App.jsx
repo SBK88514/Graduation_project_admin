@@ -53,23 +53,27 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
   Outlet,
   Route,
   RouterProvider,
 } from "react-router-dom";
 import { useContext } from "react";
 
-import NavAdmin from "./components/pages/NavAdmin";
+import NavAdmin from "./components/section/NavAdmin";
+import NavPublic from "./components/section/NavPublic";
 
 // import useContext isAuth State to App component
 import { AuthContext } from "./components/contexts/AuthContext";
+import EmployeeModal from "./components/modals/employeeModal";
 
 function Root({ isAuth }) {
   console.log(isAuth);
   return (
     <>
-      {isAuth && <NavAdmin />}
+      {isAuth ? <NavAdmin /> : <NavPublic />}
       <Outlet />
+      <EmployeeModal />
     </>
   );
 }
@@ -79,6 +83,10 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root isAuth={isAuth} />}>
+        {/* Public Routes */} 
+        <Route
+          element={isAuth ? <Navigate to={"/allemployees"} /> : <Outlet />}
+        >
         <Route
           path="login"
           lazy={async () => ({
@@ -86,11 +94,22 @@ function App() {
               .default,
           })}
         />
+        </Route>
+
+        {/* Private Routes */}
         <Route
           path="addmanager"
           lazy={async () => ({
-            Component: (await import("./components/pages/forms/AddManager"))
+            Component: (await import("./components/pages/forms/AddManagerForm"))
               .default,
+          })}
+        />
+        <Route
+          path="allemployees"
+          lazy={async () => ({
+            Component: (
+              await import("./components/pages/privatePages/AllEmployees")
+            ).default,
           })}
         />
         <Route
