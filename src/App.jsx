@@ -64,6 +64,7 @@ import NavAdmin from "./components/section/NavAdmin";
 import NavPublic from "./components/section/NavPublic";
 
 // import useContext isAuth State to App component
+import AddIssueForm from "./components/pages/forms/issue/AddIssueForm";
 import { AuthContext } from "./components/contexts/AuthContext";
 import EmployeeModal from "./components/modals/employeeModal";
 
@@ -83,17 +84,17 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root isAuth={isAuth} />}>
-        {/* Public Routes */} 
+        {/* Public Routes */}
         <Route
           element={isAuth ? <Navigate to={"/allemployees"} /> : <Outlet />}
         >
-        <Route
-          path="login"
-          lazy={async () => ({
-            Component: (await import("./components/pages/publikPages/Login"))
-              .default,
-          })}
-        />
+          <Route
+            path="login"
+            lazy={async () => ({
+              Component: (await import("./components/pages/publikPages/Login"))
+                .default,
+            })}
+          />
         </Route>
 
         {/* Private Routes */}

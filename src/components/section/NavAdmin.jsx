@@ -13,12 +13,13 @@ function NavAdmin() {
 
           {/* Navigation Links - Center */}
           <div className="flex space-x-8">
-            <a
-              href="#"
-              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+            <NavLink
+              to="addissue"
+              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium
+               transition-colors duration-200"
             >
               Add Issue
-            </a>
+            </NavLink>
             <a
               href="#"
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
