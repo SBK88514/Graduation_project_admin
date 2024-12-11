@@ -64,7 +64,7 @@ import NavAdmin from "./components/section/NavAdmin";
 import NavPublic from "./components/section/NavPublic";
 
 // import useContext isAuth State to App component
-import AddIssueForm from "./components/pages/forms/issue/AddIssueForm";
+import AddIssueForm from "./components/pages/forms/AddIssueForm";
 import { AuthContext } from "./components/contexts/AuthContext";
 import EmployeeModal from "./components/modals/employeeModal";
 
@@ -75,6 +75,7 @@ function Root({ isAuth }) {
       {isAuth ? <NavAdmin /> : <NavPublic />}
       <Outlet />
       <EmployeeModal />
+      {/* <AddIssueForm /> */}
     </>
   );
 }
@@ -86,7 +87,7 @@ function App() {
       <Route path="/" element={<Root isAuth={isAuth} />}>
         {/* Public Routes */}
         <Route
-          element={isAuth ? <Navigate to={"/allemployees"} /> : <Outlet />}
+          element={isAuth ? <Navigate to={"/welcomeadmin"} /> : <Outlet />}
         >
           <Route
             path="login"
@@ -96,6 +97,14 @@ function App() {
             })}
           />
         </Route>
+        <Route
+          path="welcomeadmin"
+          lazy={async () => ({
+            Component: (
+              await import("./components/pages/privatePages/WelcomeAdmin")
+            ).default,
+          })}
+        />
 
         {/* Private Routes */}
         <Route
@@ -119,6 +128,13 @@ function App() {
             Component: (
               await import("./components/pages/forms/AddEmployeeForm")
             ).default,
+          })}
+        />
+        <Route
+          path="addIssue"
+          lazy={async () => ({
+            Component: (await import("./components/pages/forms/AddIssueForm"))
+              .default,
           })}
         />
       </Route>

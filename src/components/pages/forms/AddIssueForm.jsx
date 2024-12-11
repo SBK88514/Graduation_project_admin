@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useMutation } from "@tanstack/react-query";
-import { data } from "react-router-dom";
+// import { data } from "react-router-dom";
 import { useState } from "react";
 
 const initialFormValues = {
@@ -23,7 +23,9 @@ function AddIssueForm() {
 
   const mutation = useMutation({
     mutationFn: async (formData) => {
+      console.log(1);
       const { data } = await axios.post("/issues/addIssues", formData);
+
       return data;
     },
     onSuccess: (data) => {

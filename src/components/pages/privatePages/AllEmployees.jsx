@@ -3,9 +3,12 @@ import EmployeesTabl from "../tables/EmployeesTable";
 import Header from "../../ui/Header";
 import axios from "axios";
 import useFetch from "../../hooks/useFetch";
+import NotEmployees from "./NotEmployees";
 
 function AllEmployees() {
-  const [data, isLoading, isError] = useFetch("/users/employee/getallempolyees");
+  const [data, isLoading, isError] = useFetch(
+    "/users/employee/getallempolyees"
+  );
 
   console.log(data);
   //   const [employees, setEmployees] = useState([])
@@ -39,12 +42,16 @@ function AllEmployees() {
   //   getEmployees()
   // },[togle])
   return (
-    <div className="w-[90%] mx-auto">
+    <div className="w-[90%] mx-auto text-amber-900">
       <Header>employees table</Header>
       {isLoading && <div>Loading...</div>}
       {isError && <div>{isError}</div>}
-      {data && !data.length && <p>there are not emmployees in the company</p>}
-      {data && data.length && <EmployeesTabl employees={data} />}
+      {data && !data.length ? (
+        <NotEmployees />
+      ) : (
+        <EmployeesTabl employees={data} />
+      )}
+      {/* {data && data.length && <EmployeesTabl employees={data} />} */}
     </div>
   );
 }
