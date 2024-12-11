@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 
 function NavAdmin() {
+  const { user } = useContext(AuthContext);
+
+  if (!user) {
+    console.error("User object is undefined");
+    return <div>Access Denied</div>;
+  }
+
+  if (!user.permission) {
+    console.error("Permission is not defined for the user");
+    return <div>Access Denied</div>;
+  }
+
   return (
     <nav className="bg-white shadow-lg mb-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,12 +39,15 @@ function NavAdmin() {
             >
               All Issues
             </a>
-            <NavLink
-              to="addmanager"
-              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
-            >
-              Add Manager
-            </NavLink>
+            {user.permission === "Admin" && (
+              <NavLink
+                to="addmanager"
+                className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              >
+                Add Manager
+              </NavLink>
+            )}
+
             <NavLink
               to="addemployee"
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
@@ -44,12 +60,14 @@ function NavAdmin() {
             >
               Employee List
             </NavLink>
-            <a
-              href="#"
-              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
-            >
-              Manager List
-            </a>
+            {user.permission === "Admin" && (
+              <a
+                href="#"
+                className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              >
+                Manager List
+              </a>
+            )}
           </div>
 
           {/* User Icon with Dropdown - Right Side */}
