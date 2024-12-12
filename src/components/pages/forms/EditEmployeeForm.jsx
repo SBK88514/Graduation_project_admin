@@ -1,35 +1,51 @@
-import React  from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { ActionContext } from "../../contexts/ActionContext";
+import axios from "axios";
 // import { AuthContext } from "../../contexts/AuthContext";
-// useContext
-
-// const initialValue = {
-//   employeeName: "",
-//   employeeEmail: "",
-//   employeePassword: "",
-// };
 
 function EditEmployeeForm() {
-//   const { handleEmployee } = useContext(AuthContext);
-//   const [values, setValues] = useState(initialValue);
-//   console.log(values);
 
-//   function handleChange(e) {
-//     const { value, name } = e.target;
-//     setValues({ ...values, [name]: value });
-//   }
 
-//   function handleSubmit(e) {
-//     e.preventDefault();
-//     handleEmployee(values);
-//   }
+  // Body OF Component run => useState implemented =>
+  // useEffect for Side Effect when component Mounting =>
+  // setState Values => rerender body of Component =>
+  // setState Values when onChange Event triggered => rerender body of Component
+
+  const { emp, toggleRequest, setToggleRequest } = useContext(ActionContext);
+  const [values, setValues] = useState(null);
+
+  function handleChange(e) {
+    const { value, name } = e.target;
+    setValues({ ...values, [name]: value });
+  }
+
+  async function handlesubmit(e) {
+    e.preventDefault();
+    try {
+      const { data } = await axios.put(`/users/employee/update/${emp._id}`, values);
+      if (data.success) {
+        document.getElementById("employee_modal").close();
+        setToggleRequest(!toggleRequest)
+
+        
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    setValues({ ...emp });
+
+  }, [emp]);
 
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
-        Edit  Employee
+        Edit Employee
       </h2>
 
-      <form className="space-y-6" >
+      <form onSubmit={handlesubmit} className="space-y-6">
         {/* Personal Information Section */}
         <div className="bg-white p-6 rounded-xl shadow-sm space-y-4">
           <h3 className="text-lg font-semibold text-amber-800 mb-4">
@@ -45,15 +61,15 @@ function EditEmployeeForm() {
                 Name
               </label>
               <input
-               
                 name="employeeName"
                 id="employeeName"
                 type="text"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter first name"
+                value={values?.employeeName}
+                onChange={handleChange}
               />
             </div>
-
 
             <div>
               <label
@@ -63,12 +79,13 @@ function EditEmployeeForm() {
                 Email
               </label>
               <input
-              
                 name="employeeEmail"
                 id="employeeEmail"
                 type="email"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter email address"
+                value={emp ? values.employeeEmail : ""}
+                onChange={handleChange}
               />
             </div>
 
@@ -80,18 +97,18 @@ function EditEmployeeForm() {
                 Password
               </label>
               <input
-               
                 name="employeePassword"
                 id="employeePassword"
                 type="tel"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter phone number"
+                // value={emp ? values.employeePassword : ""}
+                value={"*****"}
+                onChange={handleChange}
               />
             </div>
           </div>
         </div>
-
-       
 
         {/* Submit Button */}
         <div className="flex justify-end space-x-4">
@@ -114,5 +131,3 @@ function EditEmployeeForm() {
 }
 
 export default EditEmployeeForm;
-
-

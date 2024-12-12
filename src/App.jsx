@@ -1,55 +1,4 @@
-// import {
-//   createBrowserRouter,
-//   createRoutesFromElements,
-//   RouterProvider,
-//   Route,
-//   Outlet,
-//   Navigate,
-// } from "react-router-dom";
-// import Login from "./components/pages/publikPages/Login";
-// import Nav from "./components/pages/NavAdmin";
-// import { useContext } from "react";
-// import { AuthContext } from "./components/contexts/AuthContext";
 
-// function Root({ isAuth }) {
-//   return (
-//     <>
-//       {isAuth && <Nav />}
-//       <Outlet />
-//     </>
-//   );
-// }
-
-// function App() {
-//   const { isAuth } = useContext(AuthContext);
-
-//   const router = createBrowserRouter(
-//     createRoutesFromElements(
-//       <Route path="/" element={<Root isAuth={isAuth} />}>
-//         <Route index element={ !isAuth ? <Navigate to={"/login"} /> : <Navigate to={"/dashboard/employees"} />  }/>
-
-//         <Route element={ !isAuth ? <Outlet /> : <Navigate to={"/dashboard/employees"} />}>
-//           <Route path="login" element={<Login />} />
-//         </Route>
-
-//         <Route path="/dashboard" element={isAuth ? <Outlet /> : <Navigate to={"/"} />} >
-//           <Route path="employees" element={<Products />} />
-//         </Route>
-
-//       </Route>
-//     )
-//   );
-
-//   return (
-//     <div>
-//       <RouterProvider router={router} />
-//     </div>
-//   );
-// }
-
-// export default App;
-
-// app  מנתי לטיפול חיים
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -64,9 +13,10 @@ import NavAdmin from "./components/section/NavAdmin";
 import NavPublic from "./components/section/NavPublic";
 
 // import useContext isAuth State to App component
-import AddIssueForm from "./components/pages/forms/AddIssueForm";
+
 import { AuthContext } from "./components/contexts/AuthContext";
 import EmployeeModal from "./components/modals/employeeModal";
+import ModalManager from "./components/modals/ModalManager";
 
 function Root({ isAuth }) {
   console.log(isAuth);
@@ -76,6 +26,7 @@ function Root({ isAuth }) {
       <Outlet />
       <EmployeeModal />
       {/* <AddIssueForm /> */}
+      <ModalManager />
     </>
   );
 }
@@ -131,10 +82,22 @@ function App() {
           })}
         />
         <Route
-          path="addIssue"
+
+
+          path="allmanagers"
           lazy={async () => ({
-            Component: (await import("./components/pages/forms/AddIssueForm"))
-              .default,
+            Component: (
+              await import("./components/pages/privatePages/AllManagers")
+            ).default,
+          })}
+        />
+        <Route
+          path="addissue"
+          lazy={async () => ({
+            Component: (
+              await import("./components/pages/forms/AddIssueForm")
+            ).default,
+
           })}
         />
       </Route>

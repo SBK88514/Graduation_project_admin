@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import EmployeesTabl from "../tables/EmployeesTable";
+import EmployeesTabl from "../tables/employees/EmployeesTable";
 import Header from "../../ui/Header";
-import axios from "axios";
 import useFetch from "../../hooks/useFetch";
 import NotEmployees from "./NotEmployees";
 
@@ -10,37 +9,10 @@ function AllEmployees() {
     "/users/employee/getallempolyees"
   );
 
-  console.log(data);
-  //   const [employees, setEmployees] = useState([])
-  //   const [togle,setTogle] = useState(false)
 
-  //   async function getEmployees(){
-  //     try{
-  //       const {data} = await axios.get("/users/manager/getallempolyees")
-  //       console.log(data)
-  //       setEmployees(data.data)
+ 
 
-  //     }catch(error){
-  //       console.log(error)
-  //     }
-  //   }
 
-  // async function deleteEmployee(id) {
-  //   try {
-  //     const {data} = await axios.delete(`/users/employee/delete/${id}`)
-  //     console.log(data)
-  //     if(data.success){
-  //         setTogle(!togle)
-  //     }
-
-  //   }catch(error){
-  //     console.log(error)
-  //   }
-
-  // }
-  // useEffect(() => {
-  //   getEmployees()
-  // },[togle])
   return (
     <div className="w-[90%] mx-auto text-amber-900">
       <Header>employees table</Header>
