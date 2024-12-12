@@ -1,6 +1,9 @@
-import React from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext"; 
 
 function WelcomeAdmin() {
+  const { user } = useContext(AuthContext);
+
   return (
     <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 p-8 rounded-2xl shadow-lg max-w-3xl mx-auto">
       {/* Decorative Top Pattern */}
@@ -17,11 +20,11 @@ function WelcomeAdmin() {
       {/* Main Welcome Text */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 text-transparent bg-clip-text mb-4">
-          Welcome to Admin Dashboard
+          Welcome {user.manager_name} 
         </h1>
         <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto rounded-full mb-4" />
         <p className="text-amber-700 text-lg">
-          Your command center for managing everything
+        Your command center for managing everything as {user.permission}.
         </p>
       </div>
 
