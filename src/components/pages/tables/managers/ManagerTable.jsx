@@ -1,21 +1,20 @@
 import React from "react";
-import TableRow from "./employees/TableRow";
-// import { useQuery } from "@tanstack/react-query";
-// import axios from "axios";
+import TableRow from "../managers/TableRow";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
-function EmployeesTable({employees}) {
-//   const { data, isLoading, isError, error } = useQuery({
-//     queryKey: ["get_employees"],
-//     queryFn: async () => await axios.get("/users/manager/getallempolyees"),
-//     select: (data) => data.data.data,
-//   });
-//   console.log(data);
+function ManagersTable({ managers }) {
+  useMutation({
+    mutationKey: "delete_manager",
+    mutationFn: async (id) => axios.delete(`users/manager/delete${id}`),
+  });
+
   return (
     <div className="p-6">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="px-6 py-4 bg-amber-50 border-b border-amber-200">
           <h2 className="text-xl font-semibold text-amber-900">
-            Employees List
+            managers List
           </h2>
         </div>
 
@@ -39,17 +38,15 @@ function EmployeesTable({employees}) {
             </thead>
             <tbody className="bg-white divide-y divide-amber-100">
               {/* Row 1 */}
-              {employees.map((employee) =>  <TableRow  {...employee } /> )}
-              
-  
+              {managers.map((manager) => (
+                <TableRow  key={manager._id} {...manager} />
+              ))}
             </tbody>
           </table>
         </div>
       </div>
-      {/* {isLoading && <div>Loading...</div>}
-      {isError && <div>{error}</div>} */}
     </div>
   );
 }
 
-export default EmployeesTable;
+export default ManagersTable;

@@ -7,7 +7,7 @@ export const ActionContext = createContext();
 
 function ActionProvider({ children }) {
     const [toggleRequest, setToggleRequest] = useState(false);
-    const[employee, setEmployee] = useState(null)
+    const[emp, setEmp] = useState(null)
 
     async function deleteEmployee(id) {
         try {
@@ -23,16 +23,18 @@ function ActionProvider({ children }) {
             showErrorToast(err)
         }
     }
-    function handleEdit(emp){
+    function handleEdit(employee){
       document.getElementById("employee_modal").showModal();
-      setEmployee(emp)
+      setEmp(employee)
+      console.log(emp)
     }
  
 
   const value = {
     toggleRequest,
+    setToggleRequest,
     deleteEmployee, 
-    employee,
+    emp,
     handleEdit
   };
 

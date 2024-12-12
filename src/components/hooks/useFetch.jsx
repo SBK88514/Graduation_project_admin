@@ -9,7 +9,7 @@ const useFetch = (url) => {
     const [isError, setIsError] = useState("");
     const {toggleRequest} = useContext(ActionContext)
 
-    // const { toggleRequest } = useContext(ActionContext);
+   
 
 
     async function getRequest() {

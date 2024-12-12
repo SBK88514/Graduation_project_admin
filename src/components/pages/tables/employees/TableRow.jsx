@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { ActionContext } from "../../../contexts/ActionContext";
 
 function TableRow(employee) {
-    const {_id,employeeName, employeeEmail} = employee
+    const {_id,employeeName, employeeEmail} = employee;
    console.log(employee)
 
     const { deleteEmployee, handleEdit} = useContext(ActionContext)

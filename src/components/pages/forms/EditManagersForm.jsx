@@ -1,43 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
-import { ActionContext } from "../../contexts/ActionContext";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-// import { AuthContext } from "../../contexts/AuthContext";
+import React from "react";
 
 function EditEmployeeForm() {
 
+  const{mutate} = useMutation({
+    mutationKey: "edit manager",
+    mutationFn: async (man) => await axios.put(`users/manager/update${man._id}`,man),
+  });
 
-  // Body OF Component run => useState implemented =>
-  // useEffect for Side Effect when component Mounting =>
-  // setState Values => rerender body of Component =>
-  // setState Values when onChange Event triggered => rerender body of Component
-
-  const { emp, toggleRequest, setToggleRequest } = useContext(ActionContext);
-  const [values, setValues] = useState(null);
-
-  function handleChange(e) {
-    const { value, name } = e.target;
-    setValues({ ...values, [name]: value });
-  }
-
-  async function handlesubmit(e) {
-    e.preventDefault();
+  function handlesubmit(e) {
     try {
-      const { data } = await axios.put(`/users/employee/update/${emp._id}`, values);
-      if (data.success) {
-        document.getElementById("employee_modal").close();
-        setToggleRequest(!toggleRequest)
+      e.preventDefault();
+      mutate({manager_name:e.target.manager_name.value})
 
-        
-      }
     } catch (error) {
       console.log(error);
     }
   }
-
-  useEffect(() => {
-    setValues({ ...emp });
-
-  }, [emp]);
 
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
@@ -56,55 +36,55 @@ function EditEmployeeForm() {
             <div>
               <label
                 className="block text-sm font-medium text-amber-700 mb-1"
-                htmlFor="employeeName"
+                htmlFor="manager_name"
               >
                 Name
               </label>
               <input
-                name="employeeName"
-                id="employeeName"
+                name="manager_name"
+                id="manager_name"
                 type="text"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter first name"
-                value={values?.employeeName}
-                onChange={handleChange}
+                // value={values?.employeeName}
+                // onChange={handleChange}
               />
             </div>
 
             <div>
               <label
                 className="block text-sm font-medium text-amber-700 mb-1"
-                htmlFor="employeeEmail"
+                htmlFor="manager_email"
               >
                 Email
               </label>
               <input
-                name="employeeEmail"
-                id="employeeEmail"
+                name="manager_email"
+                id="manager_email"
                 type="email"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter email address"
-                value={emp ? values.employeeEmail : ""}
-                onChange={handleChange}
+                // value={emp ? values.employeeEmail : ""}
+                // onChange={handleChange}
               />
             </div>
 
             <div>
               <label
                 className="block text-sm font-medium text-amber-700 mb-1"
-                htmlFor="employeePassword"
+                htmlFor="manager_password"
               >
                 Password
               </label>
               <input
-                name="employeePassword"
-                id="employeePassword"
+                name="manager_password"
+                id="manager_password"
                 type="tel"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter phone number"
                 // value={emp ? values.employeePassword : ""}
-                value={"*****"}
-                onChange={handleChange}
+                // value={"*****"}
+                // onChange={handleChange}
               />
             </div>
           </div>

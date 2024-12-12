@@ -15,30 +15,34 @@ function NavAdmin() {
     return <div>Access Denied</div>;
   }
 
+  const { signOut } = useContext(AuthContext);
   return (
     <nav className="bg-white shadow-lg mb-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo - Left Side */}
-          <div className="flex-shrink-0">
-            <span className="text-2xl font-bold text-amber-700">Logo</span>
-          </div>
+          <NavLink to={"/"} className="text-2xl font-bold text-amber-700 w-44">
+            <img
+              src="https://res.cloudinary.com/dp08vd3cy/image/upload/v1733785970/logo_lhjqzl.jpg"
+              alt="image logo"
+            />
+          </NavLink>
 
           {/* Navigation Links - Center */}
           <div className="flex space-x-8">
             <NavLink
-              to="addissue"
+              to={"addissue"}
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium
                transition-colors duration-200"
             >
               Add Issue
             </NavLink>
-            <a
-              href="#"
+            <NavLink
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              to={"allissues"}
             >
               All Issues
-            </a>
+            </NavLink>
             {user.permission === "Admin" && (
               <NavLink
                 to="addmanager"
@@ -48,6 +52,7 @@ function NavAdmin() {
               </NavLink>
             )}
 
+            
             <NavLink
               to="addemployee"
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
@@ -61,13 +66,14 @@ function NavAdmin() {
               Employee List
             </NavLink>
             {user.permission === "Admin" && (
-              <a
-                href="#"
+              <NavLink
+              to={"allmanagers"}
                 className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 Manager List
-              </a>
+              </NavLink>
             )}
+            
           </div>
 
           {/* User Icon with Dropdown - Right Side */}
@@ -177,7 +183,7 @@ function NavAdmin() {
                         d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                       />
                     </svg>
-                    <span>Logout</span>
+                    <span onClick={signOut}>Logout</span>
                   </div>
                 </a>
               </div>

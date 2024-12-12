@@ -7,30 +7,45 @@ function NavPublic() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Left side - Logo/Brand */}
-          <div className="flex-shrink-0">
-            <span className="text-2xl font-bold text-amber-700">Logo</span>
+          <div className="flex-shrink-0 w-48">
+            <NavLink
+              to={"/"}
+              className="text-2xl font-bold text-amber-700 w-44"
+            >
+              <img
+                // width={}
+                src="https://res.cloudinary.com/dp08vd3cy/image/upload/v1733785970/logo_lhjqzl.jpg"
+                alt="image logo"
+              />
+            </NavLink>
           </div>
 
           {/* Center - Navigation Links */}
-          <div className="hidden md:flex items-center justify-center space-x-8">
-            <a
-              href="#"
-              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+          <div className="hidden md:flex items-center justify-center space-x-12">
+            <NavLink
+              to={"/LeadershipTeam"}
+              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-xl font-medium transition-colors duration-200"
             >
-              Company Owners
-            </a>
-            <a
-              href="#"
-              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              Owners
+            </NavLink>
+            <NavLink
+              to={"/AboutPage"}
+              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-xl font-medium transition-colors duration-200"
             >
               About
-            </a>
-            <a
-              href="#"
-              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+            </NavLink>
+            <NavLink
+              to={"/ContactPage"}
+              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-xl font-medium transition-colors duration-200"
             >
               Contact Us
-            </a>
+            </NavLink>
+            <NavLink
+              to={"/Offices"}
+              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-xl font-medium transition-colors duration-200"
+            >
+              Offices
+            </NavLink>
           </div>
 
           {/* Right side - Login Button */}

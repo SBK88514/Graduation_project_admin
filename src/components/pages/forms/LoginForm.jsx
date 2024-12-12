@@ -2,8 +2,8 @@ import { useContext } from "react";
 
 import React from "react";
 import { ErrorMessage, Formik } from "formik";
-import {LoginSchema} from "../../../schema/Index"
-import {AuthContext} from "../../contexts/AuthContext"
+import { LoginSchema } from "../../../schema/Index";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const initialValues = {
   manager_email: "",
@@ -30,8 +30,8 @@ function Login() {
       initialValues={initialValues}
       validationSchema={LoginSchema}
       onSubmit={async (values, actions) => {
-       await handleLogin(values)
-        
+        await handleLogin(values);
+
         actions.resetForm();
       }}
     >
@@ -58,11 +58,13 @@ function Login() {
               />
               <ErrorMessage name={"manager_email"}>
                 {(msg) => (
-                    <div className='mt-1'>
-                        <p className='text-red-500 text-base font-semibold'>{msg}</p>
-                    </div>
+                  <div className="mt-1">
+                    <p className="text-red-500 text-base font-semibold">
+                      {msg}
+                    </p>
+                  </div>
                 )}
-            </ErrorMessage>
+              </ErrorMessage>
             </div>
           </div>
 
@@ -85,17 +87,20 @@ function Login() {
                 placeholder="Enter your password"
                 required
               />
-               <ErrorMessage name={"manager_password"}>
+              <ErrorMessage name={"manager_password"}>
                 {(msg) => (
-                    <div className='mt-1'>
-                        <p className='text-red-500 text-base font-semibold'>{msg}</p>
-                    </div>
+                  <div className="mt-1">
+                    <p className="text-red-500 text-base font-semibold">
+                      {msg}
+                    </p>
+                  </div>
                 )}
-            </ErrorMessage>
+              </ErrorMessage>
             </div>
           </div>
 
-          <button disabled={isSubmitting}
+          <button
+            disabled={isSubmitting}
             type="submit"
             className="w-full bg-amber-600 text-white rounded-xl py-3 px-4 font-semibold hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg"
           >
