@@ -13,17 +13,10 @@ function AllManagers() {
     select: (data) => data.data.data,
   });
 
-  // const { data, isLoading, isError, error } = useQuery({
-  //     queryKey: ["get_managers"],
-  //     queryFn: async () => await axios.get("users/manager/getallmanagers"),
-  //     select: (data) => data.data.data,
-
-  //     staleTime: 1000 * 60 * 5,
-  // });
-  // console.log(data)
+ 
 
   return (
-    <div className="w-[30%] mx-auto">
+    <div className="w-[90%] mx-auto">
       <Header>managers Table</Header>
       <div dir="rtl"></div>
       {isLoading && <div>Loading...</div>}

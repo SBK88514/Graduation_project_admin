@@ -4,8 +4,6 @@ import axios from "axios";
 // import { AuthContext } from "../../contexts/AuthContext";
 
 function EditEmployeeForm() {
-
-
   // Body OF Component run => useState implemented =>
   // useEffect for Side Effect when component Mounting =>
   // setState Values => rerender body of Component =>
@@ -22,12 +20,13 @@ function EditEmployeeForm() {
   async function handlesubmit(e) {
     e.preventDefault();
     try {
-      const { data } = await axios.put(`/users/employee/update/${emp._id}`, values);
+      const { data } = await axios.put(
+        `/users/employee/update/${emp._id}`,
+        values
+      );
       if (data.success) {
         document.getElementById("employee_modal").close();
-        setToggleRequest(!toggleRequest)
-
-        
+        setToggleRequest(!toggleRequest);
       }
     } catch (error) {
       console.log(error);
@@ -36,7 +35,6 @@ function EditEmployeeForm() {
 
   useEffect(() => {
     setValues({ ...emp });
-
   }, [emp]);
 
   return (

@@ -12,18 +12,6 @@ const initialValues = {
 
 function Login() {
   const { handleLogin } = useContext(AuthContext);
-  // const [values, setValues] = useState(initialValue);
-  // console.log(values);
-
-  // function handleChange(e) {
-  //   const { value, name } = e.target;
-  //   setValues({ ...values, [name]: value });
-  // }
-
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   handleLogin(values);
-  // }
 
   return (
     <Formik
