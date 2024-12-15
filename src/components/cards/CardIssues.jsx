@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import useFetch from "../hooks/useFetch";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import Paginaiton from "../ui/Paginaiton";
 
 
 function CardIssues() {
-  // const [data] = useFetch("issues/getAllIssues");
 
   const [page, setPage] = useState(1)
   const [limit] = useState(3)

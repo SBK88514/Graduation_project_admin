@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Header from "../../ui/Header";
-
-// import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import ManagersTable from "../tables/managers/ManagerTable";
 import { useQuery } from "@tanstack/react-query";
@@ -27,15 +25,7 @@ function AllManagers() {
   console.log(data);
 
 
-  // const { data, isLoading, isError, error } = useQuery({
-  //     queryKey: ["get_managers"],
-  //     queryFn: async () => await axios.get("users/manager/getallmanagers"),
-  //     select: (data) => data.data.data,
-
-  //     staleTime: 1000 * 60 * 5,
-  // });
-  // console.log(data)
-
+  
   return (
     <div className="w-[90%] mx-auto">
       <Header>managers Table</Header>

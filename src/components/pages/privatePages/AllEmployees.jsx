@@ -20,11 +20,7 @@ function AllEmployees() {
       count: data.count,
     }),
   });
-  console.log(data);
-
-  //   const [employees, setEmployees] = useState([])
-  //   const [togle,setTogle] = useState(false)
-
+  
   return (
     <div className="w-[90%] mx-auto text-amber-900">
       <Header>employees table</Header>

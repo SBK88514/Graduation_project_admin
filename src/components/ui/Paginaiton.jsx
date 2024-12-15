@@ -5,7 +5,6 @@ function Paginaiton({listLength, limit, setPage}) {
   const pages = Math.ceil(listLength / limit);
   const btns = [];
   for (let i = 1; i < pages + 1; i++) btns.push(i);
-  console.log(btns);
 
 
   function nextPage() {
