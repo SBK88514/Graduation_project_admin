@@ -1,11 +1,31 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext"; 
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 function WelcomeAdmin() {
   const { user } = useContext(AuthContext);
 
+  
+  const url = `/general/getalllength`;
+
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["get_alllength"],
+    queryFn: async () => (await axios.get(url)).data,
+    select: (data) => (
+       {
+      countIssue:data.countIssue,
+      countUsers:data.countUsers
+    }),
+  });
+  console.log(data);
+  
+
   return (
     <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 p-8 rounded-2xl shadow-lg max-w-3xl mx-auto">
+      {isLoading && <div>Loading...</div>}
+      {isError && <div>{error}</div>}
+      
       {/* Decorative Top Pattern */}
       <div className="flex justify-center mb-6 space-x-2">
         {[...Array(5)].map((_, i) => (
@@ -34,13 +54,13 @@ function WelcomeAdmin() {
           <div className="text-amber-600 text-sm font-medium mb-1">
             Active Users
           </div>
-          <div className="text-2xl font-bold text-amber-900">2,543</div>
+          <div className="text-2xl font-bold text-amber-900">{data?.countUsers}</div>
         </div>
         <div className="bg-white/80 p-4 rounded-xl shadow-sm backdrop-blur-sm">
           <div className="text-amber-600 text-sm font-medium mb-1">
             Total Issues
           </div>
-          <div className="text-2xl font-bold text-amber-900">167</div>
+          <div className="text-2xl font-bold text-amber-900">{data?.countIssue}</div>
         </div>
         <div className="bg-white/80 p-4 rounded-xl shadow-sm backdrop-blur-sm">
           <div className="text-amber-600 text-sm font-medium mb-1">

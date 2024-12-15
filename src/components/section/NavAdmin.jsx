@@ -101,7 +101,7 @@ function NavAdmin() {
                     />
                   </svg>
                 </div>
-                <span className="font-medium text-sm">User Name</span>
+                <span className="font-medium text-sm">{user.manager_name}</span>
                 <svg
                   className="w-4 h-4 ml-1"
                   fill="none"
