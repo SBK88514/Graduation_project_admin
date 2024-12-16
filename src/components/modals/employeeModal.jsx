@@ -12,7 +12,6 @@ function EmployeeModal() {
             onClick={() => document.getElementById("employee_modal").close()}
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
           >
-            ✕
           </button>
         </div>
 
