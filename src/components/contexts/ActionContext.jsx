@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useState } from "react";
 import { showErrorToast, showSuccessToast } from "../../lib/Toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const ActionContext = createContext();
 
@@ -23,6 +24,17 @@ function ActionProvider({ children }) {
       showErrorToast(err);
     }
   }
+  const queryClient = useQueryClient();
+  const { mutate: mutateDelete } = useMutation({
+    mutationKey: "delete_manager",
+    mutationFn: async (id) => axios.delete(`users/manager/delete/${id}`),
+    onSuccess: (data) => {
+      // console.log(data)
+      showSuccessToast(data.message);
+      queryClient.invalidateQueries({ queryKey: ["get_managers"] });
+      document.getElementById("manager_modal").close();
+    },
+  });
   function handleEdit(employee) {
     document.getElementById("employee_modal").showModal();
     setEmp(employee);
@@ -32,6 +44,7 @@ function ActionProvider({ children }) {
     document.getElementById("manager_modal").showModal();
     setMan(manager);
   }
+ 
 
   const value = {
     toggleRequest,
@@ -41,6 +54,8 @@ function ActionProvider({ children }) {
     handleEdit,
     handleEditManager,
     man,
+    mutateDelete,
+    
   };
 
   return (
