@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TableRow from "../managers/TableRow";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -6,8 +6,10 @@ import { showSuccessToast } from "../../../../lib/Toast";
 import SearchInput from "./SearchInput";
 import Header from "../../../ui/Header";
 
-
 function ManagersTable({ managers }) {
+  //   const [searchInput, setSearchInput] = useState("");
+  //   const [suggestions, setSuggestions] = useState([]);
+
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
@@ -25,7 +27,12 @@ function ManagersTable({ managers }) {
         <Header>managers Table</Header>
         <div className="px-6 py-4 bg-amber-50 border-b border-amber-200">
           <h2 className="text-xl font-semibold text-amber-900">
-            <SearchInput />
+            <div dir="rtl">
+              {/* <SearchInput
+                setSearchInput={setSearchInput}
+                suggestions={suggestions}
+              /> */}
+            </div>
             managers List
           </h2>
         </div>
