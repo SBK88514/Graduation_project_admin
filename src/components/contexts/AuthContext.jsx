@@ -47,12 +47,11 @@ function AuthProvider({ children }) {
   async function handleManager(values) {
     try {
       const { data } = await axios.post("users/manager/signup", values);
-
       console.log(data);
-      console.log(1);
+      return true;
     } catch (error) {
       console.log(error);
-      console.log(2);
+      return false;
     }
   }
 
@@ -63,6 +62,16 @@ function AuthProvider({ children }) {
     } catch (error) {
       console.log(error);
     }
+  }
+  async function signOut(){
+    try{
+      const {data} = await axios.get("/users/manager/logout")
+      console.log(data)
+    }
+    catch(error){
+      console.log(error)
+    }
+   
   }
 
   const value = {

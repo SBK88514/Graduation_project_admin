@@ -4,11 +4,11 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { ActionContext } from "../../contexts/ActionContext";
 
-function EditEmployeeForm() {
+function EditManagerForm() {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationKey: "edit manager",
+    mutationKey: ["edit manager"],
     mutationFn: async ({ values, id }) =>
       await axios.put(`users/manager/update/${id}`, values),
     onSuccess: () => {
@@ -17,7 +17,7 @@ function EditEmployeeForm() {
     },
     // onError:
   });
-  const { man } = useContext(ActionContext);
+  const { man, mutateDelete } = useContext(ActionContext);
   const [values, setValues] = useState(null);
 
   function handleChange(e) {
@@ -36,12 +36,13 @@ function EditEmployeeForm() {
   }
   useEffect(() => {
     setValues({ ...man });
+    console.log(man);
   }, [man]);
 
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
-        Edit Manager
+        {man?.bySearch ? "View Manager" : "Edit Manager"}
       </h2>
 
       <form onSubmit={handlesubmit} className="space-y-6">
@@ -101,7 +102,7 @@ function EditEmployeeForm() {
                 type="tel"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter phone number"
-                value={values?.manager_password}
+                value={"*******"}
                 onChange={handleChange}
               />
             </div>
@@ -116,6 +117,16 @@ function EditEmployeeForm() {
           >
             Cancel
           </button>
+          {man?.bySearch && (
+            <button
+              onClick={() => mutateDelete(man._id)}
+              type="button"
+              className="px-6 py-2 border-2 border-amber-600 text-amber-600 rounded-xl hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
+            >
+              Delete
+            </button>
+          )}
+
           <button
             type="submit"
             className="px-6 py-2 bg-amber-600 text-white rounded-xl hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
@@ -128,4 +139,4 @@ function EditEmployeeForm() {
   );
 }
 
-export default EditEmployeeForm;
+export default EditManagerForm;
