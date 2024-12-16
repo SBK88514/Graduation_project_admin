@@ -44,24 +44,6 @@ function AuthProvider({ children }) {
     authUser();
   }, []);
 
-  async function signOut() {
-    try{
-      const {data} = axios.get("/users/manager/logout")
-      if(data.success){
-        setIsAuth(false)
-        
-      }
-
-    }catch(error){
-      const msg = error.response.data.error;
-      showErrorToast(msg)
-    }
-   
-
-    
-  } 
-
-
   async function handleManager(values) {
     try {
       const { data } = await axios.post("users/manager/signup", values);

@@ -1,28 +1,47 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import axios from "axios";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { ActionContext } from "../../contexts/ActionContext";
 
 function EditEmployeeForm() {
+  const queryClient = useQueryClient();
 
-  const{mutate} = useMutation({
+  const { mutate } = useMutation({
     mutationKey: "edit manager",
-    mutationFn: async (man) => await axios.put(`users/manager/update${man._id}`,man),
+    mutationFn: async ({ values, id }) =>
+      await axios.put(`users/manager/update/${id}`, values),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["get_managers"] });
+      document.getElementById("manager_modal").close();
+    },
+    // onError:
   });
+  const { man } = useContext(ActionContext);
+  const [values, setValues] = useState(null);
+
+  function handleChange(e) {
+    const { value, name } = e.target;
+    setValues({ ...values, [name]: value });
+  }
 
   function handlesubmit(e) {
     try {
       e.preventDefault();
-      mutate({manager_name:e.target.manager_name.value})
 
+      mutate({ values, id: man._id });
     } catch (error) {
       console.log(error);
     }
   }
+  useEffect(() => {
+    setValues({ ...man });
+  }, [man]);
 
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
-        Edit Employee
+        Edit Manager
       </h2>
 
       <form onSubmit={handlesubmit} className="space-y-6">
@@ -46,8 +65,8 @@ function EditEmployeeForm() {
                 type="text"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter first name"
-                // value={values?.employeeName}
-                // onChange={handleChange}
+                value={values?.manager_name}
+                onChange={handleChange}
               />
             </div>
 
@@ -64,8 +83,8 @@ function EditEmployeeForm() {
                 type="email"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter email address"
-                // value={emp ? values.employeeEmail : ""}
-                // onChange={handleChange}
+                value={values?.manager_email}
+                onChange={handleChange}
               />
             </div>
 
@@ -82,9 +101,8 @@ function EditEmployeeForm() {
                 type="tel"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter phone number"
-                // value={emp ? values.employeePassword : ""}
-                // value={"*****"}
-                // onChange={handleChange}
+                value={values?.manager_password}
+                onChange={handleChange}
               />
             </div>
           </div>

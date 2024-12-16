@@ -24,7 +24,6 @@ function AllManagers() {
   });
   console.log(data);
 
-
   
   return (
     <div className="w-[90%] mx-auto">
