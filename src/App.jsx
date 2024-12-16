@@ -23,16 +23,19 @@ import ContactPage from "./components/pages/publicPages/mainPage/ContactPage";
 import AboutPage from "./components/pages/publicPages/mainPage/AboutPage";
 import LeadershipTeam from "./components/pages/publicPages/mainPage/LeadershipTeam";
 import { Component } from "lucide-react";
+import BackgroundLayout from "./components/ui/backgroundLayout";
 
 function Root({ isAuth }) {
   console.log(isAuth);
   return (
     <>
-      {isAuth ? <NavAdmin /> : <NavPublic />}
-      <Outlet />
-      <EmployeeModal />
-      {/* <AddIssueForm /> */}
-      <ModalManager />
+      <BackgroundLayout>
+        {isAuth ? <NavAdmin /> : <NavPublic />}
+        <Outlet />
+        <EmployeeModal />
+        {/* <AddIssueForm /> */}
+        <ModalManager />
+      </BackgroundLayout>
     </>
   );
 }
@@ -43,9 +46,7 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<Root isAuth={isAuth} />}>
         {/* Public Routes */}
-        <Route
-          element={isAuth ? <Navigate to={"/welcomeadmin"} /> : <Outlet />}
-        >
+        <Route element={isAuth ? <Navigate to={"/welcomepage"} /> : <Outlet />}>
           <Route
             index
             lazy={async () => ({
@@ -63,10 +64,10 @@ function App() {
           />
         </Route>
         <Route
-          path="welcomeadmin"
+          path="welcomepage"
           lazy={async () => ({
             Component: (
-              await import("./components/pages/privatePages/WelcomeAdmin")
+              await import("./components/pages/privatePages/WelcomePage")
             ).default,
           })}
         />

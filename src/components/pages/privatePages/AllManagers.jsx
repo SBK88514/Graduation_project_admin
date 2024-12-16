@@ -13,11 +13,9 @@ function AllManagers() {
     select: (data) => data.data.data,
   });
 
- 
-
   return (
     <div className="w-[90%] mx-auto">
-      <Header>managers Table</Header>
+      {/* <Header>managers Table</Header> */}
       <div dir="rtl"></div>
       {isLoading && <div>Loading...</div>}
       {isError && <div>{error}</div>}

@@ -48,7 +48,7 @@ function AddIssueForm() {
   }
 
   return (
-    <div>
+    <div className="h-[calc(100vh-64px)] flex items-center justify-center">
       <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
         <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
           Report New Issue
