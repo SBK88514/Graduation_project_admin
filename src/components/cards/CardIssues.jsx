@@ -1,8 +1,27 @@
 import React, { useState } from "react";
-import useFetch from "../hooks/useFetch";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import Paginaiton from "../ui/Paginaiton";
+
 
 function CardIssues() {
-  const [data] = useFetch("issues/getAllIssues");
+
+  const [page, setPage] = useState(1)
+  const [limit] = useState(3)
+
+  const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
+
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["get_issues", page],
+    queryFn: async () =>(await axios.get(url)).data,
+    select: (data) =>({
+      Allissues: data.data,
+      count: data.count,
+    }),
+    
+  });  
+
+
   const [currentIndexes, setCurrentIndexes] = useState({});
 
   const nextImage = (issueId, maxLength) => {
@@ -23,8 +42,9 @@ function CardIssues() {
     <div className="container mx-auto px-4 py-8  ">
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* Issue Card */}
-
-        {data.map((element) => (
+        {isLoading && <div>Loading...</div>}
+        {isError && <div>{error}</div>}
+        {data?.Allissues?.map((element) => (
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-3xl shadow-xl w-80">
             {/* Location Pills */}
             <div className="flex space-x-2 mb-3">
@@ -217,6 +237,7 @@ function CardIssues() {
 
         {/* You can duplicate the card here for more issues */}
       </div>
+        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage}/>
     </div>
   );
 }

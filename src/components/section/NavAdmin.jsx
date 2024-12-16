@@ -6,6 +6,17 @@ import { ActionContext } from "../contexts/ActionContext";
 function NavAdmin() {
   const {signOut } = useContext(AuthContext);
   const {man, handleEditManager} = useContext(ActionContext)
+  const { user } = useContext(AuthContext);
+
+  if (!user) {
+    console.error("User object is undefined");
+    return <div>Access Denied</div>;
+  }
+
+  if (!user.permission) {
+    console.error("Permission is not defined for the user");
+    return <div>Access Denied</div>;
+  }
   return (
     <nav className="bg-white shadow-lg mb-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -33,12 +44,16 @@ function NavAdmin() {
             >
               All Issues
             </NavLink>
-            <NavLink
-              to="addmanager"
-              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
-            >
-              Add Manager
-            </NavLink>
+            {user.permission === "Admin" && (
+              <NavLink
+                to="addmanager"
+                className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              >
+                Add Manager
+              </NavLink>
+            )}
+
+            
             <NavLink
               to="addemployee"
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
@@ -51,12 +66,15 @@ function NavAdmin() {
             >
               Employee List
             </NavLink>
-            <NavLink
-              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+            {user.permission === "Admin" && (
+              <NavLink
               to={"allmanagers"}
-            >
-              Manager List
-            </NavLink>
+                className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              >
+                Manager List
+              </NavLink>
+            )}
+            
           </div>
 
           {/* User Icon with Dropdown - Right Side */}
@@ -84,7 +102,7 @@ function NavAdmin() {
                     />
                   </svg>
                 </div>
-                <span className="font-medium text-sm">User Name</span>
+                <span className="font-medium text-sm">{user.manager_name}</span>
                 <svg
                   className="w-4 h-4 ml-1"
                   fill="none"
