@@ -22,11 +22,15 @@ function WelcomeAdmin() {
   
 
   return (
+    <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 p-8 rounded-2xl shadow-lg max-w-3xl mx-auto w-5/6">
+      {/* DecorativeTop Pattern */}
+
     <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 p-8 rounded-2xl shadow-lg max-w-3xl mx-auto">
       {isLoading && <div>Loading...</div>}
       {isError && <div>{error}</div>}
       
       {/* Decorative Top Pattern */}
+
       <div className="flex justify-center mb-6 space-x-2">
         {[...Array(5)].map((_, i) => (
           <div

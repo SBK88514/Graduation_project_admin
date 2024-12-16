@@ -3,6 +3,9 @@ import TableRow from "../managers/TableRow";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { showSuccessToast } from "../../../../lib/Toast";
+import SearchInput from "./SearchInput";
+import Header from "../../../ui/Header";
+
 
 function ManagersTable({ managers }) {
   const queryClient = useQueryClient();
@@ -18,9 +21,11 @@ function ManagersTable({ managers }) {
   });
   return (
     <div className="p-6">
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden text-amber-900">
+        <Header>managers Table</Header>
         <div className="px-6 py-4 bg-amber-50 border-b border-amber-200">
           <h2 className="text-xl font-semibold text-amber-900">
+            <SearchInput />
             managers List
           </h2>
         </div>

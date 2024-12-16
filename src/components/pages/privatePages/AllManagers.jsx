@@ -27,6 +27,11 @@ function AllManagers() {
     
   });
 
+
+  return (
+    <div className="w-[90%] mx-auto">
+      {/* <Header>managers Table</Header> */}
+      <div dir="rtl"></div>
   const [searchInput, setSearchInput] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
