@@ -8,7 +8,7 @@ export const AuthContext = createContext();
 function AuthProvider({ children }) {
   // console.log(children)
   const [isAuth, setIsAuth] = useState(false);
-  // const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
   async function handleLogin(values) {
     try {
@@ -16,6 +16,8 @@ function AuthProvider({ children }) {
       if (data.success) {
         showSuccessToast(data.message);
         setIsAuth(true);
+        setUser(data.manager)
+        console.log("Signed-in user:", data.manager);
         return true;
       }
     } catch (error) {
@@ -31,7 +33,7 @@ function AuthProvider({ children }) {
       console.log(data);
       if (data.success) {
         setIsAuth(true);
-        // setUser(data.user._doc);
+        setUser(data.user);
       }
     } catch (error) {
       console.log(error);
@@ -45,12 +47,11 @@ function AuthProvider({ children }) {
   async function handleManager(values) {
     try {
       const { data } = await axios.post("users/manager/signup", values);
-
       console.log(data);
-      console.log(1);
+      return true;
     } catch (error) {
       console.log(error);
-      console.log(2);
+      return false;
     }
   }
 
@@ -62,12 +63,24 @@ function AuthProvider({ children }) {
       console.log(error);
     }
   }
+  async function signOut(){
+    try{
+      const {data} = await axios.get("/users/manager/logout")
+      console.log(data)
+    }
+    catch(error){
+      console.log(error)
+    }
+   
+  }
 
   const value = {
     isAuth,
     handleLogin,
     handleEmployee,
     handleManager,
+    user,
+    signOut
   };
 
   return (

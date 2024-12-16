@@ -6,6 +6,7 @@ import { showSuccessToast } from "../../../../lib/Toast";
 import SearchInput from "./SearchInput";
 import Header from "../../../ui/Header";
 
+
 function ManagersTable({ managers }) {
   const queryClient = useQueryClient();
 
