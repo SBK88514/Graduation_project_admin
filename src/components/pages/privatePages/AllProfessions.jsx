@@ -1,13 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import ProfessionsTable from "../tables/professions/ProfessionsTable";
+import Paginaiton from "../../ui/Paginaiton";
 
 function AllProfessions() {
-  const url = "/professions/getallprofessions";
+
+  const [page, setPage] = useState(1);
+  const [limit] = useState(2);
+
+  const url = `/professions/getallprofessions?page=${page}&limit=${limit}`;
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["get_professions"],
+    queryKey: ["get_professions", page],
     queryFn: async () => (await axios.get(url)).data,
     select: (data) => ({
       AllProfession: data.data,
@@ -35,6 +40,8 @@ function AllProfessions() {
       {data && data?.AllProfession.length && !isLoading && (
         <ProfessionsTable profession={data.AllProfession} />
       )}
+      <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+
     </div>
   );
 }
