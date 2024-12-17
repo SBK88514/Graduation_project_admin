@@ -2,32 +2,27 @@ import React, { useContext } from "react";
 import ProfessionsTableRow from "./ProfessionsTableRow";
 import { ActionContext } from "../../../contexts/ActionContext";
 
-const obj = [
-  {
-    _id: "676154d058a7f50e80949b50",
-    profession_name: "Tiler",
-    createdAt: "2024-12-17T10:39:12.781Z",
-    updatedAt: "2024-12-17T10:39:12.781Z",
-    __v: 0,
-  },
-  {
-    _id: "6761551658a7f50e80949b52",
-    profession_name: "Electrician",
-    createdAt: "2024-12-17T10:40:22.141Z",
-    updatedAt: "2024-12-17T10:40:22.141Z",
-    __v: 0,
-  },
-  {
-    _id: "6761552858a7f50e80949b54",
-    profession_name: "Plumber",
-    createdAt: "2024-12-17T10:40:40.271Z",
-    updatedAt: "2024-12-17T10:40:40.271Z",
-    __v: 0,
-  },
-];
+// const obj = [
+//   {
+//     _id: "676154d058a7f50e80949b50",
+//     profession_name: "Tiler",
+//     createdAt: "2024-12-17T10:39:12.781Z",
+//     updatedAt: "2024-12-17T10:39:12.781Z",
+//     __v: 0,
+//   },
+//   {
+//     _id: "6761551658a7f50e80949b52",
+//     profession_name: "Electrician",
+//     createdAt: "2024-12-17T10:40:22.141Z",
+//     updatedAt: "2024-12-17T10:40:22.141Z",
+//     __v: 0,
+//   },
+// ];
 
-function ProfessionsTable() {
+function ProfessionsTable({ profession }) {
   const { handleAddProfession } = useContext(ActionContext);
+  console.log(4);
+  console.log(profession);
   return (
     <div className="p-6 w-3/4 m-auto">
       <button
@@ -35,6 +30,7 @@ function ProfessionsTable() {
         type="button"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
       >
+        {/* {props.name} */}
         Add Profession
       </button>
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -58,7 +54,7 @@ function ProfessionsTable() {
             </thead>
             <tbody className="bg-white divide-y divide-amber-100">
               {/* Row 1 */}
-              {obj.map((profession) => (
+              {profession.map((profession) => (
                 <ProfessionsTableRow {...profession} />
               ))}
             </tbody>

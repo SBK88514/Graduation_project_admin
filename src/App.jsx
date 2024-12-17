@@ -99,9 +99,7 @@ function App() {
           path="Professions"
           lazy={async () => ({
             Component: (
-              await import(
-                "./components/pages/tables/professions/ProfessionsTable"
-              )
+              await import("./components/pages/privatePages/AllProfessions")
             ).default,
           })}
         />
