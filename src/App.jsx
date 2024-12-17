@@ -11,9 +11,6 @@ import NavAdmin from "./components/section/NavAdmin";
 import NavPublic from "./components/section/NavPublic";
 import { AuthContext } from "./components/contexts/AuthContext";
 
-// import useContext isAuth State to App component
-
-// import { AuthContext } from "./components/contexts/AuthContext";
 import EmployeeModal from "./components/modals/employeeModal";
 import ModalManager from "./components/modals/ModalManager";
 
