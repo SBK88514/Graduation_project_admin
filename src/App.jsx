@@ -11,11 +11,9 @@ import NavAdmin from "./components/section/NavAdmin";
 import NavPublic from "./components/section/NavPublic";
 import { AuthContext } from "./components/contexts/AuthContext";
 
-// import useContext isAuth State to App component
-
-// import { AuthContext } from "./components/contexts/AuthContext";
 import EmployeeModal from "./components/modals/employeeModal";
 import ModalManager from "./components/modals/ModalManager";
+import ModalAddProfession from "./components/modals/modalAddProfession";
 
 //import mainPage components
 import Offices from "./components/pages/publicPages/mainPage/Offices";
@@ -38,6 +36,7 @@ function Root({ isAuth }) {
         <Outlet />
         <EmployeeModal />
         <ModalManager />
+        <ModalAddProfession />
       </BackgroundLayout>
     </>
   );
@@ -101,6 +100,24 @@ function App() {
           lazy={async () => ({
             Component: (
               await import("./components/pages/privatePages/AllEmployees")
+            ).default,
+          })}
+        />
+        <Route
+          path="Professions"
+          lazy={async () => ({
+            Component: (
+              await import("./components/pages/privatePages/AllProfessions")
+            ).default,
+          })}
+        />
+        <Route
+          path="addprofession"
+          lazy={async () => ({
+            Component: (
+              await import(
+                "./components/pages/tables/professions/AddProfession"
+              )
             ).default,
           })}
         />

@@ -29,7 +29,9 @@ function EditManagerForm() {
     try {
       e.preventDefault();
 
-      mutate({ values, id: man._id });
+      console.log({ values, id: values?._id });
+
+      mutate({ values, id: values?._id });
     } catch (error) {
       console.log(error);
     }
@@ -125,7 +127,7 @@ function EditManagerForm() {
           </button>
           {man?.bySearch && (
             <button
-              onClick={() => mutateDelete(man._id)}
+              onClick={() => mutateDelete(man?._id)}
               type="button"
               className="px-6 py-2 border-2 border-amber-600 text-amber-600 rounded-xl hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
             >
@@ -135,7 +137,8 @@ function EditManagerForm() {
 
           <button
             type="submit"
-            className="px-6 py-2 bg-amber-600 text-white rounded-xl hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
+            className="px-6 py-2 bg-amber-600
+             text-white rounded-xl hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
           >
             Edit Employee
           </button>

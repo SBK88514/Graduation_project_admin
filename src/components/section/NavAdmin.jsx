@@ -4,8 +4,8 @@ import { AuthContext } from "../contexts/AuthContext";
 import { ActionContext } from "../contexts/ActionContext";
 
 function NavAdmin() {
-  const {signOut } = useContext(AuthContext);
-  const {man, handleEditManager} = useContext(ActionContext)
+  const { signOut } = useContext(AuthContext);
+  const { man, handleEditManager } = useContext(ActionContext);
   const { user } = useContext(AuthContext);
 
   if (!user) {
@@ -32,6 +32,12 @@ function NavAdmin() {
           {/* Navigation Links - Center */}
           <div className="flex space-x-8">
             <NavLink
+              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              to={"Professions"}
+            >
+              Professions
+            </NavLink>
+            <NavLink
               to={"addissue"}
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium
                transition-colors duration-200"
@@ -53,7 +59,6 @@ function NavAdmin() {
               </NavLink>
             )}
 
-            
             <NavLink
               to="addemployee"
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
@@ -68,13 +73,12 @@ function NavAdmin() {
             </NavLink>
             {user.permission === "Admin" && (
               <NavLink
-              to={"allmanagers"}
+                to={"allmanagers"}
                 className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 Manager List
               </NavLink>
             )}
-            
           </div>
 
           {/* User Icon with Dropdown - Right Side */}
@@ -141,14 +145,13 @@ function NavAdmin() {
                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                       />
                     </svg>
-                    <span onClick={() => handleEditManager(man)}>Profile</span>
+                    <span onClick={() => handleEditManager(user)}>Profile</span>
                   </div>
                 </a>
                 <a
                   href="#"
                   className="block px-3 py-2 text-sm text-amber-900 hover:bg-amber-50 transition-colors duration-200"
                 >
-                  
                   <div className="flex items-center space-x-2">
                     <svg
                       className="w-4 h-4 flex-shrink-0"

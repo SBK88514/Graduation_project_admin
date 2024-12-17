@@ -1,16 +1,17 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-// useContext
-
-const initialValue = {
-  employeeName: "",
-  employeeEmail: "",
-  employeePassword: "",
-};
+import { useQuery } from "@tanstack/react-query";
 
 function AddEmployeeForm() {
+  const initialFormValues = {
+    employeeName: "",
+    employeeEmail: "",
+    employeePassword: "",
+    issue_profession: "", // Add this
+  };
+  const [formValues, setFormValues] = useState(initialFormValues);
   const { handleEmployee } = useContext(AuthContext);
-  const [values, setValues] = useState(initialValue);
+  const [values, setValues] = useState(initialFormValues);
   console.log(values);
 
   function handleChange(e) {
@@ -22,6 +23,15 @@ function AddEmployeeForm() {
     e.preventDefault();
     handleEmployee(values);
   }
+
+  // Add this query
+  const { data: professions = [], isLoading: isProfessionsLoading } = useQuery({
+    queryKey: ["professions"],
+    queryFn: async () => {
+      const { data } = await axios.get("/api/professions");
+      return data;
+    },
+  });
 
   return (
     <div className="h-[calc(100vh-64px)] flex items-center justify-center">
@@ -103,6 +113,35 @@ function AddEmployeeForm() {
                   className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                   placeholder="Enter password"
                 />
+              </div>
+              {/* Add Profession select here */}
+              <div>
+                <label
+                  className="block text-sm font-medium text-amber-700 mb-1"
+                  htmlFor="profession"
+                >
+                  Profession
+                </label>
+                <select
+                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  id="profession"
+                  name="issue_profession"
+                  value={formValues.issue_profession}
+                  onChange={handleChange}
+                  required
+                  disabled={isProfessionsLoading}
+                >
+                  <option value="">
+                    {isProfessionsLoading
+                      ? "Loading professions..."
+                      : "Select Profession"}
+                  </option>
+                  {professions.map((prof) => (
+                    <option key={prof.id} value={prof.id}>
+                      {prof.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
