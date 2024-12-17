@@ -44,6 +44,18 @@ function ActionProvider({ children }) {
     document.getElementById("manager_modal").showModal();
     setMan(manager);
   }
+
+  async function getAllDetails(url){
+    try {
+      const {data} = (await axios.get(url)).data;
+      
+      return data
+    
+    } catch (error) {
+      console.log(error);
+      return false
+    }
+}
  
 
   const value = {
@@ -55,7 +67,7 @@ function ActionProvider({ children }) {
     handleEditManager,
     man,
     mutateDelete,
-    
+    getAllDetails
   };
 
   return (
