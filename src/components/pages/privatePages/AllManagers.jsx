@@ -36,6 +36,7 @@ function AllManagers() {
         );
         setSuggestions(data.result);
       }
+      else setSuggestions([]);
     } catch (error) {
       if (axios.isCancel(error)) {
         console.log("Request canceled", error.message);
