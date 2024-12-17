@@ -1,23 +1,53 @@
 import axios from "axios";
 import React from "react";
-import { useMutation } from "@tanstack/react-query";
+// import { useMutation } from "@tanstack/react-query";
 // import { data } from "react-router-dom";
 import { useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query"; // Add useQuery
+import { X } from "lucide-react";
 
 const initialFormValues = {
   issue_building: "",
   issue_floor: "",
   issue_apartment: "",
+  issue_profession: "", // Add this
   issue_description: "",
 };
 
 function AddIssueForm() {
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [uploadedFiles, setUploadedFiles] = useState([]); // Add this
+
+  // Add this query
+  const { data: professions = [], isLoading: isProfessionsLoading } = useQuery({
+    queryKey: ["professions"],
+    queryFn: async () => {
+      const { data } = await axios.get("/api/professions");
+      return data;
+    },
+  });
 
   function handleChange(e) {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   }
+
+  // Add these new functions
+  const handleFileUpload = (e) => {
+    const newFiles = Array.from(e.target.files);
+    setUploadedFiles((prev) => [
+      ...prev,
+      ...newFiles.map((file) => ({
+        id: Math.random().toString(36).substr(2, 9),
+        file,
+      })),
+    ]);
+    e.target.value = "";
+  };
+
+  const removeFile = (fileId) => {
+    setUploadedFiles((prev) => prev.filter((file) => file.id !== fileId));
+  };
 
   console.log(formValues);
 
@@ -44,11 +74,16 @@ function AddIssueForm() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
+    // Add each file to formData
+    uploadedFiles.forEach(({ file }) => {
+      formData.append("issue_images", file);
+    });
+
     mutation.mutate(formData);
   }
 
   return (
-    <div className="h-[calc(100vh-64px)] flex items-center justify-center">
+    <div className="h-[calc(100vh-64px)] flex items-center justify-center w-auto">
       <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
         <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
           Report New Issue
@@ -57,7 +92,7 @@ function AddIssueForm() {
         <form onSubmit={handleSubmit}>
           <div className="space-y-6 bg-white p-6 rounded-xl shadow-sm">
             {/* Location Details */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
                 <label
                   className="block text-sm font-medium text-amber-700 mb-1"
@@ -125,6 +160,36 @@ function AddIssueForm() {
                    focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
               </div>
+
+              {/* Add Profession select here */}
+              <div>
+                <label
+                  className="block text-sm font-medium text-amber-700 mb-1"
+                  htmlFor="profession"
+                >
+                  Profession
+                </label>
+                <select
+                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  id="profession"
+                  name="issue_profession"
+                  value={formValues.issue_profession}
+                  onChange={handleChange}
+                  required
+                  disabled={isProfessionsLoading}
+                >
+                  <option value="">
+                    {isProfessionsLoading
+                      ? "Loading professions..."
+                      : "Select Profession"}
+                  </option>
+                  {professions.map((prof) => (
+                    <option key={prof.id} value={prof.id}>
+                      {prof.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             {/* Issue Description */}
@@ -150,14 +215,11 @@ function AddIssueForm() {
             {/* Image Upload */}
             <div>
               <label className="block text-sm font-medium text-amber-700 mb-1">
-                Add Image
+                Add Images
               </label>
-              <div
-                className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2
-               border-amber-200 border-dashed rounded-xl bg-amber-50"
-              >
+              <div className="mt-1 flex flex-col px-6 pt-5 pb-6 border-2 border-amber-200 border-dashed rounded-xl bg-amber-50">
                 <div className="space-y-2 text-center">
-                  <div className="flex text-sm text-amber-600">
+                  <div className="flex text-sm text-amber-600 justify-center">
                     <label
                       htmlFor="issue_images"
                       className="relative cursor-pointer rounded-md font-medium text-amber-600 hover:text-amber-800"
@@ -170,6 +232,7 @@ function AddIssueForm() {
                         className="sr-only"
                         accept="image/*"
                         multiple
+                        onChange={handleFileUpload}
                       />
                     </label>
                     <p className="pl-1">or drag and drop</p>
@@ -178,6 +241,29 @@ function AddIssueForm() {
                     PNG, JPG, GIF up to 10MB
                   </p>
                 </div>
+
+                {/* Display uploaded files */}
+                {uploadedFiles.length > 0 && (
+                  <div className="mt-4 space-y-2">
+                    {uploadedFiles.map(({ id, file }) => (
+                      <div
+                        key={id}
+                        className="flex items-center justify-between bg-white p-2 rounded-lg"
+                      >
+                        <span className="text-sm text-amber-700 truncate">
+                          {file.name}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => removeFile(id)}
+                          className="text-amber-500 hover:text-amber-700"
+                        >
+                          <X size={16} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
