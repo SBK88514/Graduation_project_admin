@@ -23,6 +23,10 @@ import LeadershipTeam from "./components/pages/publicPages/mainPage/LeadershipTe
 import { Component } from "lucide-react";
 import BackgroundLayout from "./components/ui/backgroundLayout";
 
+function ProtectedRoute({ isAuth }) {
+  return isAuth ? <Outlet /> : <Navigate to="/" replace />;
+}
+
 function Root({ isAuth }) {
   console.log(isAuth);
   return (
@@ -31,7 +35,6 @@ function Root({ isAuth }) {
         {isAuth ? <NavAdmin /> : <NavPublic />}
         <Outlet />
         <EmployeeModal />
-        {/* <AddIssueForm /> */}
         <ModalManager />
         <ModalAddProfession />
       </BackgroundLayout>
@@ -62,7 +65,15 @@ function App() {
                 .default,
             })}
           />
-        </Route>
+          </Route>
+      
+
+
+
+        <Route
+          element={<ProtectedRoute isAuth={isAuth} />}
+        >
+
         <Route
           path="welcomepage"
           lazy={async () => ({
@@ -140,6 +151,8 @@ function App() {
           })}
         />
 
+
+        </Route>
         {/* some routes */}
         <Route
           path="LeadershipTeam"
@@ -177,6 +190,9 @@ function App() {
             ).default,
           })}
         />
+        
+
+        {/* <Route path="*" element={<Navigate to="/" replace />} />
         {/* </Routh> */}
       </Route>
     )
@@ -190,3 +206,7 @@ function App() {
 }
 
 export default App;
+
+
+
+

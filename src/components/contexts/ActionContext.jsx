@@ -45,10 +45,24 @@ function ActionProvider({ children }) {
     setMan(manager);
   }
 
+
+  async function getAllDetails(url){
+    try {
+      const {data} = (await axios.get(url)).data;
+      
+      return data
+    
+    } catch (error) {
+      console.log(error);
+      return false
+    }
+}
+ 
   function handleAddProfession() {
     document.getElementById("profession_modal").showModal();
     setMan(null);
   }
+
 
   const value = {
     toggleRequest,
@@ -59,6 +73,7 @@ function ActionProvider({ children }) {
     handleEditManager,
     man,
     mutateDelete,
+    getAllDetails
     handleAddProfession,
   };
 

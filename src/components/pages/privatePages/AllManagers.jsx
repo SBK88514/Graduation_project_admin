@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../ui/Header";
 import axios from "axios";
 import ManagersTable from "../tables/managers/ManagerTable";
 import { useQuery } from "@tanstack/react-query";
 import SearchInput from "../tables/managers/SearchInput";
-import { debounce } from "../../../lib/Index";
+import { debounce, exportToXL } from "../../../lib";
 import Paginaiton from "../../ui/Paginaiton";
+import ExportButton from "../../ui/ExportButton.jsx"
+import {ActionContext} from "../../contexts/ActionContext.jsx"
+
 
 function AllManagers() {
+
+  const { getAllDetails} = useContext(ActionContext)
+
   const [page, setPage] = useState(1);
   const [limit] = useState(2);
 
@@ -58,8 +64,20 @@ function AllManagers() {
 
   console.log(data);
 
+  async function downloadXl() {
+      const result = await getAllDetails("/users/manager/getallmanagers");
+      console.log(result);
+      
+      if (!result) return;
+      console.log(3);
+      
+      exportToXL(result, "managersSheet");
+    }
+
   return (
+    
     <div className="w-[90%] mx-auto">
+      <ExportButton download={downloadXl} />
       {/* <Header>managers Table</Header> */}
       <div dir="rtl">
         <SearchInput
