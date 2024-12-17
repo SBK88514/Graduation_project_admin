@@ -13,6 +13,7 @@ import { AuthContext } from "./components/contexts/AuthContext";
 
 import EmployeeModal from "./components/modals/employeeModal";
 import ModalManager from "./components/modals/ModalManager";
+import ModalAddProfession from "./components/modals/modalAddProfession";
 
 //import mainPage components
 import Offices from "./components/pages/publicPages/mainPage/Offices";
@@ -32,6 +33,7 @@ function Root({ isAuth }) {
         <EmployeeModal />
         {/* <AddIssueForm /> */}
         <ModalManager />
+        <ModalAddProfession />
       </BackgroundLayout>
     </>
   );
@@ -87,6 +89,24 @@ function App() {
           lazy={async () => ({
             Component: (
               await import("./components/pages/privatePages/AllEmployees")
+            ).default,
+          })}
+        />
+        <Route
+          path="Professions"
+          lazy={async () => ({
+            Component: (
+              await import("./components/pages/privatePages/AllProfessions")
+            ).default,
+          })}
+        />
+        <Route
+          path="addprofession"
+          lazy={async () => ({
+            Component: (
+              await import(
+                "./components/pages/tables/professions/AddProfession"
+              )
             ).default,
           })}
         />

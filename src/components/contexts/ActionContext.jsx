@@ -44,7 +44,11 @@ function ActionProvider({ children }) {
     document.getElementById("manager_modal").showModal();
     setMan(manager);
   }
- 
+
+  function handleAddProfession() {
+    document.getElementById("profession_modal").showModal();
+    setMan(null);
+  }
 
   const value = {
     toggleRequest,
@@ -55,7 +59,7 @@ function ActionProvider({ children }) {
     handleEditManager,
     man,
     mutateDelete,
-    
+    handleAddProfession,
   };
 
   return (
