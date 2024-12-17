@@ -74,7 +74,8 @@ function ActionProvider({ children }) {
     man,
     mutateDelete,
     getAllDetails,
-    handleAddProfession,
+    handleAddProfession
+
   };
 
   return (
