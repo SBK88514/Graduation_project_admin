@@ -44,10 +44,32 @@ function ActionProvider({ children }) {
     document.getElementById("manager_modal").showModal();
     setMan(manager);
   }
+
   function handleAddManager() {
     document.getElementById("manager_modal").showModal();
     setMan(null);
   }
+
+
+
+  async function getAllDetails(url){
+    try {
+      const {data} = (await axios.get(url)).data;
+      
+      return data
+    
+    } catch (error) {
+      console.log(error);
+      return false
+    }
+}
+ 
+  function handleAddProfession() {
+    document.getElementById("profession_modal").showModal();
+    setMan(null);
+  }
+
+
 
   const value = {
     toggleRequest,
@@ -59,6 +81,8 @@ function ActionProvider({ children }) {
     man,
     mutateDelete,
     handleAddManager,
+    getAllDetails,
+    handleAddProfession
   };
 
   return (

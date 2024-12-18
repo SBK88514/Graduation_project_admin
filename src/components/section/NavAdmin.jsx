@@ -32,6 +32,12 @@ function NavAdmin() {
           {/* Navigation Links - Center */}
           <div className="flex space-x-8">
             <NavLink
+              className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              to={"Professions"}
+            >
+              Professions
+            </NavLink>
+            <NavLink
               to={"addissue"}
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium
                transition-colors duration-200"
@@ -53,7 +59,6 @@ function NavAdmin() {
               </NavLink>
             )}
 
-            
             <NavLink
               to="addemployee"
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
@@ -140,7 +145,7 @@ function NavAdmin() {
                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                       />
                     </svg>
-                    <span onClick={() => handleEditManager(man)}>Profile</span>
+                    <span onClick={() => handleEditManager(user)}>Profile</span>
                   </div>
                 </a>
                 <a
