@@ -45,6 +45,12 @@ function ActionProvider({ children }) {
     setMan(manager);
   }
 
+  function handleAddManager() {
+    document.getElementById("manager_modal").showModal();
+    setMan(null);
+  }
+
+
 
   async function getAllDetails(url){
     try {
@@ -64,6 +70,7 @@ function ActionProvider({ children }) {
   }
 
 
+
   const value = {
     toggleRequest,
     setToggleRequest,
@@ -73,9 +80,9 @@ function ActionProvider({ children }) {
     handleEditManager,
     man,
     mutateDelete,
+    handleAddManager,
     getAllDetails,
     handleAddProfession
-
   };
 
   return (

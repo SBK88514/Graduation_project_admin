@@ -5,8 +5,8 @@ import { ActionContext } from "../../../contexts/ActionContext";
 function SearchInput({ setSearchInput, suggestions }) {
   const { handleEditManager } = useContext(ActionContext);
   return (
-    <div className="relative w-full max-w-md">
-      <label className="input input-bordered flex items-center gap-2">
+    <div className="relative w-60 max-w-md ">
+      <label className="input input-bordered flex items-center gap-2 bg-amber-200">
         <input
           onChange={(e) => setSearchInput(e.target.value)}
           type="text"
