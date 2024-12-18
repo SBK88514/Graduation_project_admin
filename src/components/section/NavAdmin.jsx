@@ -4,8 +4,8 @@ import { AuthContext } from "../contexts/AuthContext";
 import { ActionContext } from "../contexts/ActionContext";
 
 function NavAdmin() {
-  const {signOut } = useContext(AuthContext);
-  const {man, handleEditManager} = useContext(ActionContext)
+  const { signOut } = useContext(AuthContext);
+  const { man, handleEditManager } = useContext(ActionContext);
   const { user } = useContext(AuthContext);
 
   if (!user) {
@@ -44,7 +44,7 @@ function NavAdmin() {
             >
               All Issues
             </NavLink>
-            {user.permission === "Admin" && (
+            {/* {user.permission === "Admin" && (
               <NavLink
                 to="addmanager"
                 className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
@@ -59,7 +59,7 @@ function NavAdmin() {
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
             >
               Add Employee
-            </NavLink>
+            </NavLink> */}
             <NavLink
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               to={"allemployees"}
@@ -68,13 +68,12 @@ function NavAdmin() {
             </NavLink>
             {user.permission === "Admin" && (
               <NavLink
-              to={"allmanagers"}
+                to={"allmanagers"}
                 className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
                 Manager List
               </NavLink>
             )}
-            
           </div>
 
           {/* User Icon with Dropdown - Right Side */}
@@ -148,7 +147,6 @@ function NavAdmin() {
                   href="#"
                   className="block px-3 py-2 text-sm text-amber-900 hover:bg-amber-50 transition-colors duration-200"
                 >
-                  
                   <div className="flex items-center space-x-2">
                     <svg
                       className="w-4 h-4 flex-shrink-0"

@@ -8,11 +8,7 @@ function EmployeesTable({ employees }) {
   return (
     <div className="p-6">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div className="px-6 py-4 bg-amber-50 border-b border-amber-200 text-center">
-          <h2 className="text-2xl font-semibold text-amber-950 ">
-            Employees List
-          </h2>
-        </div>
+        <div className="px-6 py-4 bg-amber-50 border-b border-amber-200 text-center"></div>
 
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-amber-200">

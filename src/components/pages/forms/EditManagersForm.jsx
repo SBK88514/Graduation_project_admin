@@ -4,6 +4,12 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { ActionContext } from "../../contexts/ActionContext";
 
+const initialValues = {
+  manager_name: "",
+  manager_email: "",
+  manager_password: "",
+};
+
 function EditManagerForm() {
   const queryClient = useQueryClient();
 
@@ -11,6 +17,17 @@ function EditManagerForm() {
     mutationKey: ["edit manager"],
     mutationFn: async ({ values, id }) =>
       await axios.put(`users/manager/update/${id}`, values),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["get_managers"] });
+      document.getElementById("manager_modal").close();
+    },
+    // onError:
+  });
+
+  const { mutate: addMutate } = useMutation({
+    mutationKey: ["add_manager"],
+    mutationFn: async (values) =>
+      await axios.post(`users/manager/addmanager`, values),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get_managers"] });
       document.getElementById("manager_modal").close();
@@ -28,21 +45,23 @@ function EditManagerForm() {
   function handlesubmit(e) {
     try {
       e.preventDefault();
-
-      mutate({ values, id: man._id });
+      man ? mutate({ values, id: man._id }) : addMutate(values);
     } catch (error) {
       console.log(error);
     }
   }
   useEffect(() => {
+    if (!man) return setValues(initialValues);
     setValues({ ...man });
     console.log(man);
   }, [man]);
 
+  console.log(values);
+
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
-        {man?.bySearch ? "View Manager" : "Edit Manager"}
+        {!man ? "Add Managar" : man?.bySearch ? "View Manager" : "Edit Manager"}
       </h2>
 
       <form onSubmit={handlesubmit} className="space-y-6">
@@ -102,7 +121,7 @@ function EditManagerForm() {
                 type="tel"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter phone number"
-                value={"*******"}
+                value={values?.manager_password}
                 onChange={handleChange}
               />
             </div>
@@ -131,7 +150,11 @@ function EditManagerForm() {
             type="submit"
             className="px-6 py-2 bg-amber-600 text-white rounded-xl hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
           >
-            Edit Employee
+            {!man
+              ? "Add Managar"
+              : man?.bySearch
+              ? "Edit Manager"
+              : "Edit Manager"}
           </button>
         </div>
       </form>
