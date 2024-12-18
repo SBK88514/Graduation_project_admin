@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../ui/Header";
 import axios from "axios";
 import ManagersTable from "../tables/managers/ManagerTable";
 import { useQuery } from "@tanstack/react-query";
 import SearchInput from "../tables/managers/SearchInput";
-import { debounce } from "../../../lib/Index";
+
 import Paginaiton from "../../ui/Paginaiton";
+import useSuggestions from "../../hooks/useSuggestions";
+import { ActionContext } from "../../contexts/ActionContext";
+
 
 function AllManagers() {
   const [page, setPage] = useState(1);
@@ -22,41 +25,8 @@ function AllManagers() {
     }),
   });
 
-  const [searchInput, setSearchInput] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-
-  const getSuggestion = async (source) => {
-    try {
-      if (searchInput) {
-        const { data } = await axios.get(
-          `/users/autocomplete?query=${searchInput}`,
-          {
-            cancelToken: source.token,
-          }
-        );
-        setSuggestions(data.result);
-      }
-      else setSuggestions([]);
-    } catch (error) {
-      if (axios.isCancel(error)) {
-        console.log("Request canceled", error.message);
-      } else {
-        console.error("Error fetching suggestions:", error);
-      }
-    }
-  };
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-
-    const processChange = debounce(() => getSuggestion(source));
-    processChange();
-
-    return () => {
-      source.cancel("operation cancelled by the user.");
-    };
-  }, [searchInput]);
-
-  console.log(data);
+  const [suggestions, setSearchInput] = useSuggestions("users");
+  const {handleEditManager} = useContext(ActionContext)
 
   return (
     <div className="w-[90%] mx-auto">
@@ -65,6 +35,9 @@ function AllManagers() {
         <SearchInput
           setSearchInput={setSearchInput}
           suggestions={suggestions}
+          suggestionKey={"manager_name"}
+          onClick={(current) => {
+            handleEditManager({ ...current, bySearch: true })}}
         />
       </div>
       {isLoading && <div>Loading...</div>}
