@@ -21,5 +21,5 @@ const wb = XLSX.utils.book_new();
 const ws = XLSX.utils.json_to_sheet(json)
 // Create New Xl Page With Data
 XLSX.utils.book_append_sheet(wb,ws,exelName);
-XLSX.writeFile(wb,exelName)
+XLSX.writeFile(wb,`${exelName}.xlsx`)
 }
