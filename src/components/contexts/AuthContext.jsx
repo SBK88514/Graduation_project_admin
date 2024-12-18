@@ -16,7 +16,7 @@ function AuthProvider({ children }) {
       if (data.success) {
         showSuccessToast(data.message);
         setIsAuth(true);
-        setUser(data.manager)
+        setUser(data.manager);
         console.log("Signed-in user:", data.manager);
         return true;
       }
@@ -46,7 +46,7 @@ function AuthProvider({ children }) {
 
   async function handleManager(values) {
     try {
-      const { data } = await axios.post("users/manager/signup", values);
+      const { data } = await axios.post("/users/manager/signup", values);
       console.log(data);
       return true;
     } catch (error) {
@@ -57,21 +57,19 @@ function AuthProvider({ children }) {
 
   async function handleEmployee(values) {
     try {
-      const { data } = await axios.post("users/employee/signup", values);
+      const { data } = await axios.post("/users/employee/signup", values);
       console.log(data);
     } catch (error) {
       console.log(error);
     }
   }
-  async function signOut(){
-    try{
-      const {data} = await axios.get("/users/manager/logout")
-      console.log(data)
+  async function signOut() {
+    try {
+      const { data } = await axios.get("/users/manager/logout");
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
-    catch(error){
-      console.log(error)
-    }
-   
   }
 
   const value = {
@@ -80,7 +78,7 @@ function AuthProvider({ children }) {
     handleEmployee,
     handleManager,
     user,
-    signOut
+    signOut,
   };
 
   return (

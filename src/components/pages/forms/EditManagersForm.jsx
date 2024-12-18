@@ -27,7 +27,7 @@ function EditManagerForm() {
   const { mutate: addMutate } = useMutation({
     mutationKey: ["add_manager"],
     mutationFn: async (values) =>
-      await axios.post(`users/manager/addmanager`, values),
+      await axios.post(`users/manager/signup`, values),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get_managers"] });
       document.getElementById("manager_modal").close();
