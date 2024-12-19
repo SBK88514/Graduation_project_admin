@@ -1,10 +1,18 @@
 import React from "react";
 import TableRow from "./TableRow";
-// import { useQuery } from "@tanstack/react-query";
-// import { useQuery } from "@tanstack/react-query";
-// import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 function EmployeesTable({ employees }) {
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationKey: "delete_employee",
+    mutationFn: async (id) => axios.delete(`users/employee/delete/${id}`),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["get_employees"] });
+    },
+  });
   return (
     <div className="p-6">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -31,7 +39,7 @@ function EmployeesTable({ employees }) {
             <tbody className="bg-white divide-y divide-amber-100">
               {/* Row 1 */}
               {employees.map((employee) => (
-                <TableRow {...employee} />
+                <TableRow employee={employee} mutate={mutate} />
               ))}
             </tbody>
           </table>

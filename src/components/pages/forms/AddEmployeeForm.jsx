@@ -1,17 +1,20 @@
-import React, { useContext, useState } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
+import SelectBox from "./SelectBox";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 function AddEmployeeForm() {
-  const initialFormValues = {
-    employeeName: "",
-    employeeEmail: "",
-    employeePassword: "",
-    issue_profession: "", // Add this
-  };
-  const [formValues, setFormValues] = useState(initialFormValues);
-  const { handleEmployee } = useContext(AuthContext);
-  const [values, setValues] = useState(initialFormValues);
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationKey: ["add_employee"],
+    mutationFn: async (employee) =>
+      await axios.post("/users//employee/signup", employee),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["get_employees"] });
+    },
+  });
+
+  const [values, setValues] = useState(null);
   console.log(values);
 
   function handleChange(e) {
@@ -20,18 +23,13 @@ function AddEmployeeForm() {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
-    handleEmployee(values);
+    try {
+      e.preventDefault();
+      mutate(values);
+    } catch (error) {
+      console.log(error);
+    }
   }
-
-  // Add this query
-  const { data: professions = [], isLoading: isProfessionsLoading } = useQuery({
-    queryKey: ["professions"],
-    queryFn: async () => {
-      const { data } = await axios.get("/api/professions");
-      return data;
-    },
-  });
 
   return (
     <div className="h-[calc(100vh-64px)] flex items-center justify-center">
@@ -40,7 +38,7 @@ function AddEmployeeForm() {
           Add New Employee
         </h2>
 
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-6">
           {/* Personal Information Section */}
           <div className="bg-white p-6 rounded-xl shadow-sm space-y-4">
             <h3 className="text-lg font-semibold text-amber-800 mb-4">
@@ -64,23 +62,6 @@ function AddEmployeeForm() {
                   placeholder="Enter name"
                 />
               </div>
-
-              {/* <div>
-              <label
-                className="block text-sm font-medium text-amber-700 mb-1"
-                htmlFor=""
-              >
-                Last Name
-              </label>
-              <input
-                name=""
-                id=""
-                type="text"
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                placeholder="Enter last name"
-              />
-            </div> */}
-
               <div>
                 <label
                   className="block text-sm font-medium text-amber-700 mb-1"
@@ -122,84 +103,11 @@ function AddEmployeeForm() {
                 >
                   Profession
                 </label>
-                <select
-                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                  id="profession"
-                  name="issue_profession"
-                  value={formValues.issue_profession}
-                  onChange={handleChange}
-                  required
-                  disabled={isProfessionsLoading}
-                >
-                  <option value="">
-                    {isProfessionsLoading
-                      ? "Loading professions..."
-                      : "Select Profession"}
-                  </option>
-                  {professions.map((prof) => (
-                    <option key={prof.id} value={prof.id}>
-                      {prof.name}
-                    </option>
-                  ))}
-                </select>
+                <SelectBox handleChange={handleChange} />
+                {/*  */}
               </div>
             </div>
           </div>
-
-          {/* Employment Details Section */}
-
-          {/* <div className="bg-white p-6 rounded-xl shadow-sm space-y-4">
-          <h3 className="text-lg font-semibold text-amber-800 mb-4">
-            Employment Details
-          </h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-amber-700 mb-1">
-                Department
-              </label>
-              <select className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
-                <option value="">Select department</option>
-                <option value="sales">General</option>
-                <option value="it">Electricity</option>
-                <option value="hr">Plumbing</option>
-                <option value="marketing">Painter</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-amber-700 mb-1">
-                Position
-              </label>
-              <input
-                type="text"
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                placeholder="Enter position"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-amber-700 mb-1">
-                Start Date
-              </label>
-              <input
-                type="date"
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-amber-700 mb-1">
-                Salary
-              </label>
-              <input
-                type="number"
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                placeholder="Enter salary"
-              />
-            </div>
-          </div>
-        </div> */}
 
           {/* Submit Button */}
           <div className="flex justify-end space-x-4">
