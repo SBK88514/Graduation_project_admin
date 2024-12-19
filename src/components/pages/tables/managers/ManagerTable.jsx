@@ -1,23 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import TableRow from "../managers/TableRow";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { showSuccessToast } from "../../../../lib/Toast";
-import SearchInput from "./SearchInput";
-import Header from "../../../ui/Header";
 
 function ManagersTable({ managers }) {
-  //   const [searchInput, setSearchInput] = useState("");
-  //   const [suggestions, setSuggestions] = useState([]);
-
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
     mutationKey: "delete_manager",
     mutationFn: async (id) => axios.delete(`users/manager/delete/${id}`),
     onSuccess: (data) => {
-      // console.log(data)
-      showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["get_managers"] });
     },
   });
