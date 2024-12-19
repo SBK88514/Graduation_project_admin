@@ -47,20 +47,17 @@ function EditManagerForm() {
       e.preventDefault();
       man ? mutate({ values, id: man._id }) : addMutate(values);
 
-      console.log({ values, id: values?._id });
-
-      mutate({ values, id: values?._id });
     } catch (error) {
       console.log(error);
     }
   }
   useEffect(() => {
     if (!man) return setValues(initialValues);
+
     setValues({ ...man });
-    console.log(man);
+
   }, [man]);
 
-  console.log(values);
 
   function handleCancel() {
     document.getElementById("manager_modal").close();

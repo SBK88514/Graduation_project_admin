@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ActionContext } from "../../contexts/ActionContext";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import { AuthContext } from "../../contexts/AuthContext";
+
 
 function EditEmployeeForm() {
   // Body OF Component run => useState implemented =>
@@ -20,10 +20,10 @@ function EditEmployeeForm() {
       queryClient.invalidateQueries({ queryKey: ["get_employees"] });
       document.getElementById("employee_modal").close();
     },
-    // onError:
+   
   });
   const { emp } = useContext(ActionContext);
-  // const { emp, toggleRequest, setToggleRequest } = useContext(ActionContext);
+ 
   useContext(ActionContext);
   const [values, setValues] = useState(null);
 
@@ -36,14 +36,6 @@ function EditEmployeeForm() {
     e.preventDefault();
     try {
       mutate({ values, id: values?._id });
-      // const { data } = await axios.put(
-      //   `/users/employee/update/${emp._id}`,
-      //   values
-      // );
-      // if (data.success) {
-      //   document.getElementById("employee_modal").close();
-      //   setToggleRequest(!toggleRequest);
-      // }
     } catch (error) {
       console.log(error);
     }
