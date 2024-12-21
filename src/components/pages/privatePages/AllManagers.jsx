@@ -4,8 +4,15 @@ import axios from "axios";
 import ManagersTable from "../tables/managers/ManagerTable";
 import { useQuery } from "@tanstack/react-query";
 import SearchInput from "../tables/managers/SearchInput";
+
+
+
 import { debounce, exportToXL } from "../../../lib";
+
 import Paginaiton from "../../ui/Paginaiton";
+import useSuggestions from "../../hooks/useSuggestions";
+import { ActionContext } from "../../contexts/ActionContext";
+
 
 import Button from "../../ui/Button";
 import { ActionContext } from "../../contexts/ActionContext";
@@ -31,40 +38,44 @@ function AllManagers() {
     }),
   });
 
-  const [searchInput, setSearchInput] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
 
-  const getSuggestion = async (source) => {
-    try {
-      if (searchInput) {
-        const { data } = await axios.get(
-          `/users/autocomplete?query=${searchInput}`,
-          {
-            cancelToken: source.token,
-          }
-        );
-        setSuggestions(data.result);
-      } else setSuggestions([]);
-    } catch (error) {
-      if (axios.isCancel(error)) {
-        console.log("Request canceled", error.message);
-      } else {
-        console.error("Error fetching suggestions:", error);
-      }
-    }
-  };
-  useEffect(() => {
-    const source = axios.CancelToken.source();
+  const [suggestions, setSearchInput] = useSuggestions("users");
+  const {handleEditManager} = useContext(ActionContext)
 
-    const processChange = debounce(() => getSuggestion(source));
-    processChange();
 
-    return () => {
-      source.cancel("operation cancelled by the user.");
-    };
-  }, [searchInput]);
 
-  console.log(data);
+//   const getSuggestion = async (source) => {
+//     try {
+//       if (searchInput) {
+//         const { data } = await axios.get(
+//           `/users/autocomplete?query=${searchInput}`,
+//           {
+//             cancelToken: source.token,
+//           }
+//         );
+//         setSuggestions(data.result);
+//       } else setSuggestions([]);
+//     } catch (error) {
+//       if (axios.isCancel(error)) {
+//         console.log("Request canceled", error.message);
+//       } else {
+//         console.error("Error fetching suggestions:", error);
+//       }
+//     }
+//   };
+//   useEffect(() => {
+//     const source = axios.CancelToken.source();
+
+//     const processChange = debounce(() => getSuggestion(source));
+//     processChange();
+
+//     return () => {
+//       source.cancel("operation cancelled by the user.");
+//     };
+//   }, [searchInput]);
+
+//   console.log(data);
+
 
   async function downloadXl() {
     const result = await getAllDetails("/users/manager/getallmanagers");
@@ -85,6 +96,9 @@ function AllManagers() {
           <SearchInput
             setSearchInput={setSearchInput}
             suggestions={suggestions}
+			suggestionKey={"manager_name"}
+          	onClick={(current) => {
+            handleEditManager({ ...current, bySearch: true })}}
           />
           <h2 className="text-2xl font-semibold text-amber-950 ">
             Manager List
@@ -107,6 +121,7 @@ function AllManagers() {
         )}
         {/* {Pagination} */}
         <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+
       </div>
     </div>
   );
