@@ -80,16 +80,7 @@ function App() {
 
           {/* Private Routes */}
           {isAuth && user.permission === "Admin" && (
-            <Route
-              path="addmanager"
-              lazy={async () => ({
-                Component: (
-                  await import("./components/pages/forms/AddManagerForm")
-                ).default,
-              })}
-            />
-          )}
-
+         
           <Route
             path="allemployees"
             lazy={async () => ({
@@ -98,6 +89,7 @@ function App() {
               ).default,
             })}
           />
+          )}
           <Route
             path="Professions"
             lazy={async () => ({

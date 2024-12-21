@@ -10,7 +10,7 @@ const initialValues = {
   manager_password: "",
 };
 
-function EditManagerForm() {
+function ManagerForm() {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
@@ -46,7 +46,6 @@ function EditManagerForm() {
     try {
       e.preventDefault();
       man ? mutate({ values, id: man._id }) : addMutate(values);
-
     } catch (error) {
       console.log(error);
     }
@@ -55,9 +54,7 @@ function EditManagerForm() {
     if (!man) return setValues(initialValues);
 
     setValues({ ...man });
-
   }, [man]);
-
 
   function handleCancel() {
     document.getElementById("manager_modal").close();
@@ -126,7 +123,8 @@ function EditManagerForm() {
                 type="tel"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter phone number"
-                value={values?.manager_password}
+                // value={values?.manager_password}
+                value={"******"}
                 onChange={handleChange}
               />
             </div>
@@ -169,4 +167,4 @@ function EditManagerForm() {
   );
 }
 
-export default EditManagerForm;
+export default ManagerForm;
