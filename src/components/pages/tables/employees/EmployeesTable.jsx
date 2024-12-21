@@ -23,6 +23,9 @@ function EmployeesTable({ employees }) {
                 <th className="px-6 py-3 text-left text-sm font-medium text-amber-800 uppercase tracking-wider">
                   Password
                 </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-amber-800 uppercase tracking-wider">
+                  Profession
+                </th>
                 <th className="px-6 py-3 text-right text-sm font-medium text-amber-800 uppercase tracking-wider">
                   Actions
                 </th>

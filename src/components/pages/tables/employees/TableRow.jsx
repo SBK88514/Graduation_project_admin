@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { ActionContext } from "../../../contexts/ActionContext";
 
 function TableRow(employee) {
-  const { _id, employeeName, employeeEmail } = employee;
+  const { _id, employeeName, employeeEmail, employeeId } = employee;
   console.log(employee);
 
   const { deleteEmployee, handleEdit } = useContext(ActionContext);
@@ -16,6 +16,9 @@ function TableRow(employee) {
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-amber-800">
         *********
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-amber-800">
+        {employeeId.profession_name}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
         <button

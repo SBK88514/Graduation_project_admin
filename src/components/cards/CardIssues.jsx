@@ -2,29 +2,26 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import Paginaiton from "../ui/Paginaiton.jsx";
-import ExportButton from "../ui/ExportButton.jsx"
-import {ActionContext} from "../contexts/ActionContext.jsx"
-import {exportToXL} from "../../lib";
-
+import ExportButton from "../ui/ExportButton.jsx";
+import { ActionContext } from "../contexts/ActionContext.jsx";
+import { exportToXL } from "../../lib";
 
 function CardIssues() {
-  const { getAllDetails} = useContext(ActionContext)
+  const { getAllDetails } = useContext(ActionContext);
 
-  const [page, setPage] = useState(1)
-  const [limit] = useState(3)
+  const [page, setPage] = useState(1);
+  const [limit] = useState(3);
 
   const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["get_issues", page],
-    queryFn: async () =>(await axios.get(url)).data,
-    select: (data) =>({
+    queryFn: async () => (await axios.get(url)).data,
+    select: (data) => ({
       Allissues: data.data,
       count: data.count,
     }),
-    
-  });  
-
+  });
 
   const [currentIndexes, setCurrentIndexes] = useState({});
 
@@ -45,10 +42,10 @@ function CardIssues() {
   async function downloadXl() {
     const result = await getAllDetails("/issues/getAllIssues");
     console.log(result);
-    
+
     if (!result) return;
     console.log(3);
-    
+
     exportToXL(result, "IssuesSheet");
   }
 
@@ -252,7 +249,7 @@ function CardIssues() {
 
         {/* You can duplicate the card here for more issues */}
       </div>
-        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage}/>
+      <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
     </div>
   );
 }

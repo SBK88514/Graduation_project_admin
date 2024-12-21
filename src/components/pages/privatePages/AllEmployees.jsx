@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import EmployeesTable from "../tables/employees/EmployeesTable";
 import Header from "../../ui/Header";
 import NotEmployees from "./NotEmployees";
@@ -8,6 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import Button from "../../ui/Button";
 import SearchInput from "../tables/managers/SearchInput";
 
+import { ActionContext } from "../../contexts/ActionContext";
+
 function AllEmployees() {
   const [page, setPage] = useState(1);
   const [limit] = useState(2);
@@ -15,6 +17,8 @@ function AllEmployees() {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const { handleAddEmployee } = useContext(ActionContext);
 
   const url = `/users/employee/getallempolyees?page=${page}&limit=${limit}`;
   const [searchInput, setSearchInput] = useState("");
@@ -36,9 +40,11 @@ function AllEmployees() {
           setSearchInput={setSearchInput}
           suggestions={suggestions}
         />
-        <h2 className="text-2xl font-semibold text-amber-950 ">Manager List</h2>
+        <h2 className="text-2xl font-semibold text-amber-950 ">
+          Employee List
+        </h2>
 
-        <Button name="Add New Employee" link="/addemployee" />
+        <Button name="Add New Employee" onClick={() => handleAddEmployee()} />
       </div>
 
       {isLoading && <div>Loading...</div>}

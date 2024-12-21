@@ -66,6 +66,7 @@ function AuthProvider({ children }) {
   async function signOut() {
     try {
       const { data } = await axios.get("/users/manager/logout");
+      window.location.reload();
       console.log(data);
     } catch (error) {
       console.log(error);

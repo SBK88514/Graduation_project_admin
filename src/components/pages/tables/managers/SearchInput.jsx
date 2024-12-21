@@ -11,7 +11,7 @@ function SearchInput({ setSearchInput, suggestions }) {
           onChange={(e) => setSearchInput(e.target.value)}
           type="text"
           className="grow"
-          placeholder="Search"
+          placeholder="Search Email"
           id="searchInput"
           name="searchInput"
         />
@@ -23,6 +23,7 @@ function SearchInput({ setSearchInput, suggestions }) {
             <li
               onClick={() => {
                 handleEditManager({ ...suggestion, bySearch: true });
+                setSearchInput(null);
               }}
               key={index}
               className={`px-4 py-2 cursor-pointer text-white bg-[#1d232a] hover:bg-gray-500`}
