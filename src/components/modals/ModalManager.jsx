@@ -1,5 +1,5 @@
 import React from "react";
-import EditManagersForm from "../pages/forms/EditManagersForm";
+import ManagerForm from "../pages/forms/ManagersForm";
 
 function ModalManager() {
   return (
@@ -15,7 +15,7 @@ function ModalManager() {
           </button>
         </div>
 
-        <EditManagersForm />
+        <ManagerForm />
       </div>
     </dialog>
   );

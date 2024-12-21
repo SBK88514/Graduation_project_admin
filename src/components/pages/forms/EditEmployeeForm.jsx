@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { ActionContext } from "../../contexts/ActionContext";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import { AuthContext } from "../../contexts/AuthContext";
 
 function EditEmployeeForm() {
   // Body OF Component run => useState implemented =>
@@ -20,11 +19,8 @@ function EditEmployeeForm() {
       queryClient.invalidateQueries({ queryKey: ["get_employees"] });
       document.getElementById("employee_modal").close();
     },
-    // onError:
   });
   const { emp } = useContext(ActionContext);
-  // const { emp, toggleRequest, setToggleRequest } = useContext(ActionContext);
-  useContext(ActionContext);
   const [values, setValues] = useState(null);
 
   function handleChange(e) {
@@ -36,14 +32,6 @@ function EditEmployeeForm() {
     e.preventDefault();
     try {
       mutate({ values, id: values?._id });
-      // const { data } = await axios.put(
-      //   `/users/employee/update/${emp._id}`,
-      //   values
-      // );
-      // if (data.success) {
-      //   document.getElementById("employee_modal").close();
-      //   setToggleRequest(!toggleRequest);
-      // }
     } catch (error) {
       console.log(error);
     }
@@ -101,7 +89,7 @@ function EditEmployeeForm() {
                 type="email"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter email address"
-                value={emp ? values.employeeEmail : ""}
+                value={values?.employeeEmail}
                 onChange={handleChange}
               />
             </div>
@@ -119,7 +107,7 @@ function EditEmployeeForm() {
                 type="tel"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter phone number"
-                // value={emp ? values.employeePassword : ""}
+                // value={values?.employeePassword}
                 value={"*****"}
                 onChange={handleChange}
               />
