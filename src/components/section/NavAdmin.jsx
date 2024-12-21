@@ -8,6 +8,23 @@ function NavAdmin() {
   const { man, handleEditManager } = useContext(ActionContext);
   const { user } = useContext(AuthContext);
 
+  //   const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      const dropdown = document.getElementById("userDropdown");
+      if (
+        !dropdown.contains(event.target) &&
+        !dropdown.classList.contains("hidden")
+      ) {
+        dropdown.classList.add("hidden");
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   if (!user) {
     console.error("User object is undefined");
     return <div>Access Denied</div>;
@@ -50,7 +67,7 @@ function NavAdmin() {
             >
               All Issues
             </NavLink>
-            {user.permission === "Admin" && (
+            {/* {user.permission === "Admin" && (
               <NavLink
                 to="addmanager"
                 className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
@@ -64,7 +81,7 @@ function NavAdmin() {
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
             >
               Add Employee
-            </NavLink>
+            </NavLink> */}
             <NavLink
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               to={"allemployees"}
@@ -125,7 +142,7 @@ function NavAdmin() {
               {/* Dropdown Menu */}
               <div
                 id="userDropdown"
-                className="hidden absolute transform -translate-x-1/2 left-1/2 mt-2 w-40 bg-white rounded-xl shadow-lg py-1 ring-1 ring-black ring-opacity-5"
+                className="z-50 hidden absolute transform -translate-x-1/2 left-1/2 mt-2 w-40 bg-white rounded-xl shadow-lg py-1 ring-1 ring-black ring-opacity-5"
               >
                 <a
                   href="#"

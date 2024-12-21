@@ -35,14 +35,37 @@ function ActionProvider({ children }) {
       document.getElementById("manager_modal").close();
     },
   });
-  function handleEdit(employee) {
+
+  function handleEditEmployee(employee) {
     document.getElementById("employee_modal").showModal();
     setEmp(employee);
     console.log(emp);
   }
+
+  function handleAddEmployee() {
+    document.getElementById("employee_modal").showModal();
+    setEmp(null);
+  }
+
   function handleEditManager(manager) {
     document.getElementById("manager_modal").showModal();
     setMan(manager);
+  }
+
+  function handleAddManager() {
+    document.getElementById("manager_modal").showModal();
+    setMan(null);
+  }
+
+  async function getAllDetails(url) {
+    try {
+      const { data } = (await axios.get(url)).data;
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 
   function handleAddProfession() {
@@ -55,11 +78,14 @@ function ActionProvider({ children }) {
     setToggleRequest,
     deleteEmployee,
     emp,
-    handleEdit,
+    handleEditEmployee,
     handleEditManager,
     man,
     mutateDelete,
+    handleAddManager,
+    getAllDetails,
     handleAddProfession,
+    handleAddEmployee,
   };
 
   return (

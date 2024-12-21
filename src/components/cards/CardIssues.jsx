@@ -5,8 +5,13 @@ import Paginaiton from "../ui/Paginaiton";
 import useSuggestions from "../hooks/useSuggestions";
 import SearchInput from "../pages/tables/managers/SearchInput";
 import CardSelected from "./CardSelected";
+import ExportButton from "../ui/ExportButton.jsx";
+import { ActionContext } from "../contexts/ActionContext.jsx";
+import { exportToXL } from "../../lib";
+
 
 function CardIssues() {
+  const { getAllDetails } = useContext(ActionContext);
   const [page, setPage] = useState(1);
   const [limit] = useState(3);
 
@@ -40,8 +45,19 @@ function CardIssues() {
   const [suggestions, setSearchInput] = useSuggestions("issues");
   const [selected, setSelected] = useState(null);
 
+  async function downloadXl() {
+    const result = await getAllDetails("/issues/getAllIssues");
+    console.log(result);
+
+    if (!result) return;
+    console.log(3);
+
+    exportToXL(result, "IssuesSheet");
+  }
+
   return (
     <div className="container mx-auto px-4 py-8  ">
+      <ExportButton download={downloadXl} />
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* searchinput issues */}
         <div dir="rtl">
@@ -255,6 +271,9 @@ function CardIssues() {
           />
         )}
       </div>
+
+      <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+
     </div>
   );
 }

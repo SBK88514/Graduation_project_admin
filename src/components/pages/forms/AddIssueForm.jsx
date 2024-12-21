@@ -83,16 +83,17 @@ function AddIssueForm() {
   }
 
   return (
-    <div className="h-[calc(100vh-64px)] flex items-center justify-center w-auto">
-      <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
-        <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
+    <div className=" w-full p-4 flex items-center justify-center ">
+      <div className="bg-orange-50 p-4 md:p-6 rounded-2xl shadow-lg w-full max-w-4xl h-[85vh] flex flex-col">
+        {/* כותרת */}
+        <h2 className="text-xl md:text-2xl font-bold text-amber-900 mb-2 md:mb-2 text-center">
           Report New Issue
         </h2>
 
-        <form onSubmit={handleSubmit}>
-          <div className="space-y-6 bg-white p-6 rounded-xl shadow-sm">
-            {/* Location Details */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-aut">
+          <div className="space-y-4 bg-white p-4 md:p-6 rounded-xl shadow-sm">
+            {/* Location and Basic Details Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
               <div>
                 <label
                   className="block text-sm font-medium text-amber-700 mb-1"
@@ -101,8 +102,7 @@ function AddIssueForm() {
                   Building
                 </label>
                 <select
-                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3
-                 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                   id="building"
                   name="issue_building"
                   value={formValues.issue_building}
@@ -124,8 +124,7 @@ function AddIssueForm() {
                   Floor
                 </label>
                 <select
-                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3
-                 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                   id="floor"
                   name="issue_floor"
                   value={formValues.issue_floor}
@@ -156,12 +155,10 @@ function AddIssueForm() {
                   onChange={handleChange}
                   required
                   placeholder="Enter apartment number"
-                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none
-                   focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
               </div>
 
-              {/* Add Profession select here */}
               <div>
                 <label
                   className="block text-sm font-medium text-amber-700 mb-1"
@@ -170,7 +167,7 @@ function AddIssueForm() {
                   Profession
                 </label>
                 <select
-                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                   id="profession"
                   name="issue_profession"
                   value={formValues.issue_profession}
@@ -190,9 +187,31 @@ function AddIssueForm() {
                   ))}
                 </select>
               </div>
+              {/* Urgency Selection */}
+              <div>
+                <label
+                  className="block text-sm font-medium text-amber-700 mb-1"
+                  htmlFor="urgency"
+                >
+                  Urgency Level
+                </label>
+                <select
+                  className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  id="urgency"
+                  name="issue_urgency"
+                  value={formValues.issue_urgency}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Urgency</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
             </div>
 
-            {/* Issue Description */}
+            {/* Description */}
             <div>
               <label
                 className="block text-sm font-medium text-amber-700 mb-1"
@@ -206,64 +225,68 @@ function AddIssueForm() {
                 value={formValues.issue_description}
                 onChange={handleChange}
                 required
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Please describe the issue in detail..."
-                rows="4"
+                rows="3"
               ></textarea>
             </div>
 
-            {/* Image Upload */}
+            {/* Image Upload with Fixed Height */}
             <div>
-              <label className="block text-sm font-medium text-amber-700 mb-1">
+              <label className=" block text-sm font-medium text-amber-700 mb-1">
                 Add Images
               </label>
-              <div className="mt-1 flex flex-col px-6 pt-5 pb-6 border-2 border-amber-200 border-dashed rounded-xl bg-amber-50">
-                <div className="space-y-2 text-center">
-                  <div className="flex text-sm text-amber-600 justify-center">
-                    <label
-                      htmlFor="issue_images"
-                      className="relative cursor-pointer rounded-md font-medium text-amber-600 hover:text-amber-800"
-                    >
-                      <span>Upload a file</span>
-                      <input
-                        id="issue_images"
-                        name="issue_images"
-                        type="file"
-                        className="sr-only"
-                        accept="image/*"
-                        multiple
-                        onChange={handleFileUpload}
-                      />
-                    </label>
-                    <p className="pl-1">or drag and drop</p>
-                  </div>
-                  <p className="text-xs text-amber-500">
-                    PNG, JPG, GIF up to 10MB
-                  </p>
-                </div>
-
-                {/* Display uploaded files */}
-                {uploadedFiles.length > 0 && (
-                  <div className="mt-4 space-y-2">
-                    {uploadedFiles.map(({ id, file }) => (
-                      <div
-                        key={id}
-                        className="flex items-center justify-between bg-white p-2 rounded-lg"
+              <div className="mt-1  h-32 border-2 border-amber-200 border-dashed rounded-lg bg-amber-50">
+                <div className="px-4 py-4">
+                  <div className="text-center">
+                    <div className=" flex text-sm text-amber-600 justify-center">
+                      <label
+                        htmlFor="issue_images"
+                        className="  relative cursor-pointer rounded-md font-medium text-amber-600 hover:text-amber-800"
                       >
-                        <span className="text-sm text-amber-700 truncate">
-                          {file.name}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => removeFile(id)}
-                          className="text-amber-500 hover:text-amber-700"
-                        >
-                          <X size={16} />
-                        </button>
-                      </div>
-                    ))}
+                        <span>Upload a file</span>
+                        <input
+                          id="issue_images"
+                          name="issue_images"
+                          type="file"
+                          className="sr-only"
+                          accept="image/*"
+                          multiple
+                          onChange={handleFileUpload}
+                        />
+                      </label>
+                      <p className="pl-1">or drag and drop</p>
+                    </div>
+                    <p className="text-xs text-amber-500 mt-1">
+                      PNG, JPG, GIF up to 10MB
+                    </p>
                   </div>
-                )}
+
+                  {/* Scrollable uploaded files container */}
+                  {uploadedFiles.length > 0 && (
+                    <div className=" overflow-auto h-10 mt-1 max-h-32 overflow-y-auto">
+                      <div className="space-y-2">
+                        {uploadedFiles.map(({ id, file }) => (
+                          <div
+                            key={id}
+                            className="flex items-center justify-between bg-white p-1 rounded-sm"
+                          >
+                            <span className="text-sm text-amber-700 truncate max-w-[80%]">
+                              {file.name}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => removeFile(id)}
+                              className="text-amber-500 hover:text-amber-700"
+                            >
+                              <X size={16} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 

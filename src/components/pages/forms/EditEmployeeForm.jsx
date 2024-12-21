@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ActionContext } from "../../contexts/ActionContext";
 import axios from "axios";
-// import { AuthContext } from "../../contexts/AuthContext";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 function EditEmployeeForm() {
   // Body OF Component run => useState implemented =>
@@ -9,7 +9,18 @@ function EditEmployeeForm() {
   // setState Values => rerender body of Component =>
   // setState Values when onChange Event triggered => rerender body of Component
 
-  const { emp, toggleRequest, setToggleRequest } = useContext(ActionContext);
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationKey: ["edit employee"],
+    mutationFn: async ({ values, id }) =>
+      await axios.put(`users/employee/update/${id}`, values),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["get_employees"] });
+      document.getElementById("employee_modal").close();
+    },
+  });
+  const { emp } = useContext(ActionContext);
   const [values, setValues] = useState(null);
 
   function handleChange(e) {
@@ -20,14 +31,7 @@ function EditEmployeeForm() {
   async function handlesubmit(e) {
     e.preventDefault();
     try {
-      const { data } = await axios.put(
-        `/users/employee/update/${emp._id}`,
-        values
-      );
-      if (data.success) {
-        document.getElementById("employee_modal").close();
-        setToggleRequest(!toggleRequest);
-      }
+      mutate({ values, id: values?._id });
     } catch (error) {
       console.log(error);
     }
@@ -37,10 +41,8 @@ function EditEmployeeForm() {
     setValues({ ...emp });
   }, [emp]);
 
-
-  function handleCancel() {    
+  function handleCancel() {
     document.getElementById("employee_modal").close();
-
   }
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
@@ -87,7 +89,7 @@ function EditEmployeeForm() {
                 type="email"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter email address"
-                value={emp ? values.employeeEmail : ""}
+                value={values?.employeeEmail}
                 onChange={handleChange}
               />
             </div>
@@ -105,7 +107,7 @@ function EditEmployeeForm() {
                 type="tel"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter phone number"
-                // value={emp ? values.employeePassword : ""}
+                // value={values?.employeePassword}
                 value={"*****"}
                 onChange={handleChange}
               />
