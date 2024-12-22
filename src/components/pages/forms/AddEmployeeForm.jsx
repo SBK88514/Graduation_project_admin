@@ -105,7 +105,7 @@ function AddEmployeeForm() {
                 >
                   Profession
                 </label>
-                <SelectBox handleChange={handleChange} />
+                <SelectBox handleChange={handleChange} id={"employeeId"}/>
               </div>
             </div>
           </div>

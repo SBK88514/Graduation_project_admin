@@ -7,7 +7,7 @@ import SearchInput from "../pages/tables/managers/SearchInput";
 import CardSelected from "./CardSelected";
 import ExportButton from "../ui/ExportButton.jsx";
 import { ActionContext } from "../contexts/ActionContext.jsx";
-import { exportToXL } from "../../lib";
+import { exportToXL } from "../../lib/index";
 
 function CardIssues() {
   const { getAllDetails } = useContext(ActionContext);
@@ -205,6 +205,10 @@ function CardIssues() {
                 <div className="flex items-center justify-between mb-3">
                   <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium border border-yellow-200">
                     In Progress
+                  </span>
+                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800
+                   rounded-full text-xs font-medium border border-yellow-200">
+                    {element.issue_profession?.profession_name}
                   </span>
                   <div className="flex items-center space-x-1 text-amber-600">
                     <svg
