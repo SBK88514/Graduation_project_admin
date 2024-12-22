@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import WaveLoader from "../../ui/Loader";
 
 function WelcomeAdmin() {
   const { user } = useContext(AuthContext);
@@ -22,7 +23,11 @@ function WelcomeAdmin() {
     <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 p-8 rounded-2xl shadow-lg max-w-3xl mx-auto w-5/6">
       {/* DecorativeTop Pattern */}
 
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <div className="flex justify-center items-center h-[50vh]">
+          <WaveLoader />
+        </div>
+      )}
       {isError && <div>{error}</div>}
 
       {/* Decorative Top Pattern */}

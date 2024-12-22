@@ -4,6 +4,7 @@ import axios from "axios";
 import ManagersTable from "../tables/managers/ManagerTable";
 import { useQuery } from "@tanstack/react-query";
 import SearchInput from "../tables/managers/SearchInput";
+import WaveLoader from "../../ui/Loader";
 
 import { debounce, exportToXL } from "../../../lib";
 
@@ -104,7 +105,11 @@ function AllManagers() {
           />
         </div>
 
-        {isLoading && <div>Loading...</div>}
+        {isLoading && (
+          <div className="flex justify-center items-center h-[50vh]">
+            <WaveLoader />
+          </div>
+        )}
         {isError && <div>{error}</div>}
         {data && !data.AllManagers.length && (
           <p>No Categories Yet, please add Categories</p>
@@ -113,7 +118,11 @@ function AllManagers() {
           <ManagersTable managers={data.AllManagers} />
         )}
         {data?.count > limit && (
-          <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+          <Paginaiton
+            listLength={data?.count}
+            limit={limit}
+            setPage={setPage}
+          />
         )}
       </div>
     </div>

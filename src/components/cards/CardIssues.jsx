@@ -8,6 +8,7 @@ import CardSelected from "./CardSelected";
 import ExportButton from "../ui/ExportButton.jsx";
 import { ActionContext } from "../contexts/ActionContext.jsx";
 import { exportToXL } from "../../lib";
+import WaveLoader from "../ui/Loader.jsx";
 
 function CardIssues() {
   const { getAllDetails } = useContext(ActionContext);
@@ -57,18 +58,22 @@ function CardIssues() {
   return (
     <div className="container mx-auto px-4 py-8  ">
       <ExportButton download={downloadXl} />
-        {/* searchinput issues */}
-        <div dir="rt">
-          <SearchInput
-            setSearchInput={setSearchInput}
-            suggestions={suggestions}
-            suggestionKey={"issue_apartment"}
-            onClick={(current) => setSelected(current)}
-          />
-        </div>
+      {/* searchinput issues */}
+      <div dir="rt">
+        <SearchInput
+          setSearchInput={setSearchInput}
+          suggestions={suggestions}
+          suggestionKey={"issue_apartment"}
+          onClick={(current) => setSelected(current)}
+        />
+      </div>
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* Issue Card */}
-        {isLoading && <div>Loading...</div>}
+        {isLoading && (
+          <div className="flex justify-center items-center h-[50vh]">
+            <WaveLoader />
+          </div>
+        )}
         {isError && <div>{error}</div>}
         {!selected &&
           data?.Allissues?.map((element) => (
@@ -271,8 +276,9 @@ function CardIssues() {
         )}
       </div>
 
-      {data?.count > limit &&
-      (<Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />)}
+      {data?.count > limit && (
+        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+      )}
     </div>
   );
 }

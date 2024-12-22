@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import Button from "../../ui/Button";
 import SearchInput from "../tables/managers/SearchInput";
 import { ActionContext } from "../../contexts/ActionContext";
+import WaveLoader from "../../ui/Loader";
 
 function AllEmployees() {
   const [page, setPage] = useState(1);
@@ -46,7 +47,11 @@ function AllEmployees() {
         <Button name="Add New Employee" onClick={() => handleAddEmployee()} />
       </div>
 
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <div className="flex justify-center items-center h-[50vh]">
+          <WaveLoader />
+        </div>
+      )}
       {isError && <div>{error}</div>}
       {data && !data.allEmployees?.length ? (
         <NotEmployees />

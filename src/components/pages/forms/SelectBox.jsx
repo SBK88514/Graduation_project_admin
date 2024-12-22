@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import axios from "axios";
+import WaveLoader from "../../ui/Loader";
 
 function SelectBox({ handleChange }) {
   const { data, isLoading, isError, error } = useQuery({
@@ -21,7 +22,11 @@ function SelectBox({ handleChange }) {
         onChange={handleChange}
       >
         <option value="">Select Profession</option>
-        {isLoading && <div>Loading...</div>}
+        {isLoading && (
+          <div className="flex justify-center items-center h-[50vh]">
+            <WaveLoader />
+          </div>
+        )}
         {isError && <div>{error}</div>}
         {data?.map((profession) => (
           <option key={profession._id} value={profession._id}>
