@@ -5,17 +5,14 @@ import ManagersTable from "../tables/managers/ManagerTable";
 import { useQuery } from "@tanstack/react-query";
 import SearchInput from "../tables/managers/SearchInput";
 
-
-
 import { debounce, exportToXL } from "../../../lib";
 
 import Paginaiton from "../../ui/Paginaiton";
 import useSuggestions from "../../hooks/useSuggestions";
 import { ActionContext } from "../../contexts/ActionContext";
 
-
 import Button from "../../ui/Button";
-import { ActionContext } from "../../contexts/ActionContext";
+// import { ActionContext } from "../../contexts/ActionContext";
 
 import ExportButton from "../../ui/ExportButton.jsx";
 // import {ActionContext} from "../../contexts/ActionContext.jsx"
@@ -25,7 +22,7 @@ function AllManagers() {
   const { getAllDetails } = useContext(ActionContext);
 
   const [page, setPage] = useState(1);
-  const [limit] = useState(2);
+  const [limit] = useState(6);
 
   const url = `/users/manager/getallmanagers?page=${page}&limit=${limit}`;
 
@@ -38,51 +35,46 @@ function AllManagers() {
     }),
   });
 
-
   const [suggestions, setSearchInput] = useSuggestions("users");
-  const {handleEditManager} = useContext(ActionContext)
+  const { handleEditManager } = useContext(ActionContext);
 
+  //   const getSuggestion = async (source) => {
+  //     try {
+  //       if (searchInput) {
+  //         const { data } = await axios.get(
+  //           `/users/autocomplete?query=${searchInput}`,
+  //           {
+  //             cancelToken: source.token,
+  //           }
+  //         );
+  //         setSuggestions(data.result);
+  //       } else setSuggestions([]);
+  //     } catch (error) {
+  //       if (axios.isCancel(error)) {
+  //         console.log("Request canceled", error.message);
+  //       } else {
+  //         console.error("Error fetching suggestions:", error);
+  //       }
+  //     }
+  //   };
+  //   useEffect(() => {
+  //     const source = axios.CancelToken.source();
 
+  //     const processChange = debounce(() => getSuggestion(source));
+  //     processChange();
 
-//   const getSuggestion = async (source) => {
-//     try {
-//       if (searchInput) {
-//         const { data } = await axios.get(
-//           `/users/autocomplete?query=${searchInput}`,
-//           {
-//             cancelToken: source.token,
-//           }
-//         );
-//         setSuggestions(data.result);
-//       } else setSuggestions([]);
-//     } catch (error) {
-//       if (axios.isCancel(error)) {
-//         console.log("Request canceled", error.message);
-//       } else {
-//         console.error("Error fetching suggestions:", error);
-//       }
-//     }
-//   };
-//   useEffect(() => {
-//     const source = axios.CancelToken.source();
+  //     return () => {
+  //       source.cancel("operation cancelled by the user.");
+  //     };
+  //   }, [searchInput]);
 
-//     const processChange = debounce(() => getSuggestion(source));
-//     processChange();
-
-//     return () => {
-//       source.cancel("operation cancelled by the user.");
-//     };
-//   }, [searchInput]);
-
-//   console.log(data);
-
+  //   console.log(data);
 
   async function downloadXl() {
     const result = await getAllDetails("/users/manager/getallmanagers");
     console.log(result);
 
     if (!result) return;
-    console.log(3);
 
     exportToXL(result, "managersSheet");
   }
@@ -96,9 +88,10 @@ function AllManagers() {
           <SearchInput
             setSearchInput={setSearchInput}
             suggestions={suggestions}
-			suggestionKey={"manager_name"}
-          	onClick={(current) => {
-            handleEditManager({ ...current, bySearch: true })}}
+            suggestionKey={"manager_name"}
+            onClick={(current) => {
+              handleEditManager({ ...current, bySearch: true });
+            }}
           />
           <h2 className="text-2xl font-semibold text-amber-950 ">
             Manager List
@@ -119,9 +112,9 @@ function AllManagers() {
         {data && data?.AllManagers.length && !isLoading && (
           <ManagersTable managers={data.AllManagers} />
         )}
-        {/* {Pagination} */}
-        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
-
+        {data?.count > limit && (
+          <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+        )}
       </div>
     </div>
   );

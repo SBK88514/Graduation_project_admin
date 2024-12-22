@@ -1,10 +1,11 @@
+import React, { useState } from "react";
 import axios from "axios";
-import React from "react";
-// import { useMutation } from "@tanstack/react-query";
-// import { data } from "react-router-dom";
-import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query"; // Add useQuery
 import { X } from "lucide-react";
+import { data } from "react-router-dom";
+import SelectBox from "./SelectBox";
+import { Link, useNavigate } from "react-router-dom";
+
 
 const initialFormValues = {
   issue_building: "",
@@ -17,15 +18,8 @@ const initialFormValues = {
 function AddIssueForm() {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [uploadedFiles, setUploadedFiles] = useState([]); // Add this
-
-  // Add this query
-  const { data: professions = [], isLoading: isProfessionsLoading } = useQuery({
-    queryKey: ["professions"],
-    queryFn: async () => {
-      const { data } = await axios.get("/api/professions");
-      return data;
-    },
-  });
+  const navigate = useNavigate();
+ 
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -53,7 +47,6 @@ function AddIssueForm() {
 
   const mutation = useMutation({
     mutationFn: async (formData) => {
-      console.log(1);
       const { data } = await axios.post("/issues/addIssues", formData);
 
       return data;
@@ -61,6 +54,7 @@ function AddIssueForm() {
     onSuccess: (data) => {
       console.log("Issue added successfully:", data);
       setFormValues(initialFormValues);
+      navigate("/welcomepage");
     },
     onError: (error) => {
       console.error(
@@ -80,6 +74,7 @@ function AddIssueForm() {
     });
 
     mutation.mutate(formData);
+
   }
 
   return (
@@ -166,26 +161,7 @@ function AddIssueForm() {
                 >
                   Profession
                 </label>
-                <select
-                  className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                  id="profession"
-                  name="issue_profession"
-                  value={formValues.issue_profession}
-                  onChange={handleChange}
-                  required
-                  disabled={isProfessionsLoading}
-                >
-                  <option value="">
-                    {isProfessionsLoading
-                      ? "Loading professions..."
-                      : "Select Profession"}
-                  </option>
-                  {professions.map((prof) => (
-                    <option key={prof.id} value={prof.id}>
-                      {prof.name}
-                    </option>
-                  ))}
-                </select>
+                <SelectBox handleChange={handleChange} />
               </div>
               {/* Urgency Selection */}
               <div>
@@ -292,14 +268,14 @@ function AddIssueForm() {
 
             {/* Submit Buttons */}
             <div className="flex justify-end space-x-4 pt-4">
-              <button
-                type="button"
+              <Link
+                to="/welcomepage"
                 className="px-6 py-2 border-2 border-amber-600 text-amber-600 rounded-xl hover:bg-amber-50 focus:outline-none focus:ring-2
                  focus:ring-amber-500 focus:ring-offset-2 transition-colors
                   duration-200"
               >
                 Cancel
-              </button>
+              </Link>
               <button
                 type="submit"
                 className="px-6 py-2 bg-amber-600 text-white 
