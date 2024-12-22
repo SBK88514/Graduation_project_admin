@@ -44,6 +44,8 @@ function AllEmployees() {
         </h2>
 
         <Button name="Add New Employee" onClick={() => handleAddEmployee()} />
+        {/* <Button name="Add New Employee" onClick={() => handleAddEmployee()} /> */}
+        
       </div>
 
       {isLoading && <div>Loading...</div>}
