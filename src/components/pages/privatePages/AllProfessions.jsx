@@ -7,7 +7,7 @@ import Paginaiton from "../../ui/Paginaiton";
 function AllProfessions() {
 
   const [page, setPage] = useState(1);
-  const [limit] = useState(2);
+  const [limit] = useState(6);
 
   const url = `/professions/getallprofessions?page=${page}&limit=${limit}`;
 
@@ -40,7 +40,10 @@ function AllProfessions() {
       {data && data?.AllProfession.length && !isLoading && (
         <ProfessionsTable profession={data.AllProfession} />
       )}
-      <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+      {data?.count > limit &&
+      (<Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />)
+        
+      }
 
     </div>
   );

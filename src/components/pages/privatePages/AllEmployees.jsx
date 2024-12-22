@@ -11,7 +11,7 @@ import { ActionContext } from "../../contexts/ActionContext";
 
 function AllEmployees() {
   const [page, setPage] = useState(1);
-  const [limit] = useState(2);
+  const [limit] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -55,8 +55,9 @@ function AllEmployees() {
         data.allEmployees?.length &&
         !isLoading && <EmployeesTable employees={data.allEmployees} />
       )}
-
-      <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+      {data?.count > limit && (
+        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+      )}
     </div>
   );
 }
