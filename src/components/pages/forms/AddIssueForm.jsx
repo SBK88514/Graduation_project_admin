@@ -49,8 +49,12 @@ function AddIssueForm() {
     mutationFn: async (formData) => {
       const { data } = await axios.post("/issues/addIssues", formData);
 
+      console.log(11);
+      console.log(data);
+      console.log(22);
       return data;
     },
+    
     onSuccess: (data) => {
       console.log("Issue added successfully:", data);
       setFormValues(initialFormValues);
@@ -161,7 +165,7 @@ function AddIssueForm() {
                 >
                   Profession
                 </label>
-                <SelectBox handleChange={handleChange} />
+                <SelectBox handleChange={handleChange} id={"issue_profession"} />
               </div>
               {/* Urgency Selection */}
               <div>
