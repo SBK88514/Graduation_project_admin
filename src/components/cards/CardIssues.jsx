@@ -12,7 +12,7 @@ import { exportToXL } from "../../lib";
 function CardIssues() {
   const { getAllDetails } = useContext(ActionContext);
   const [page, setPage] = useState(1);
-  const [limit] = useState(3);
+  const [limit] = useState(4);
 
   const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
 
@@ -57,9 +57,8 @@ function CardIssues() {
   return (
     <div className="container mx-auto px-4 py-8  ">
       <ExportButton download={downloadXl} />
-      <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* searchinput issues */}
-        <div dir="rtl">
+        <div dir="rt">
           <SearchInput
             setSearchInput={setSearchInput}
             suggestions={suggestions}
@@ -67,6 +66,7 @@ function CardIssues() {
             onClick={(current) => setSelected(current)}
           />
         </div>
+      <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* Issue Card */}
         {isLoading && <div>Loading...</div>}
         {isError && <div>{error}</div>}
@@ -271,7 +271,8 @@ function CardIssues() {
         )}
       </div>
 
-      <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+      {data?.count > limit &&
+      (<Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />)}
     </div>
   );
 }

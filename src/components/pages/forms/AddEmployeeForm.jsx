@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SelectBox from "./SelectBox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function AddEmployeeForm() {
   const queryClient = useQueryClient();
@@ -105,19 +106,18 @@ function AddEmployeeForm() {
                   Profession
                 </label>
                 <SelectBox handleChange={handleChange} />
-                {/*  */}
               </div>
             </div>
           </div>
 
           {/* Submit Button */}
           <div className="flex justify-end space-x-4">
-            <button
-              type="button"
+            <Link
+              to="/allemployees"
               className="px-6 py-2 border-2 border-amber-600 text-amber-600 rounded-xl hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
             >
               Cancel
-            </button>
+            </Link>
             <button
               type="submit"
               className="px-6 py-2 bg-amber-600 text-white rounded-xl hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"

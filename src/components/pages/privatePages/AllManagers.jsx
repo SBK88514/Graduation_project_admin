@@ -5,7 +5,7 @@ import ManagersTable from "../tables/managers/ManagerTable";
 import { useQuery } from "@tanstack/react-query";
 import SearchInput from "../tables/managers/SearchInput";
 
-// import { debounce, exportToXL } from "../../../lib";
+import { debounce, exportToXL } from "../../../lib";
 
 import Paginaiton from "../../ui/Paginaiton";
 import useSuggestions from "../../hooks/useSuggestions";
@@ -22,7 +22,7 @@ function AllManagers() {
   const { getAllDetails } = useContext(ActionContext);
 
   const [page, setPage] = useState(1);
-  const [limit] = useState(2);
+  const [limit] = useState(6);
 
   const url = `/users/manager/getallmanagers?page=${page}&limit=${limit}`;
 
@@ -75,7 +75,6 @@ function AllManagers() {
     console.log(result);
 
     if (!result) return;
-    console.log(3);
 
     exportToXL(result, "managersSheet");
   }
@@ -113,8 +112,9 @@ function AllManagers() {
         {data && data?.AllManagers.length && !isLoading && (
           <ManagersTable managers={data.AllManagers} />
         )}
-        {/* {Pagination} */}
-        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+        {data?.count > limit && (
+          <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+        )}
       </div>
     </div>
   );
