@@ -80,15 +80,14 @@ function App() {
 
           {/* Private Routes */}
           {isAuth && user.permission === "Admin" && (
-         
-          <Route
-            path="allemployees"
-            lazy={async () => ({
-              Component: (
-                await import("./components/pages/privatePages/AllEmployees")
-              ).default,
-            })}
-          />
+            <Route
+              path="allemployees"
+              lazy={async () => ({
+                Component: (
+                  await import("./components/pages/privatePages/AllEmployees")
+                ).default,
+              })}
+            />
           )}
           <Route
             path="Professions"
@@ -102,9 +101,7 @@ function App() {
             path="addprofession"
             lazy={async () => ({
               Component: (
-                await import(
-                  "./components/pages/tables/professions/AddProfession"
-                )
+                await import("./components/pages/forms/AddProfessionForm")
               ).default,
             })}
           />

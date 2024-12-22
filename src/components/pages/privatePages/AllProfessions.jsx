@@ -1,11 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import ProfessionsTable from "../tables/professions/ProfessionsTable";
 import Paginaiton from "../../ui/Paginaiton";
 
 function AllProfessions() {
-
   const [page, setPage] = useState(1);
   const [limit] = useState(6);
 
@@ -38,13 +37,11 @@ function AllProfessions() {
         <p>No Categories Yet, please add Categories</p>
       )}
       {data && data?.AllProfession.length && !isLoading && (
-        <ProfessionsTable profession={data.AllProfession} />
+        <ProfessionsTable professions={data.AllProfession} />
       )}
-      {data?.count > limit &&
-      (<Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />)
-        
-      }
-
+      {data?.count > limit && (
+        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+      )}
     </div>
   );
 }

@@ -1,6 +1,5 @@
 // import React from "react";
 import React, { useState } from "react";
-// import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -45,7 +44,7 @@ function AddProfessionForm() {
                 name="profession_name"
                 id="profession_name"
                 type="text"
-                value={profession_name}
+                // value={profession_name}
                 onChange={(e) => setProfession_name(e.target.value)}
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter Profession"

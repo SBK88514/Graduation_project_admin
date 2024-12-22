@@ -38,37 +38,6 @@ function AllManagers() {
   const [suggestions, setSearchInput] = useSuggestions("users");
   const { handleEditManager } = useContext(ActionContext);
 
-  //   const getSuggestion = async (source) => {
-  //     try {
-  //       if (searchInput) {
-  //         const { data } = await axios.get(
-  //           `/users/autocomplete?query=${searchInput}`,
-  //           {
-  //             cancelToken: source.token,
-  //           }
-  //         );
-  //         setSuggestions(data.result);
-  //       } else setSuggestions([]);
-  //     } catch (error) {
-  //       if (axios.isCancel(error)) {
-  //         console.log("Request canceled", error.message);
-  //       } else {
-  //         console.error("Error fetching suggestions:", error);
-  //       }
-  //     }
-  //   };
-  //   useEffect(() => {
-  //     const source = axios.CancelToken.source();
-
-  //     const processChange = debounce(() => getSuggestion(source));
-  //     processChange();
-
-  //     return () => {
-  //       source.cancel("operation cancelled by the user.");
-  //     };
-  //   }, [searchInput]);
-
-  //   console.log(data);
 
   async function downloadXl() {
     const result = await getAllDetails("/users/manager/getallmanagers");

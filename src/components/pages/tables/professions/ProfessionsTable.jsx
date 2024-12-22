@@ -1,28 +1,25 @@
 import React, { useContext } from "react";
 import ProfessionsTableRow from "./ProfessionsTableRow";
 import { ActionContext } from "../../../contexts/ActionContext";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
-// const obj = [
-//   {
-//     _id: "676154d058a7f50e80949b50",
-//     profession_name: "Tiler",
-//     createdAt: "2024-12-17T10:39:12.781Z",
-//     updatedAt: "2024-12-17T10:39:12.781Z",
-//     __v: 0,
-//   },
-//   {
-//     _id: "6761551658a7f50e80949b52",
-//     profession_name: "Electrician",
-//     createdAt: "2024-12-17T10:40:22.141Z",
-//     updatedAt: "2024-12-17T10:40:22.141Z",
-//     __v: 0,
-//   },
-// ];
+function ProfessionsTable({ professions }) {
 
-function ProfessionsTable({ profession }) {
+  // console.log(professions);
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationKey: "delete_profession",
+    mutationFn: async (id) =>
+      axios.delete(`/professions/deleteprofession/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["get_professions"] });
+    },
+  });
+
   const { handleAddProfession } = useContext(ActionContext);
-  console.log(4);
-  console.log(profession);
+
   return (
     <div className="p-6 w-3/4 m-auto">
       <button
@@ -54,8 +51,8 @@ function ProfessionsTable({ profession }) {
             </thead>
             <tbody className="bg-white divide-y divide-amber-100">
               {/* Row 1 */}
-              {profession.map((profession) => (
-                <ProfessionsTableRow {...profession} />
+              {professions.map((profession) => (
+                <ProfessionsTableRow profession={profession} mutate={mutate} />
               ))}
             </tbody>
           </table>
