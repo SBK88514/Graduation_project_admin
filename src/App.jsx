@@ -22,6 +22,7 @@ import AboutPage from "./components/pages/publicPages/mainPage/AboutPage";
 import LeadershipTeam from "./components/pages/publicPages/mainPage/LeadershipTeam";
 import { Component } from "lucide-react";
 import BackgroundLayout from "./components/ui/backgroundLayout";
+import IssueModal from "./components/modals/IssueModal";
 
 function ProtectedRoute({ isAuth }) {
   return isAuth ? <Outlet /> : <Navigate to="/" replace />;
@@ -35,6 +36,7 @@ function Root({ isAuth }) {
       <BackgroundLayout>
         {isAuth ? <NavAdmin /> : <NavPublic />}
         <Outlet />
+        <IssueModal />
         <EmployeeModal />
         <ModalManager />
         <ModalAddProfession />
@@ -124,7 +126,7 @@ function App() {
           <Route
             path="addissue"
             lazy={async () => ({
-              Component: (await import("./components/pages/forms/AddIssueForm"))
+              Component: (await import("./components/pages/forms/IssueForm"))
                 .default,
             })}
           />
