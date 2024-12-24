@@ -2,7 +2,6 @@ import axios from "axios";
 import { createContext, useState } from "react";
 import { showErrorToast, showSuccessToast } from "../../lib/Toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 export const ActionContext = createContext();
 
 function ActionProvider({ children }) {
@@ -39,7 +38,6 @@ function ActionProvider({ children }) {
   function handleEditEmployee(employee) {
     document.getElementById("employee_modal").showModal();
     setEmp(employee);
-    console.log(emp);
   }
 
   function handleAddEmployee() {

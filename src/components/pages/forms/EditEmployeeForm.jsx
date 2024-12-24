@@ -2,6 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { ActionContext } from "../../contexts/ActionContext";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import SelectBox from "./SelectBox";
+
+const initialValues = {
+  employeeName: "",
+  employeeEmail: "",
+  employeePassword: "",
+  employeeId: "",
+};
 
 function EditEmployeeForm() {
   // Body OF Component run => useState implemented =>
@@ -19,6 +27,17 @@ function EditEmployeeForm() {
       queryClient.invalidateQueries({ queryKey: ["get_employees"] });
       document.getElementById("employee_modal").close();
     },
+    // onError:
+  });
+  const { mutate: addMutate } = useMutation({
+    mutationKey: ["add_employee"],
+    mutationFn: async (values) =>
+      await axios.post(`users/employee/signup`, values),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["get_employee"] });
+      document.getElementById("employee_modal").close();
+    },
+    // onError:
   });
   const { emp } = useContext(ActionContext);
   const [values, setValues] = useState(null);
@@ -31,23 +50,28 @@ function EditEmployeeForm() {
   async function handlesubmit(e) {
     e.preventDefault();
     try {
-      mutate({ values, id: values?._id });
+      emp ? mutate({ values, id: values?._id }) : addMutate(values);
+      setValues(initialValues);
     } catch (error) {
       console.log(error);
     }
   }
 
   useEffect(() => {
+    if (!emp) return setValues(initialValues);
     setValues({ ...emp });
   }, [emp]);
-
   function handleCancel() {
     document.getElementById("employee_modal").close();
   }
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
-        Edit Employee
+        {!emp
+          ? "Add Employee"
+          : emp?.bySearch
+          ? "View Employee"
+          : "Edit Employee"}
       </h2>
 
       <form onSubmit={handlesubmit} className="space-y-6">
@@ -104,12 +128,26 @@ function EditEmployeeForm() {
               <input
                 name="employeePassword"
                 id="employeePassword"
-                type="tel"
+                type="password"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter phone number"
                 // value={values?.employeePassword}
-                value={"*****"}
+                value={values?.employeePassword}
                 onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-amber-700 mb-1"
+                htmlFor="profession"
+              >
+                Profession
+              </label>
+              <SelectBox
+                value={values?.employeeId?.profession_name}
+                handleChange={handleChange}
+                placeholder="Select Profession"
+                id={"employeeId"}
               />
             </div>
           </div>
@@ -128,7 +166,11 @@ function EditEmployeeForm() {
             type="submit"
             className="px-6 py-2 bg-amber-600 text-white rounded-xl hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
           >
-            Edit Employee
+            {!emp
+              ? "Add Employee"
+              : emp?.bySearch
+              ? "Edit Employee"
+              : "Edit Employee"}
           </button>
         </div>
       </form>

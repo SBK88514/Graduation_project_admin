@@ -17,12 +17,13 @@ import Button from "../../ui/Button";
 import ExportButton from "../../ui/ExportButton.jsx";
 // import {ActionContext} from "../../contexts/ActionContext.jsx"
 
+import { Filter, ChevronDown, Plus } from "lucide-react";
 function AllManagers() {
   const { handleAddManager } = useContext(ActionContext);
   const { getAllDetails } = useContext(ActionContext);
 
   const [page, setPage] = useState(1);
-  const [limit] = useState(6);
+  const [limit] = useState(5);
 
   const url = `/users/manager/getallmanagers?page=${page}&limit=${limit}`;
 
@@ -38,7 +39,6 @@ function AllManagers() {
   const [suggestions, setSearchInput] = useSuggestions("users");
   const { handleEditManager } = useContext(ActionContext);
 
-
   async function downloadXl() {
     const result = await getAllDetails("/users/manager/getallmanagers");
     console.log(result);
@@ -49,42 +49,45 @@ function AllManagers() {
   }
 
   return (
-    // <div className="w-[80%] mx-auto mt-5 ">
-    <div className="fle justify-between items-center rounded-xl p-6 py-6 bg-amber-50 border-b border-amber-200 text-center">
-      <div className="w-[90%] mx-auto">
+    <div className="w-[80%] mx-auto mt-5 p-4 shadow-md rounded-xl mb-6 animate-slide-down">
+      <div className=" bg-white border-solid border-2 border-amber-300  my-auto p-4 shadow-md rounded-xl mb-6 animate-slide-down flex flex-wrap gap-4 items-center justify-between">
         <ExportButton download={downloadXl} />
-        <div dir="rt" className="flex justify-between">
-          <SearchInput
-            setSearchInput={setSearchInput}
-            suggestions={suggestions}
-            suggestionKey={"manager_name"}
-            onClick={(current) => {
-              handleEditManager({ ...current, bySearch: true });
-            }}
-          />
-          <h2 className="text-2xl font-semibold text-amber-950 ">
-            Manager List
-          </h2>
-
-          <Button
-            name="Add New Maneger"
-            //   link="/addmanager"
-            onClick={() => handleAddManager()}
-          />
+        <SearchInput
+          setSearchInput={setSearchInput}
+          suggestions={suggestions}
+          suggestionKey={"manager_name"}
+          onClick={(current) => {
+            handleEditManager({ ...current, bySearch: true });
+          }}
+        />
+        <div className="flex-1 text-center">
+          <h1 className="text-2xl font-bold text-amber-900">
+            Manager Management
+          </h1>
         </div>
-
-        {isLoading && <div>Loading...</div>}
-        {isError && <div>{error}</div>}
-        {data && !data.AllManagers.length && (
-          <p>No Categories Yet, please add Categories</p>
-        )}
-        {data && data?.AllManagers.length && !isLoading && (
-          <ManagersTable managers={data.AllManagers} />
-        )}
-        {data?.count > limit && (
-          <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
-        )}
+        <div className="flex gap-3">
+          <button
+            className="flex justify-center items-center gap-2 px-4 py-2 h-10 bg-amber-100 text-amber-700 rounded-xl
+                         hover:bg-amber-200 transition-all duration-200"
+          >
+            <Filter className="w-3 h-3" />
+            <span>Filter</span>
+            <ChevronDown className="w-4 h-4" />
+          </button>
+          <Button name="Add New Maneger" onClick={() => handleAddManager()} />
+        </div>
       </div>
+      {isLoading && <div>Loading...</div>}
+      {isError && <div>{error}</div>}
+      {data && !data.AllManagers.length && (
+        <p>No Categories Yet, please add Categories</p>
+      )}
+      {data && data?.AllManagers.length && !isLoading && (
+        <ManagersTable managers={data.AllManagers} />
+      )}
+      {data?.count > limit && (
+        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+      )}
     </div>
   );
 }

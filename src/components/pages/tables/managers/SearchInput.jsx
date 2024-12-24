@@ -1,32 +1,28 @@
-import React  from "react";
+import React from "react";
 import { FaSearchengin } from "react-icons/fa";
-
-
-function SearchInput({ setSearchInput, suggestions, suggestionKey , onClick }) {
-  
+import { Search } from "lucide-react";
+function SearchInput({ setSearchInput, suggestions, suggestionKey, onClick }) {
   return (
-    <div className="relative w-60 max-w-md ">
-      <label className="input input-bordered flex items-center gap-2 bg-amber-200">
-        <input
-          onChange={(e) => setSearchInput(e.target.value)}
-          type="text"
-          className="grow"
-          placeholder="Search Email"
-          id="searchInput"
-          name="searchInput"
-        />
-        <FaSearchengin size={30} color="white" />
-      </label>
+    <div className="relative flex-1 min-w-[150px] max-w-[300px] ">
+      <input
+        onChange={(e) => setSearchInput(e.target.value)}
+        type="text"
+        placeholder="Search by email..."
+        className="w-full pl-4 pr-10 py-3 rounded-xl  bg-amber-50 border-2 border-amber-200 
+                    focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500
+                    transition-all duration-300"
+        id="searchInput"
+        name="searchInput"
+      />
+      <Search className="absolute right-3 top-3.5 text-amber-500 w-5 h-5" />
+
       {suggestions.length > 0 && (
         <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
           {suggestions.map((suggestion, index) => (
             <li
-
-           onClick={() => onClick(suggestion)}
-              
-              key={index} 
-
-              className={`px-4 py-2 cursor-pointer text-white bg-[#1d232a] hover:bg-gray-500`}
+              onClick={() => onClick(suggestion, setSearchInput(""))}
+              key={index}
+              className={`px-4 py-2 cursor-pointer text-white bg-[#f1b571] hover:bg-amber-500`}
             >
               {suggestion[suggestionKey]}
             </li>
