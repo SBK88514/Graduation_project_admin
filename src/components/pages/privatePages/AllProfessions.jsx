@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import ProfessionsTable from "../tables/professions/ProfessionsTable";
 import Paginaiton from "../../ui/Paginaiton";
+
 
 function AllProfessions() {
   const [page, setPage] = useState(1);
@@ -20,7 +21,7 @@ function AllProfessions() {
   });
 
   // הדפס את הנתונים בקונסול
-  React.useEffect(() => {
+  useEffect(() => {
     if (data) {
       console.log("All Professions:", data.AllProfession);
       console.log("Count:", data.count);
