@@ -11,6 +11,7 @@ function AddEmployeeForm() {
       await axios.post("/users//employee/signup", employee),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["get_employees"] });
+      
     },
   });
 
