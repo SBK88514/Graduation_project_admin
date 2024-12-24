@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import axios from "axios";
 
-function SelectBox({ handleChange, id }) {
+function SelectBox({ handleChange, id, value }) {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["get_professions"],
     queryFn: async () => await axios.get("/professions/getallprofessions"),
@@ -19,7 +19,7 @@ function SelectBox({ handleChange, id }) {
           focus:border-amber-500"
         onChange={handleChange}
       >
-        <option value="">Select Profession</option>
+        <option>{value}</option>
         {isLoading && <div>Loading...</div>}
         {isError && <div>{error}</div>}
         {data?.map((profession) => (

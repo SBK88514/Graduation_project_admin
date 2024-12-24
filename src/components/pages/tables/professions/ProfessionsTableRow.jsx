@@ -1,3 +1,4 @@
+import { Trash2 } from "lucide-react";
 import React from "react";
 
 function ProfessionsTableRow({ mutate, profession }) {
@@ -14,7 +15,7 @@ function ProfessionsTableRow({ mutate, profession }) {
           onClick={() => mutate(_id)}
           className="text-red-600 hover:text-red-900 font-medium px-3 py-1 rounded-lg hover:bg-red-50 transition-colors duration-200"
         >
-          Delete
+          <Trash2 className="w-5 h-5" />
         </button>
       </td>
     </tr>

@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { ActionContext } from "../../contexts/ActionContext";
@@ -46,6 +45,7 @@ function ManagerForm() {
     try {
       e.preventDefault();
       man ? mutate({ values, id: man._id }) : addMutate(values);
+      setValues(initialValues);
     } catch (error) {
       console.log(error);
     }
@@ -120,7 +120,7 @@ function ManagerForm() {
               <input
                 name="manager_password"
                 id="manager_password"
-                type="tel"
+                type="password"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter phone number"
                 // value={values?.manager_password}
@@ -153,7 +153,7 @@ function ManagerForm() {
           <button
             type="submit"
             className="px-6 py-2 bg-amber-600
-             text-white rounded-xl hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
+            text-white rounded-xl hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
           >
             {!man
               ? "Add Managar"

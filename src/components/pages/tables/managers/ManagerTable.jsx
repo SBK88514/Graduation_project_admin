@@ -2,6 +2,7 @@ import React from "react";
 import TableRow from "../managers/TableRow";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { SortDesc } from "lucide-react";
 
 function ManagersTable({ managers }) {
   const queryClient = useQueryClient();
@@ -14,22 +15,25 @@ function ManagersTable({ managers }) {
     },
   });
   return (
-    <div className="bg-white p-6 rounded-xl shadow-lg overflow-hidden">
+    <div className="bg-white  rounded-xl shadow-lg overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-amber-200">
-          <thead className="bg-amber-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-sm font-medium text-amber-800 uppercase tracking-wider">
-                Username
+          <thead>
+            <tr className="bg-gradient-to-r from-amber-100 to-orange-100">
+              <th className="px-6 py-4 text-left text-amber-900 font-semibold">
+                <div className="flex items-center gap-2 cursor-pointer hover:text-amber-700">
+                  USERNAME
+                  <SortDesc className="w-4 h-4" />
+                </div>
               </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-amber-800 uppercase tracking-wider">
-                Email
+              <th className="px-6 py-4 text-left text-amber-900 font-semibold">
+                EMAIL
               </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-amber-800 uppercase tracking-wider">
-                Password
+              <th className="px-6 py-4 text-left text-amber-900 font-semibold">
+                PASSWORD
               </th>
-              <th className="px-6 py-3 text-right text-sm font-medium text-amber-800 uppercase tracking-wider">
-                Actions
+              <th className="px-6 py-4 text-right text-amber-900 font-semibold">
+                ACTIONS
               </th>
             </tr>
           </thead>
