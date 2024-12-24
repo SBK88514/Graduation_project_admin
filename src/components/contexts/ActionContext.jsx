@@ -2,13 +2,13 @@ import axios from "axios";
 import { createContext, useState } from "react";
 import { showErrorToast, showSuccessToast } from "../../lib/Toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 export const ActionContext = createContext();
 
 function ActionProvider({ children }) {
   const [toggleRequest, setToggleRequest] = useState(false);
   const [emp, setEmp] = useState(null);
   const [man, setMan] = useState(null);
+  const [iss, setIss] = useState(null);
 
   async function deleteEmployee(id) {
     try {
@@ -35,14 +35,42 @@ function ActionProvider({ children }) {
       document.getElementById("manager_modal").close();
     },
   });
-  function handleEdit(employee) {
+
+  function handleEditEmployee(employee) {
     document.getElementById("employee_modal").showModal();
     setEmp(employee);
-    console.log(emp);
   }
+
+  function handleAddEmployee() {
+    document.getElementById("employee_modal").showModal();
+    setEmp(null);
+  }
+
   function handleEditManager(manager) {
     document.getElementById("manager_modal").showModal();
     setMan(manager);
+  }
+
+  function handleAddManager() {
+    document.getElementById("manager_modal").showModal();
+    setMan(null);
+  }
+
+  async function getAllDetails(url) {
+    try {
+      const { data } = (await axios.get(url)).data;
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  function handleEditIssue(issue) {    
+    console.log(issue);    
+    document.getElementById("issue_modal").showModal();
+    setIss(issue);
   }
 
   function handleAddProfession() {
@@ -55,11 +83,17 @@ function ActionProvider({ children }) {
     setToggleRequest,
     deleteEmployee,
     emp,
-    handleEdit,
+    handleEditEmployee,
     handleEditManager,
     man,
     mutateDelete,
+    handleAddManager,
+    getAllDetails,
+    handleEditIssue,
+    iss,
+    setIss,
     handleAddProfession,
+    handleAddEmployee,
   };
 
   return (
