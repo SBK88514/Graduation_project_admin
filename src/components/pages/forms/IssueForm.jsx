@@ -185,6 +185,7 @@ function IssueForm() {
               </label>
               {!iss ? <SelectBox handleChange={handleChange} id={"issue_profession"} /> : 
               <input
+              disabled={!!iss}
               value={values?.issue_profession?.profession_name}
               className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
             />
