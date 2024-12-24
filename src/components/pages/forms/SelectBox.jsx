@@ -8,7 +8,6 @@ function SelectBox({ handleChange, id }) {
     queryFn: async () => await axios.get("/professions/getallprofessions"),
     select: (data) => data.data.data,
   });
-  console.log(data);
   return (
     <div>
       <select

@@ -10,7 +10,7 @@ import { ActionContext } from "../contexts/ActionContext.jsx";
 import { exportToXL } from "../../lib/index";
 
 function CardIssues() {
-  const { getAllDetails } = useContext(ActionContext);
+  const { getAllDetails, handleEditIssue } = useContext(ActionContext);
   const [page, setPage] = useState(1);
   const [limit] = useState(4);
 
@@ -71,7 +71,7 @@ function CardIssues() {
         {isLoading && <div>Loading...</div>}
         {isError && <div>{error}</div>}
         {!selected &&
-          data?.Allissues?.map((element) => (
+          data?.Allissues?.map((issue) => (
             <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-3xl shadow-xl w-80">
               {/* Location Pills */}
               <div className="flex space-x-2 mb-3">
@@ -92,7 +92,7 @@ function CardIssues() {
                   <div>
                     <div className="text-xs text-amber-600">Building</div>
                     <div className="font-bold text-sm text-amber-900">
-                      {element.issue_building}
+                      {issue.issue_building}
                     </div>
                   </div>
                 </div>
@@ -113,7 +113,7 @@ function CardIssues() {
                   <div>
                     <div className="text-xs text-amber-600">Floor</div>
                     <div className="font-bold text-sm text-amber-900">
-                      {element.issue_floor}
+                      {issue.issue_floor}
                     </div>
                   </div>
                 </div>
@@ -134,7 +134,7 @@ function CardIssues() {
                   <div>
                     <div className="text-xs text-amber-600">apartment</div>
                     <div className="font-bold text-sm text-amber-900">
-                      {element.issue_apartment}
+                      {issue.issue_apartment}
                     </div>
                   </div>
                 </div>
@@ -144,7 +144,7 @@ function CardIssues() {
                 <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20"></div>
                 <div className="flex transition-transform duration-300 h-full">
                   <img
-                    src={element.issue_images[currentIndexes[element._id] || 0]}
+                    src={issue?.issue_images[currentIndexes[issue._id] || 0]}
                     alt="Issue"
                     className="w-full h-full object-cover"
                   />
@@ -153,7 +153,7 @@ function CardIssues() {
                 {/* Navigation Arrows */}
                 <button
                   onClick={() =>
-                    prevImage(element._id, element.issue_images.length)
+                    prevImage(issue?._id, issue?.issue_images.length)
                   }
                   className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/90 text-white hover:text-amber-600 p-2 rounded-full backdrop-blur-sm transition-all duration-200 transform hover:scale-110"
                 >
@@ -173,7 +173,7 @@ function CardIssues() {
                 </button>
                 <button
                   onClick={() =>
-                    nextImage(element._id, element.issue_images.length)
+                    nextImage(issue?._id, issue?.issue_images.length)
                   }
                   className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/90 text-white hover:text-amber-600 p-2 rounded-full backdrop-blur-sm transition-all duration-200 transform hover:scale-110"
                 >
@@ -194,8 +194,8 @@ function CardIssues() {
 
                 {/* Image Counter */}
                 <div className="absolute bottom-2 right-2 bg-white/10 backdrop-blur-md text-white px-3 py-0.5 rounded-full text-xs font-medium border border-white/20">
-                  {(currentIndexes[element._id] || 0) + 1}/
-                  {element.issue_images.length}
+                  {(currentIndexes[issue._id] || 0) + 1}/
+                  {issue?.issue_images.length}
                 </div>
               </div>
               {/* Issue Details */}
@@ -204,11 +204,11 @@ function CardIssues() {
                 {/* <div className="flex items-center justify-between mb-3"> */}
                 <div className="flex items-center justify-between mb-3">
                   <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium border border-yellow-200">
-                    In Progress
+                    {issue.issue_status}
                   </span>
                   <span className="px-3 py-1 bg-yellow-100 text-yellow-800
                    rounded-full text-xs font-medium border border-yellow-200">
-                    {element.issue_profession?.profession_name}
+                    {issue.issue_profession?.profession_name}
                   </span>
                   <div className="flex items-center space-x-1 text-amber-600">
                     <svg
@@ -228,11 +228,11 @@ function CardIssues() {
                   </div>
                 </div>
 
-                {/* <div className="max-h-24 overflow-y-auto scrollbar-thin scrollbar-thumb-amber-200 scrollbar-track-amber-50 pr-2"> */}
-                <div className="flex-1 overflow-y-auto hover:overflow-y-scroll pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-amber-100 [&::-webkit-scrollbar-track]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-amber-500 [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:hover:bg-amber-600">
-                  {/* <h3 className="text-base font-bold text-amber-900"> */}
+                <div className="flex-1 overflow-y-auto hover:overflow-y-scroll pr-2
+                 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-amber-100 [&::-webkit-scrollbar-track]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-amber-500
+                 [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:hover:bg-amber-600">
                   <h3 className="text-base font-bold text-amber-900">
-                    {element.issue_description}
+                    {issue.issue_description}
                   </h3>
                 </div>
 
@@ -254,12 +254,14 @@ function CardIssues() {
                       </svg>
                     </span>
                     <span className="text-xs font-medium text-red-600">
-                      Urgent
+                      {issue.issue_urgency}
                     </span>
                   </div>
 
-                  <button className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
-                    Update
+                  <button 
+                  onClick={() => handleEditIssue(issue)}
+                   className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
+                    Update 
                   </button>
                 </div>
               </div>

@@ -9,6 +9,7 @@ function ActionProvider({ children }) {
   const [toggleRequest, setToggleRequest] = useState(false);
   const [emp, setEmp] = useState(null);
   const [man, setMan] = useState(null);
+  const [iss, setIss] = useState(null);
 
   async function deleteEmployee(id) {
     try {
@@ -68,6 +69,12 @@ function ActionProvider({ children }) {
     }
   }
 
+  function handleEditIssue(issue) {    
+    console.log(issue);    
+    document.getElementById("issue_modal").showModal();
+    setIss(issue);
+  }
+
   function handleAddProfession() {
     document.getElementById("profession_modal").showModal();
     setMan(null);
@@ -84,6 +91,9 @@ function ActionProvider({ children }) {
     mutateDelete,
     handleAddManager,
     getAllDetails,
+    handleEditIssue,
+    iss,
+    setIss,
     handleAddProfession,
     handleAddEmployee,
   };
