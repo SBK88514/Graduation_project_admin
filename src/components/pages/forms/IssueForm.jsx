@@ -18,7 +18,11 @@ const initialValues = {
 
 
 function IssueForm() {
+  const { iss  , setIss} = useContext(ActionContext);
+  const [values, setValues] = useState(null);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { mutate } = useMutation({
     mutationKey: ["edit issue"],
@@ -38,6 +42,7 @@ function IssueForm() {
     onSuccess: (data) => {
       console.log("Issue added successfully:", data);
       queryClient.invalidateQueries({ queryKey: ["get_issues"] });
+      // setUploadedFiles([]);
       setIss(null)
       navigate("/allissues");
     },
@@ -49,10 +54,7 @@ function IssueForm() {
     },
   });
   
-  const { iss  , setIss} = useContext(ActionContext);
-  const [values, setValues] = useState(null);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
-  const navigate = useNavigate();
+  
 
   function handleChange(e) {
     const { value, name } = e.target;
@@ -62,7 +64,12 @@ function IssueForm() {
   function handlesubmit(e) {
     try {
       e.preventDefault();
-       iss ? mutate({ values, id: values?._id }) : addMutate(values);
+      const formData = new FormData(e.currentTarget);
+
+      uploadedFiles.forEach(({ file }) => {
+        formData.append("issue_images", file);
+      });
+       iss ? mutate({ values, id: values?._id }) : addMutate(formData);
 
     } catch (error) {
       console.log(error);
@@ -74,6 +81,10 @@ function IssueForm() {
 
     setValues({ ...iss });
   }, [iss]);
+
+  const removeFile = (fileId) => {
+    setUploadedFiles((prev) => prev.filter((file) => file.id !== fileId));
+  };
 
   const handleFileUpload = (e) => {
     const newFiles = Array.from(e.target.files);
@@ -259,7 +270,8 @@ function IssueForm() {
           </div>
 
           {/* Image Upload with Fixed Height */}
-          {!iss && (<div>
+          {!iss && (
+            <div>
             <label className=" block text-sm font-medium text-amber-700 mb-1">
               Add Images
             </label>
