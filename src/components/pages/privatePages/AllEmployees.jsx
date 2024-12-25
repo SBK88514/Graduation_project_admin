@@ -10,6 +10,7 @@ import SearchInput from "../tables/managers/SearchInput";
 import { ActionContext } from "../../contexts/ActionContext";
 import ExportButton from "../../ui/ExportButton.jsx";
 import { Filter, ChevronDown } from "lucide-react";
+import WaveLoader from "../../ui/WaveLoader";
 
 function AllEmployees() {
   const [page, setPage] = useState(1);
@@ -60,7 +61,7 @@ function AllEmployees() {
         {/* <Button name="Add New Employee" onClick={() => handleAddEmployee()} /> */}
       </div>
 
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <WaveLoader />}
       {isError && <div>{error}</div>}
       {data && !data.allEmployees?.length ? (
         <NotEmployees />
