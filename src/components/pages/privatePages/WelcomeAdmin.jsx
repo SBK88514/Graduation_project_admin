@@ -22,7 +22,9 @@ function WelcomeAdmin() {
   return (
     <div className="w-full">
       {isLoading ? (
-        <WaveLoader />
+        <div className="flex justify-center items-center h-[50vh]">
+          <WaveLoader />
+        </div>
       ) : (
         <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 p-8 rounded-2xl shadow-lg max-w-3xl mx-auto ">
           <div className="flex justify-center mb-6 space-x-2">

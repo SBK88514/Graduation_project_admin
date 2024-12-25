@@ -72,7 +72,13 @@ function AllManagers() {
           <Button name="Add New Maneger" onClick={() => handleAddManager()} />
         </div>
       </div>
-      {isLoading && <WaveLoader />}
+
+      {isLoading && (
+        <div className="flex justify-center items-center h-[50vh]">
+          <WaveLoader />
+        </div>
+      )}
+
       {isError && <div>{error}</div>}
       {data && !data.AllManagers.length && (
         <p>No Categories Yet, please add Categories</p>

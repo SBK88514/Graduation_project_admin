@@ -68,8 +68,12 @@ function CardIssues() {
         />
       </div>
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
-        {/* Issue Card */}
-        {isLoading && <WaveLoader />}
+        {isLoading && (
+          <div className="flex justify-center items-center h-[50vh]">
+            <WaveLoader />
+          </div>
+        )}
+
         {isError && <div>{error}</div>}
         {!selected &&
           data?.Allissues?.map((issue) => (

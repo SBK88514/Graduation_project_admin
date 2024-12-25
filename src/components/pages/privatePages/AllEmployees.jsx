@@ -61,7 +61,12 @@ function AllEmployees() {
         {/* <Button name="Add New Employee" onClick={() => handleAddEmployee()} /> */}
       </div>
 
-      {isLoading && <WaveLoader />}
+      {isLoading && (
+        <div className="flex justify-center items-center h-[50vh]">
+          <WaveLoader />
+        </div>
+      )}
+
       {isError && <div>{error}</div>}
       {data && !data.allEmployees?.length ? (
         <NotEmployees />

@@ -49,8 +49,6 @@ function EmployeesTable({ employees }) {
         </table>
       </div>
     </div>
-    //   {/* {isLoading && <div>Loading...</div>}
-    //   {isError && <div>{error}</div>} */}
   );
 }
 

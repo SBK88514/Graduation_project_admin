@@ -31,10 +31,11 @@ function AllProfessions() {
   return (
     <div className="w-[90%] mx-auto">
       {isLoading && (
-        <div className="flex justify-center items-center h-[70vh]">
+        <div className="flex justify-center items-center h-[50vh]">
           <WaveLoader />
         </div>
       )}
+
       {isError && <div>{error}</div>}
       {data && !data.AllProfession.length && (
         <p>No Categories Yet, please add Categories</p>
