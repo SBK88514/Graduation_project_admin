@@ -11,13 +11,16 @@ import { exportToXL } from "../../lib/index";
 import WaveLoader from "../ui/WaveLoader.jsx";
 import Button from "../ui/Button";
 import { Filter, ChevronDown } from "lucide-react";
+import FilterButtons from "../ui/FilretButtons.jsx";
 
 function CardIssues() {
   const { getAllDetails, handleEditIssue } = useContext(ActionContext);
   const [page, setPage] = useState(1);
   const [limit] = useState(3);
 
-  const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
+  const [statusFilter, setStatusFilter] = useState("all");
+  console.log(statusFilter);
+  const url = `/issues/getAllIssues?page=${page}&limit=${limit}&search=${statusFilter}`;
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["get_issues", page],
@@ -60,6 +63,7 @@ function CardIssues() {
   return (
     <div className="w-[80%] mx-auto mt-5 p-4 shadow-md rounded-xl mb-6 animate-slide-down">
       <div className=" bg-white border-solid border-2 border-amber-300  my-auto p-4 shadow-md rounded-xl mb-6 animate-slide-down flex flex-wrap gap-4 items-center justify-between">
+        <FilterButtons setStatusFilter={setStatusFilter} />
         <ExportButton download={downloadXl} />
         <SearchInput
           setSearchInput={setSearchInput}
