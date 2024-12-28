@@ -83,7 +83,6 @@ function CardIssues() {
             <Filter className="w-3 h-3" />
             <span>Filter</span>
             <ChevronDown className="w-4 h-4" />
-            onClick={() => handleEditIssue()}
           </button>
           <Button name="Add New Issue" />
         </div>
