@@ -9,11 +9,13 @@ import ExportButton from "../ui/ExportButton.jsx";
 import { ActionContext } from "../contexts/ActionContext.jsx";
 import { exportToXL } from "../../lib/index";
 import WaveLoader from "../ui/WaveLoader.jsx";
+import Button from "../ui/Button";
+import { Filter, ChevronDown } from "lucide-react";
 
 function CardIssues() {
   const { getAllDetails, handleEditIssue } = useContext(ActionContext);
   const [page, setPage] = useState(1);
-  const [limit] = useState(4);
+  const [limit] = useState(3);
 
   const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
 
@@ -56,18 +58,38 @@ function CardIssues() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8  ">
-      <ExportButton download={downloadXl} />
-      {/* searchinput issues */}
-      <div dir="rt">
+    <div className="w-[80%] mx-auto mt-5 p-4 shadow-md rounded-xl mb-6 animate-slide-down">
+      <div className=" bg-white border-solid border-2 border-amber-300  my-auto p-4 shadow-md rounded-xl mb-6 animate-slide-down flex flex-wrap gap-4 items-center justify-between">
+        <ExportButton download={downloadXl} />
         <SearchInput
           setSearchInput={setSearchInput}
           suggestions={suggestions}
           suggestionKey={"issue_apartment"}
-          onClick={(current) => setSelected(current)}
+          onClick={(current) => {
+            setSelected(current);
+          }}
         />
+
+        <div className="flex-1 text-center">
+          <h1 className="text-2xl font-bold text-amber-900">
+            Issues Management
+          </h1>
+        </div>
+        <div className="flex gap-3">
+          <button
+            className="flex justify-center items-center gap-2 px-4 py-2 h-10 bg-amber-100 text-amber-700 rounded-xl
+                         hover:bg-amber-200 transition-all duration-200"
+          >
+            <Filter className="w-3 h-3" />
+            <span>Filter</span>
+            <ChevronDown className="w-4 h-4" />
+            onClick={() => handleEditIssue()}
+          </button>
+          <Button name="Add New Issue" />
+        </div>
+        {/* </div> */}
       </div>
-      <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
+      <div className="flex flex-wrap gap-4 justify-evenly">
         {isLoading && (
           <div className="flex justify-center items-center h-[50vh]">
             <WaveLoader />
