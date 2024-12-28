@@ -8,6 +8,7 @@ import CardSelected from "./CardSelected";
 import ExportButton from "../ui/ExportButton.jsx";
 import { ActionContext } from "../contexts/ActionContext.jsx";
 import { exportToXL } from "../../lib/index";
+import WaveLoader from "../ui/WaveLoader.jsx";
 
 function CardIssues() {
   const { getAllDetails, handleEditIssue } = useContext(ActionContext);
@@ -57,18 +58,22 @@ function CardIssues() {
   return (
     <div className="container mx-auto px-4 py-8  ">
       <ExportButton download={downloadXl} />
-        {/* searchinput issues */}
-        <div dir="rt">
-          <SearchInput
-            setSearchInput={setSearchInput}
-            suggestions={suggestions}
-            suggestionKey={"issue_apartment"}
-            onClick={(current) => setSelected(current)}
-          />
-        </div>
+      {/* searchinput issues */}
+      <div dir="rt">
+        <SearchInput
+          setSearchInput={setSearchInput}
+          suggestions={suggestions}
+          suggestionKey={"issue_apartment"}
+          onClick={(current) => setSelected(current)}
+        />
+      </div>
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
-        {/* Issue Card */}
-        {isLoading && <div>Loading...</div>}
+        {isLoading && (
+          <div className="flex justify-center items-center h-[50vh]">
+            <WaveLoader />
+          </div>
+        )}
+
         {isError && <div>{error}</div>}
         {!selected &&
           data?.Allissues?.map((issue) => (
@@ -206,8 +211,10 @@ function CardIssues() {
                   <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium border border-yellow-200">
                     {issue.issue_status}
                   </span>
-                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800
-                   rounded-full text-xs font-medium border border-yellow-200">
+                  <span
+                    className="px-3 py-1 bg-yellow-100 text-yellow-800
+                   rounded-full text-xs font-medium border border-yellow-200"
+                  >
                     {issue.issue_profession?.profession_name}
                   </span>
                   <div className="flex items-center space-x-1 text-amber-600">
@@ -228,9 +235,11 @@ function CardIssues() {
                   </div>
                 </div>
 
-                <div className="flex-1 overflow-y-auto hover:overflow-y-scroll pr-2
+                <div
+                  className="flex-1 overflow-y-auto hover:overflow-y-scroll pr-2
                  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-amber-100 [&::-webkit-scrollbar-track]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-amber-500
-                 [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:hover:bg-amber-600">
+                 [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:hover:bg-amber-600"
+                >
                   <h3 className="text-base font-bold text-amber-900">
                     {issue.issue_description}
                   </h3>
@@ -258,10 +267,11 @@ function CardIssues() {
                     </span>
                   </div>
 
-                  <button 
-                  onClick={() => handleEditIssue(issue)}
-                   className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
-                    Update 
+                  <button
+                    onClick={() => handleEditIssue(issue)}
+                    className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium"
+                  >
+                    Update
                   </button>
                 </div>
               </div>
@@ -277,8 +287,9 @@ function CardIssues() {
         )}
       </div>
 
-      {data?.count > limit &&
-      (<Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />)}
+      {data?.count > limit && (
+        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+      )}
     </div>
   );
 }

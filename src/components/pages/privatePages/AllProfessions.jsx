@@ -3,7 +3,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import ProfessionsTable from "../tables/professions/ProfessionsTable";
 import Paginaiton from "../../ui/Paginaiton";
-
+import WaveLoader from "../../ui/WaveLoader";
 
 function AllProfessions() {
   const [page, setPage] = useState(1);
@@ -30,9 +30,12 @@ function AllProfessions() {
 
   return (
     <div className="w-[90%] mx-auto">
-      {/* {data.AllProfession} */}
-      {/* <ProfessionsTable profession={data.AllProfession} /> */}
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <div className="flex justify-center items-center h-[50vh]">
+          <WaveLoader />
+        </div>
+      )}
+
       {isError && <div>{error}</div>}
       {data && !data.AllProfession.length && (
         <p>No Categories Yet, please add Categories</p>

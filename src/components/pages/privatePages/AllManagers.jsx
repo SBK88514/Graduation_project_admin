@@ -4,20 +4,15 @@ import axios from "axios";
 import ManagersTable from "../tables/managers/ManagerTable";
 import { useQuery } from "@tanstack/react-query";
 import SearchInput from "../tables/managers/SearchInput";
-
 import { debounce, exportToXL } from "../../../lib";
-
 import Paginaiton from "../../ui/Paginaiton";
 import useSuggestions from "../../hooks/useSuggestions";
 import { ActionContext } from "../../contexts/ActionContext";
-
 import Button from "../../ui/Button";
-// import { ActionContext } from "../../contexts/ActionContext";
-
 import ExportButton from "../../ui/ExportButton.jsx";
-// import {ActionContext} from "../../contexts/ActionContext.jsx"
-
 import { Filter, ChevronDown, Plus } from "lucide-react";
+import WaveLoader from "../../ui/WaveLoader";
+
 function AllManagers() {
   const { handleAddManager } = useContext(ActionContext);
   const { getAllDetails } = useContext(ActionContext);
@@ -77,7 +72,13 @@ function AllManagers() {
           <Button name="Add New Maneger" onClick={() => handleAddManager()} />
         </div>
       </div>
-      {isLoading && <div>Loading...</div>}
+
+      {isLoading && (
+        <div className="flex justify-center items-center h-[50vh]">
+          <WaveLoader />
+        </div>
+      )}
+
       {isError && <div>{error}</div>}
       {data && !data.AllManagers.length && (
         <p>No Categories Yet, please add Categories</p>
