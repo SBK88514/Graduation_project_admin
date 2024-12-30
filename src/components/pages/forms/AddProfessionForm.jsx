@@ -22,6 +22,11 @@ function AddProfessionForm() {
     mutate({ profession_name });
   };
 
+  function handleCancel() {
+    setProfession_name("");
+    document.getElementById("profession_modal").close();
+  }
+
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
@@ -42,6 +47,7 @@ function AddProfessionForm() {
                 name="profession_name"
                 id="profession_name"
                 type="text"
+                value={profession_name}
                 onChange={(e) => setProfession_name(e.target.value)}
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 placeholder="Enter Profession"
@@ -53,7 +59,10 @@ function AddProfessionForm() {
         <div className="flex justify-end space-x-4">
           <button
             type="button"
-            className="px-6 py-2 border-2 border-amber-600 text-amber-600 rounded-xl hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
+            className="px-6 py-2 border-2 border-amber-600
+             text-amber-600 rounded-xl hover:bg-amber-50
+              focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
+            onClick={handleCancel}
           >
             Cancel
           </button>

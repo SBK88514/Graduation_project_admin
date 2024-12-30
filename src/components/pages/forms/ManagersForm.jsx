@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { ActionContext } from "../../contexts/ActionContext";
+import { data } from "react-router-dom";
 
 const initialValues = {
   manager_name: "",
@@ -22,6 +23,8 @@ function ManagerForm() {
     },
     // onError:
   });
+  
+  
 
   const { mutate: addMutate } = useMutation({
     mutationKey: ["add_manager"],
@@ -110,7 +113,8 @@ function ManagerForm() {
               />
             </div>
 
-            <div>
+            {(!man) && 
+            ( <div>
               <label
                 className="block text-sm font-medium text-amber-700 mb-1"
                 htmlFor="manager_password"
@@ -127,7 +131,8 @@ function ManagerForm() {
                 value={values?.manager_password}
                 onChange={handleChange}
               />
-            </div>
+            </div>)}
+           
           </div>
         </div>
 
