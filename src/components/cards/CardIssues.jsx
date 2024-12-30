@@ -14,7 +14,7 @@ import { Filter, ChevronDown } from "lucide-react";
 import SelectBox from "../pages/forms/SelectBox.jsx";
 
 function CardIssues() {
-  const { getAllDetails, handleEditIssue } = useContext(ActionContext);
+  const { getAllDetails, handleEditIssue, mutatePutInHistory } = useContext(ActionContext);
   const [page, setPage] = useState(1);
   const [limit] = useState(3);
 
@@ -94,6 +94,7 @@ function CardIssues() {
             <ChevronDown className="w-4 h-4" />
           </button>
           <Button name="Add" />
+      
         </div>
         <div>
           <select
@@ -285,6 +286,7 @@ function CardIssues() {
                   >
                     {issue.issue_profession?.profession_name}
                   </span>
+                
                   <div className="flex items-center space-x-1 text-amber-600">
                     <svg
                       className="w-3 h-3"
@@ -311,6 +313,18 @@ function CardIssues() {
                   <h3 className="text-base font-bold text-amber-900">
                     {issue.issue_description}
                   </h3>
+                  <button 
+                  onClick={() => mutatePutInHistory(
+                     issue._id
+                  )}
+                  type="button" class="py-1.5 px-4
+                   me-2 mb-2 text-sm font-medium text-gray-900 
+                   focus:outline-none bg-white rounded-lg border
+                    border-gray-200 hover:bg-gray-100 hover:text-blue-700 
+                    focus:z-10 focus:ring-4 focus:ring-gray-100
+                     dark:focus:ring-gray-700 dark:bg-gray-800
+                      dark:text-gray-400 dark:border-gray-600
+                       dark:hover:text-white dark:hover:bg-gray-700">Reamove</button>
                 </div>
 
                 <div className="mt-4 flex justify-between items-center pt-3 border-t border-amber-100">
