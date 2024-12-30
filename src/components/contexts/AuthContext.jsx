@@ -16,8 +16,8 @@ function AuthProvider({ children }) {
       if (data.success) {
         showSuccessToast(data.message);
         setIsAuth(true);
-        setUser(data.manager);
-        console.log("Signed-in user:", data.manager);
+        setUser(data.data);
+        console.log("Signed-in user:", data.data);
         return true;
       }
     } catch (error) {
