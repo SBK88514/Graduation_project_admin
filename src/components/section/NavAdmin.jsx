@@ -52,7 +52,7 @@ function NavAdmin() {
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               to={"Professions"}
             >
-              Professions
+              Professions Management
             </NavLink>
             <NavLink
               to={"addissue"}
@@ -65,20 +65,20 @@ function NavAdmin() {
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               to={"allissues"}
             >
-              All Issues
+              Issues Management
             </NavLink>
             <NavLink
               className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               to={"allemployees"}
             >
-              Employee List
+              Employee Management
             </NavLink>
             {user.permission === "Admin" && (
               <NavLink
                 to={"allmanagers"}
                 className="text-amber-900 hover:bg-amber-50 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
               >
-                Manager List
+                Manager Management
               </NavLink>
             )}
           </div>
