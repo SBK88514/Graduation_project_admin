@@ -129,6 +129,13 @@ function App() {
                 .default,
             })}
           />
+          <Route
+            path="issueshistory"
+            lazy={async () => ({
+              Component: (await import("./components/cards/IssuesHistory"))
+                .default,
+            })}
+          />
         </Route>
         {/* some routes */}
         <Route

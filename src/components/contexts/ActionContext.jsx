@@ -67,8 +67,8 @@ function ActionProvider({ children }) {
     }
   }
 
-  function handleEditIssue(issue) {    
-    console.log(issue);    
+  function handleEditIssue(issue) {
+    console.log(issue);
     document.getElementById("issue_modal").showModal();
     setIss(issue);
   }
@@ -77,6 +77,15 @@ function ActionProvider({ children }) {
     document.getElementById("profession_modal").showModal();
     setMan(null);
   }
+  const { mutate: mutatePutInHistory } = useMutation({
+    mutationKey: ["put_in_history"],
+    mutationFn: async (id) => await axios.post(`issues/deleteissue/${id}`),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({queryKey: ["get_issues"]})
+      
+    },
+    onError: () => {},
+  });
 
   const value = {
     toggleRequest,
@@ -94,6 +103,7 @@ function ActionProvider({ children }) {
     setIss,
     handleAddProfession,
     handleAddEmployee,
+    mutatePutInHistory,
   };
 
   return (
