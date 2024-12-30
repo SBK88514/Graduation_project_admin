@@ -2,8 +2,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 function Button(props) {
-  console.log(props);
-
   return (
     <NavLink to={props.link} className="flex justify-between items-center ">
       <button

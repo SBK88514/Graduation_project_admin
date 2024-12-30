@@ -11,16 +11,27 @@ import { exportToXL } from "../../lib/index";
 import WaveLoader from "../ui/WaveLoader.jsx";
 import Button from "../ui/Button";
 import { Filter, ChevronDown } from "lucide-react";
+import SelectBox from "../pages/forms/SelectBox.jsx";
 
 function CardIssues() {
   const { getAllDetails, handleEditIssue } = useContext(ActionContext);
   const [page, setPage] = useState(1);
   const [limit] = useState(3);
 
-  const url = `/issues/getAllIssues?page=${page}&limit=${limit}`;
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusFilterStatus, setStatusFilterStatus] = useState("all");
+  const [professionFilter, setProfessionFilter] = useState("all");
+
+  const url = `/issues/getAllIssues?page=${page}&limit=${limit}&search=${statusFilter}&status=${statusFilterStatus}&profession=${professionFilter}`;
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["get_issues", page],
+    queryKey: [
+      "get_issues",
+      page,
+      statusFilter,
+      statusFilterStatus,
+      professionFilter,
+    ],
     queryFn: async () => (await axios.get(url)).data,
     select: (data) => ({
       Allissues: data.data,
@@ -49,10 +60,8 @@ function CardIssues() {
 
   async function downloadXl() {
     const result = await getAllDetails("/issues/getAllIssues");
-    console.log(result);
 
     if (!result) return;
-    console.log(3);
 
     exportToXL(result, "IssuesSheet");
   }
@@ -84,9 +93,47 @@ function CardIssues() {
             <span>Filter</span>
             <ChevronDown className="w-4 h-4" />
           </button>
-          <Button name="Add New Issue" />
+          <Button name="Add" />
         </div>
-        {/* </div> */}
+        <div>
+          <select
+            className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+            id="status"
+            name="issue_status"
+            onChange={(e) => setStatusFilterStatus(e.target.value)}
+          >
+            <option value="">Filter Status</option>
+            <option value="all">All</option>
+            <option value="New">New</option>
+            <option value="In process">In process</option>
+            <option value="Done">Done</option>
+          </select>
+        </div>
+
+        <div>
+          <select
+            className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+            id="urgency"
+            name="issue_urgency"
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
+            <option value="">Filter Urgency</option>
+            <option value="all">All</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+
+        <div>
+          <SelectBox
+            value={professionFilter || "all"}
+            handleChange={(e) => setProfessionFilter(e.target.value)}
+            onChange={(value) => setProfessionFilter(value.profession_name)}
+            placeholder="Select Profession"
+            id={"profession_name"}
+          />
+        </div>
       </div>
       <div className="flex flex-wrap gap-4 justify-evenly">
         {isLoading && (
