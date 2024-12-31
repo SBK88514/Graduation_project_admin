@@ -67,6 +67,11 @@ function ActionProvider({ children }) {
     }
   }
 
+  function handleAddIssue() {
+    document.getElementById("issue_modal").showModal();
+    setIss(null);    
+  } 
+
   function handleEditIssue(issue) {    
     console.log(issue);    
     document.getElementById("issue_modal").showModal();
@@ -89,6 +94,7 @@ function ActionProvider({ children }) {
     mutateDelete,
     handleAddManager,
     getAllDetails,
+    handleAddIssue,
     handleEditIssue,
     iss,
     setIss,
