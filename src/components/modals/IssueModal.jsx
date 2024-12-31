@@ -9,6 +9,7 @@ function IssueModal() {
   
   function handleCancel() {
     document.getElementById("issue_modal").close();
+
     setIss(null)
   }
   return (
@@ -16,13 +17,13 @@ function IssueModal() {
       <div className="modal-box w-[60%] h-[80%] max-w-none max-h-none p-0">
         {/* Exit Btn */}
         <div>
-          <button
+          {/* <button
             onClick={handleCancel}
 
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
           >
             ✕
-          </button>
+          </button> */}
         </div>
 
         <IssueForm/>

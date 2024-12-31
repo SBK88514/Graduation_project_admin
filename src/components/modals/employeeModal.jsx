@@ -8,12 +8,12 @@ function EmployeeModal() {
       <div className="modal-box p-0">
         {/* Exit Btn */}
         <div>
-          <button
+          {/* <button
             onClick={() => document.getElementById("employee_modal").close()}
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
           >
             ✕
-          </button>
+          </button> */}
         </div>
 
         <EditEmployeeForm/>

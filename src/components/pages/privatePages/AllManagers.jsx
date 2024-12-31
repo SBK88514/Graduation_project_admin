@@ -14,8 +14,7 @@ import { Filter, ChevronDown, Plus } from "lucide-react";
 import WaveLoader from "../../ui/WaveLoader";
 
 function AllManagers() {
-  const { handleAddManager } = useContext(ActionContext);
-  const { getAllDetails } = useContext(ActionContext);
+  const { handleAddManager, getAllDetails } = useContext(ActionContext);
 
   const [page, setPage] = useState(1);
   const [limit] = useState(5);

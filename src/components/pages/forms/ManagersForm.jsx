@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { ActionContext } from "../../contexts/ActionContext";
 import { data } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const initialValues = {
   manager_name: "",
@@ -37,7 +38,10 @@ function ManagerForm() {
     // onError:
   });
   const { man, mutateDelete } = useContext(ActionContext);
+  const { user } = useContext(AuthContext);
   const [values, setValues] = useState(null);
+
+
 
   function handleChange(e) {
     const { value, name } = e.target;
@@ -45,8 +49,8 @@ function ManagerForm() {
   }
 
   function handlesubmit(e) {
+    e.preventDefault();
     try {
-      e.preventDefault();
       man ? mutate({ values, id: man._id }) : addMutate(values);
       setValues(initialValues);
     } catch (error) {
@@ -55,11 +59,11 @@ function ManagerForm() {
   }
   useEffect(() => {
     if (!man) return setValues(initialValues);
-
     setValues({ ...man });
   }, [man]);
 
   function handleCancel() {
+    {(!man) && (setValues(initialValues))};
     document.getElementById("manager_modal").close();
   }
 
@@ -113,7 +117,7 @@ function ManagerForm() {
               />
             </div>
 
-            {(!man) && 
+            {(!man || user?.manager_email === values?.manager_email) && 
             ( <div>
               <label
                 className="block text-sm font-medium text-amber-700 mb-1"
@@ -126,8 +130,7 @@ function ManagerForm() {
                 id="manager_password"
                 type="password"
                 className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                placeholder="Enter phone number"
-                // value={values?.manager_password}
+                placeholder="Enter your password"
                 value={values?.manager_password}
                 onChange={handleChange}
               />

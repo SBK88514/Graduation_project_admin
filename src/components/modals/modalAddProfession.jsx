@@ -7,12 +7,12 @@ function modalAddProfession() {
       <div className="modal-box p-0">
         {/* Exit Btn */}
         <div>
-          <button
+          {/* <button
             onClick={() => document.getElementById("profession_modal").close()}
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
           >
             ✕
-          </button>
+          </button> */}
         </div>
 
         <AddProfessionForm />

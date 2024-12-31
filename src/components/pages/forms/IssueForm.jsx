@@ -39,9 +39,11 @@ function IssueForm() {
     onSuccess: (data) => {
       console.log("Issue added successfully:", data);
       queryClient.invalidateQueries({ queryKey: ["get_issues"] });
-      // setUploadedFiles([]);
-      setIss(null);
-      navigate("/allissues");
+      setUploadedFiles([]);
+      setValues(initialValues);
+      // setIss(null);
+      document.getElementById("issue_modal").close();
+      // navigate("/allissues");
     },
     onError: (error) => {
       console.error(
@@ -93,12 +95,14 @@ function IssueForm() {
   };
 
   function handleCancel() {
-    if (!iss) {
-      navigate("/allissues");
-    } else {
-      document.getElementById("issue_modal").close();
-      setIss(null);
-    }
+    // if (!iss) {
+    //   setValues(initialValues);
+    //   document.getElementById("issue_modal").close();
+    // } else {
+    //   setIss(null);
+    // }
+    document.getElementById("issue_modal").close();
+    { !iss ? setValues(initialValues) : setIss(null) }
   }
   return (
     <div className=" w-full p-4 flex items-center justify-center ">
@@ -126,7 +130,7 @@ function IssueForm() {
                   value={values?.issue_building}
                   onChange={handleChange}
                   required
-                  disabled={!!iss}
+                  // disabled={!!iss}
                 >
                   <option value="">Select Building</option>
                   <option value="A">Building A</option>
@@ -149,7 +153,7 @@ function IssueForm() {
                   value={values?.issue_floor}
                   onChange={handleChange}
                   required
-                  disabled={!!iss}
+                  // disabled={!!iss}
                 >
                   <option value="">Select Floor</option>
                   <option value="1">1st Floor</option>
@@ -174,7 +178,7 @@ function IssueForm() {
                   value={values?.issue_apartment}
                   onChange={handleChange}
                   required
-                  disabled={!!iss}
+                  // disabled={!!iss}
                   placeholder="Enter apartment number"
                   className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
@@ -195,7 +199,7 @@ function IssueForm() {
                   />
                 ) : (
                   <input
-                    disabled={!!iss}
+                    // disabled={!!iss}
                     value={values?.issue_profession?.profession_name}
                     className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                   />
