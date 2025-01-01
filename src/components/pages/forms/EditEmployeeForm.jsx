@@ -57,7 +57,7 @@ function EditEmployeeForm() {
     }
   }
 
-  console.log(values);
+  console.log("valllll", values);
 
   useEffect(() => {
     if (!emp) return setValues(initialValues);
@@ -68,6 +68,7 @@ function EditEmployeeForm() {
     { !emp && setValues(initialValues) };
     document.getElementById("employee_modal").close();
   }
+
   return (
     <div
       className="bg-orange-50 p-6 rounded-2xl 

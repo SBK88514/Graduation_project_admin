@@ -103,6 +103,8 @@ function IssueForm() {
     // }
     document.getElementById("issue_modal").close();
     { !iss ? setValues(initialValues) : setIss(null) }
+    console.log("values", values);
+    
   }
   return (
     <div className=" w-full p-4 flex items-center justify-center ">
@@ -191,19 +193,11 @@ function IssueForm() {
                 >
                   Profession
                 </label>
-                {!iss ? (
                   <SelectBox
-                    value={values?.issue_profession}
+                    value={values?.issue_profession._id || values?.issue_profession}
                     handleChange={handleChange}
                     id={"issue_profession"}
-                  />
-                ) : (
-                  <input
-                    // disabled={!!iss}
-                    value={values?.issue_profession?.profession_name}
-                    className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                  />
-                )}
+                    />
               </div>
               {/* Urgency Selection */}
               <div>

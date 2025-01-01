@@ -19,9 +19,9 @@ function SelectBox({ handleChange, id, value }) {
          focus:outline-none focus:ring-2 focus:ring-amber-500
           focus:border-amber-500"
         onChange={handleChange}
-        value={!value ? "" : value}
+        value={value || ""}
       >
-        <option value={"all"}>Choose Permission</option>
+        <option value="">Choose Profession</option>
 
         {isLoading && <div>Loading...</div>}
         {isError && <div>{error}</div>}
