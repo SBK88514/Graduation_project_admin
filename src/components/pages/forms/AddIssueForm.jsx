@@ -6,7 +6,6 @@ import { data } from "react-router-dom";
 import SelectBox from "./SelectBox";
 import { Link, useNavigate } from "react-router-dom";
 
-
 const initialFormValues = {
   issue_building: "",
   issue_floor: "",
@@ -19,7 +18,6 @@ function AddIssueForm() {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [uploadedFiles, setUploadedFiles] = useState([]); // Add this
   const navigate = useNavigate();
- 
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -48,13 +46,9 @@ function AddIssueForm() {
   const mutation = useMutation({
     mutationFn: async (formData) => {
       const { data } = await axios.post("/issues/addIssues", formData);
-
-      console.log(11);
-      console.log(data);
-      console.log(22);
       return data;
     },
-    
+
     onSuccess: (data) => {
       console.log("Issue added successfully:", data);
       setFormValues(initialFormValues);
@@ -78,7 +72,6 @@ function AddIssueForm() {
     });
 
     mutation.mutate(formData);
-
   }
 
   return (
@@ -165,7 +158,10 @@ function AddIssueForm() {
                 >
                   Profession
                 </label>
-                <SelectBox handleChange={handleChange} id={"issue_profession"} />
+                <SelectBox
+                  handleChange={handleChange}
+                  id={"issue_profession"}
+                />
               </div>
               {/* Urgency Selection */}
               <div>

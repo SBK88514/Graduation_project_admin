@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SelectBox from "./SelectBox";
 import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
+import { showSuccessToast, showErrorToast } from "../../../lib/Toast";
 
 const initialValues = {
   issue_building: "",
@@ -29,6 +30,10 @@ function IssueForm() {
       queryClient.invalidateQueries({ queryKey: ["get_issues"] });
       setIss(null);
       document.getElementById("issue_modal").close();
+      showSuccessToast("Issue updated successfully");
+    },
+    onError: () => {
+      showErrorToast("Failed to update issue");
     },
   });
 
@@ -44,12 +49,15 @@ function IssueForm() {
       // setIss(null);
       document.getElementById("issue_modal").close();
       // navigate("/allissues");
+      showSuccessToast("Issue added successfully");
     },
+
     onError: (error) => {
       console.error(
         "Error adding issue:",
         error.response?.data || error.message
       );
+      showErrorToast("Failed to add issue");
     },
   });
 
@@ -102,9 +110,10 @@ function IssueForm() {
     //   setIss(null);
     // }
     document.getElementById("issue_modal").close();
-    { !iss ? setValues(initialValues) : setIss(null) }
+    {
+      !iss ? setValues(initialValues) : setIss(null);
+    }
     console.log("values", values);
-    
   }
   return (
     <div className=" w-full p-4 flex items-center justify-center ">
@@ -193,11 +202,13 @@ function IssueForm() {
                 >
                   Profession
                 </label>
-                  <SelectBox
-                    value={values?.issue_profession._id || values?.issue_profession}
-                    handleChange={handleChange}
-                    id={"issue_profession"}
-                    />
+                <SelectBox
+                  value={
+                    values?.issue_profession._id || values?.issue_profession
+                  }
+                  handleChange={handleChange}
+                  id={"issue_profession"}
+                />
               </div>
               {/* Urgency Selection */}
               <div>

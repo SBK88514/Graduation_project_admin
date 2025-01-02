@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 // import ExportButton from "../ui/ExportButton.jsx";
 // import { exportToXL } from "../../lib";
+import WaveLoader from "../ui/WaveLoader";
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -11,7 +12,6 @@ function IssuesHistory() {
     queryFn: async () => await axios.get("/issues/getallhistories"),
     select: (data) => data.data.data,
   });
-  console.log(data);
 
   const [currentIndexes, setCurrentIndexes] = useState({});
 
@@ -43,8 +43,12 @@ function IssuesHistory() {
       {/* <ExportButton download={downloadXl} /> */}
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* Issue Card */}
-        {/* {isLoading && <div>Loading...</div>}
-        {isError && <div>{error}</div>} */}
+        {isLoading && (
+          <div className="flex justify-center items-center h-[50vh]">
+            <WaveLoader />
+          </div>
+        )}
+        {isError && <div>{error}</div>}
         {data?.map((history) => (
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-3xl shadow-xl w-80">
             {/* Location Pills */}

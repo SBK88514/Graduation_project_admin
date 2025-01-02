@@ -1,11 +1,10 @@
 import React from "react";
-
 import EditEmployeeForm from "../pages/forms/EditEmployeeForm";
 
 function EmployeeModal() {
   return (
     <dialog id="employee_modal" className="modal">
-      <div className="modal-box p-0">
+      <div className="modal-box p-0 ">
         {/* Exit Btn */}
         <div>
           {/* <button
@@ -16,7 +15,7 @@ function EmployeeModal() {
           </button> */}
         </div>
 
-        <EditEmployeeForm/>
+        <EditEmployeeForm />
       </div>
     </dialog>
   );

@@ -44,12 +44,13 @@ function WelcomeAdmin() {
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto rounded-full mb-4" />
             <p className="text-amber-700 text-lg">
-              Your command center for managing everything as {user.permission}.
+              Your command center for managing everything as
+              <span className="font-bold"> {user.permission}</span>.
             </p>
           </div>
 
           {/* Quick Stats Grid */}
-          <div className="grid grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-3 gap-6 mb-8 text-center">
             <div className="bg-white/80 p-4 rounded-xl shadow-sm backdrop-blur-sm">
               <div className="text-amber-600 text-sm font-medium mb-1">
                 Active Users

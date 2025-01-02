@@ -25,8 +25,6 @@ function Button(props) {
         </svg>
         {props.name}
       </button>
-
-      {/* תיבת החיפוש שלך יכולה להיות כאן */}
     </NavLink>
   );
 }

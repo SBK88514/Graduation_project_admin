@@ -3,6 +3,7 @@ import TableRow from "./TableRow";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { SortDesc } from "lucide-react";
+import { showErrorToast, showSuccessToast } from "../../../../lib/Toast";
 
 function EmployeesTable({ employees }) {
   const queryClient = useQueryClient();
@@ -12,6 +13,10 @@ function EmployeesTable({ employees }) {
     mutationFn: async (id) => axios.delete(`users/employee/delete/${id}`),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["get_employees"] });
+      showSuccessToast("Employee deleted successfully");
+    },
+    onError: (error) => {
+      showErrorToast("Failed to delete employee");
     },
   });
   return (
