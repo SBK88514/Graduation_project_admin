@@ -17,7 +17,6 @@ function AuthProvider({ children }) {
         showSuccessToast(data.message);
         setIsAuth(true);
         setUser(data.data);
-        console.log("Signed-in user:", data.data);
         return true;
       }
     } catch (error) {

@@ -14,7 +14,6 @@ import { Filter, ChevronDown } from "lucide-react";
 import SelectBox from "../pages/forms/SelectBox.jsx";
 exportToXL;
 function CardIssues() {
-
   const { getAllDetails, handleEditIssue, mutatePutInHistory, handleAddIssue } =
     useContext(ActionContext);
   const [page, setPage] = useState(1);
@@ -87,14 +86,6 @@ function CardIssues() {
           </h1>
         </div>
         <div className="flex gap-3">
-          <button
-            className="flex justify-center items-center gap-2 px-4 py-2 h-10 bg-amber-100 text-amber-700 rounded-xl
-                         hover:bg-amber-200 transition-all duration-200"
-          >
-            <Filter className="w-3 h-3" />
-            <span>Filter</span>
-            <ChevronDown className="w-4 h-4" />
-          </button>
           <Button name="Add New Issue" onClick={() => handleAddIssue()} />
         </div>
         <div>

@@ -4,6 +4,7 @@ import { ActionContext } from "../../../contexts/ActionContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Button from "../../../ui/Button";
+import { showSuccessToast, showErrorToast } from "../../../../lib/Toast";
 
 function ProfessionsTable({ professions }) {
   // console.log(professions);
@@ -15,6 +16,10 @@ function ProfessionsTable({ professions }) {
       axios.delete(`/professions/deleteprofession/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get_professions"] });
+      showSuccessToast("Profession deleted successfully");
+    },
+    onError: (error) => {
+      showErrorToast("failed deleting profession");
     },
   });
 

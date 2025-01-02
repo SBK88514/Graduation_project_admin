@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ActionContext } from "../../contexts/ActionContext";
 import { data } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import { showSuccessToast, showErrorToast } from "../../../lib/Toast";
 
 const initialValues = {
   manager_name: "",
@@ -21,11 +22,13 @@ function ManagerForm() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get_managers"] });
       document.getElementById("manager_modal").close();
+      showSuccessToast("Manager updated successfully");
     },
-    // onError:
+    onError: (error) => {
+      document.getElementById("manager_modal").close();
+      showErrorToast("failed updating manager");
+    },
   });
-  
-  
 
   const { mutate: addMutate } = useMutation({
     mutationKey: ["add_manager"],
@@ -34,8 +37,12 @@ function ManagerForm() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get_managers"] });
       document.getElementById("manager_modal").close();
+      showSuccessToast("Manager added successfully");
     },
-    // onError:
+    onError: (error) => {
+      document.getElementById("manager_modal").close();
+      showErrorToast("failed adding manager");
+    },
   });
   const { man, mutateDelete } = useContext(ActionContext);
   const { user } = useContext(AuthContext);
@@ -74,7 +81,9 @@ function ManagerForm() {
   }, [man]);
 
   function handleCancel() {
-    {(!man) && (setValues(initialValues))};
+    {
+      !man && setValues(initialValues);
+    }
     document.getElementById("manager_modal").close();
   }
 
@@ -87,10 +96,6 @@ function ManagerForm() {
       <form onSubmit={handlesubmit} className="space-y-6">
         {/* Personal Information Section */}
         <div className="bg-white p-6 rounded-xl shadow-sm space-y-4">
-          <h3 className="text-lg font-semibold text-amber-800 mb-4">
-            Personal Information
-          </h3>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label
@@ -128,27 +133,27 @@ function ManagerForm() {
               />
             </div>
 
-            {(!man || user?.manager_email === values?.manager_email) && 
-            ( <div>
-              <label
-                className="block text-sm font-medium text-amber-700 mb-1"
-                htmlFor="manager_password"
-              >
-                Password
-              </label>
-              <input
-                name="manager_password"
-                id="manager_password"
-                type="password"
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                placeholder="Enter your password"
-                value={displayPassword}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-            </div>)}
-           
+            {(!man || user?.manager_email === values?.manager_email) && (
+              <div>
+                <label
+                  className="block text-sm font-medium text-amber-700 mb-1"
+                  htmlFor="manager_password"
+                >
+                  Password
+                </label>
+                <input
+                  name="manager_password"
+                  id="manager_password"
+                  type="password"
+                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  placeholder="Enter your password"
+                  value={displayPassword}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+              </div>
+            )}
           </div>
         </div>
 
@@ -179,8 +184,8 @@ function ManagerForm() {
             {!man
               ? "Add Managar"
               : man?.bySearch
-              ? "Edit Manager"
-              : "Edit Manager"}
+                ? "Edit Manager"
+                : "Edit Manager"}
           </button>
         </div>
       </form>

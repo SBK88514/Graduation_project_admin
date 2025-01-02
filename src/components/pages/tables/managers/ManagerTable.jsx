@@ -3,6 +3,7 @@ import TableRow from "../managers/TableRow";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { SortDesc } from "lucide-react";
+import { showErrorToast, showSuccessToast } from "../../../../lib/Toast";
 
 function ManagersTable({ managers }) {
   const queryClient = useQueryClient();
@@ -12,8 +13,13 @@ function ManagersTable({ managers }) {
     mutationFn: async (id) => axios.delete(`users/manager/delete/${id}`),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["get_managers"] });
+      showSuccessToast("Manager deleted successfully");
+    },
+    onError: (error) => {
+      showErrorToast("failed deleting manager");
     },
   });
+
   return (
     <div className="bg-white  rounded-xl shadow-lg overflow-hidden">
       <div className="overflow-x-auto">

@@ -36,7 +36,7 @@ function NavAdmin() {
   }
   return (
     <nav className="bg-white shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo - Left Side */}
           <NavLink to={"/"} className="text-2xl font-bold text-amber-700 w-44">
@@ -81,7 +81,6 @@ function NavAdmin() {
               </NavLink>
             )}
           </div>
-
           {/* User Icon with Dropdown - Right Side */}
           <div className="flex items-center">
             <div className="relative">

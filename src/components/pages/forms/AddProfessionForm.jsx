@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { showSuccessToast, showErrorToast } from "../../../lib/Toast";
 
 function AddProfessionForm() {
   const [profession_name, setProfession_name] = useState("");
@@ -14,6 +15,11 @@ function AddProfessionForm() {
       queryClient.invalidateQueries({ queryKey: ["get_professions"] });
       setProfession_name("");
       document.getElementById("profession_modal").close();
+      showSuccessToast("Profession added successfully");
+    },
+    onError: (error) => {
+      document.getElementById("profession_modal").close();
+      showErrorToast("failed adding profession");
     },
   });
 

@@ -1,7 +1,6 @@
 import React from "react";
 
 function CardSelected({ selected, currentIndexes, nextImage, prevImage }) {
-  console.log(selected);
   return (
     <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-3xl shadow-xl w-80">
       {/* Location Pills */}
