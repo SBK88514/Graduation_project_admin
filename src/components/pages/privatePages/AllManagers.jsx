@@ -39,7 +39,18 @@ function AllManagers() {
 
     if (!result) return;
 
-    exportToXL(result, "managersSheet");
+    const prepareDataForExcel = result.map((item) => {
+      return {
+        id: item._id,
+        "Manager Name": item.manager_name,
+        "Manager Email": item.manager_email,
+        permission: item.permission,
+        "Created At": item.createdAt,
+        "Updated At": item.updatedAt,       
+      };
+    });
+
+    exportToXL(prepareDataForExcel, "managersSheet");
   }
 
   return (

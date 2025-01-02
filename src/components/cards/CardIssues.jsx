@@ -65,7 +65,22 @@ function CardIssues() {
 
     if (!result) return;
 
-    exportToXL(result, "IssuesSheet");
+    const prepareDataForExcel = result.map((item) => {
+      return {
+        id: item._id,
+        "building": item.issue_building,
+        "floor": item.issue_floor,
+        "apartment": item.issue_apartment,
+        "description": item.issue_description,
+        "status": item.issue_status,
+        "urgency": item.issue_urgency,
+        "profession": item.issue_profession?.profession_name,
+        "Created At": item.createdAt,
+        "Updated At": item.updatedAt,       
+      };
+    });
+    
+    exportToXL(prepareDataForExcel, "IssuesSheet");
   }
 
   return (
