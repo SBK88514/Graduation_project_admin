@@ -195,7 +195,7 @@ function IssuesHistory() {
                     />
                   </svg>
 
-                  <span>{history.employees?.employeeName}</span>
+                  <span>{history.issue_profession?.profession_name}</span>
                 </div>
               </div>
 
