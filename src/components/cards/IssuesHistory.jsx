@@ -178,7 +178,7 @@ function IssuesHistory() {
               {/* <div className="flex items-center justify-between mb-3"> */}
               <div className="flex items-center justify-between mb-3">
                 <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium border border-yellow-200">
-                  In Progress
+                  {history.issue_status}
                 </span>
                 <div className="flex items-center space-x-1 text-amber-600">
                   <svg
@@ -224,14 +224,14 @@ function IssuesHistory() {
                       />
                     </svg>
                   </span>
-                  <span className="text-xs font-medium text-red-600">
+                  {/* {/* <span className="text-xs font-medium text-red-600">
                     Urgent
-                  </span>
+                  </span> */}
                 </div>
 
-                <button className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
+                {/* <button className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
                   Update
-                </button>
+                </button>  */}
               </div>
             </div>
           </div>
