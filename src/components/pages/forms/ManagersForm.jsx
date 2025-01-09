@@ -5,6 +5,8 @@ import { ActionContext } from "../../contexts/ActionContext";
 import { data } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { showSuccessToast, showErrorToast } from "../../../lib/Toast";
+import InputField from "../../ui/InputField";
+import CloseButton from "../../ui/CloseButton";
 
 const initialValues = {
   manager_name: "",
@@ -37,6 +39,7 @@ function ManagerForm() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get_managers"] });
       document.getElementById("manager_modal").close();
+      setValues(initialValues);
       showSuccessToast("Manager added successfully");
     },
     onError: (error) => {
@@ -69,7 +72,6 @@ function ManagerForm() {
     e.preventDefault();
     try {
       man ? mutate({ values, id: man._id }) : addMutate(values);
-      setValues(initialValues);
     } catch (error) {
       console.log(error);
     }
@@ -79,12 +81,6 @@ function ManagerForm() {
     setValues({ ...man });
   }, [man]);
 
-  function handleCancel() {
-    {
-      !man && setValues(initialValues);
-    }
-    document.getElementById("manager_modal").close();
-  }
 
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
@@ -96,43 +92,24 @@ function ManagerForm() {
         {/* Personal Information Section */}
         <div className="bg-white p-6 rounded-xl shadow-sm space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label
-                className="block text-sm font-medium text-amber-700 mb-1"
-                htmlFor="manager_name"
-              >
-                Name
-              </label>
-              <input
-                name="manager_name"
-                id="manager_name"
-                type="text"
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                placeholder="Enter first name"
-                value={values?.manager_name}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div>
-              <label
-                className="block text-sm font-medium text-amber-700 mb-1"
-                htmlFor="manager_email"
-              >
-                Email
-              </label>
-              <input
-                name="manager_email"
-                id="manager_email"
-                type="email"
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                placeholder="Enter email address"
-                value={values?.manager_email}
-                onChange={handleChange}
-              />
-            </div>
-
-
+          <InputField
+            label="Name"
+            name="manager_name"
+            type="text"
+            placeholder="Enter first name"
+            value={values?.manager_name}
+            onChange={handleChange}
+          />
+            
+          <InputField
+            label="Email"
+            name="manager_email"
+            type="email"
+            placeholder="Enter email address"
+            value={values?.manager_email}
+            onChange={handleChange}
+          />
+           
             {(!man || user?.manager_email === values?.manager_email) && 
             ( <div>
               <label
@@ -158,13 +135,10 @@ function ManagerForm() {
 
         {/* Submit Button */}
         <div className="flex justify-end space-x-4">
-          <button
-            type="button"
-            className="px-6 py-2 border-2 border-amber-600 text-amber-600 rounded-xl hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
-            onClick={handleCancel}
-          >
-            Cancel
-          </button>
+        <CloseButton
+            modalId={"manager_modal"}
+            onCancel={() => {!man && setValues(initialValues);}}
+          />
           {man?.bySearch && (
             <button
               onClick={() => mutateDelete(man?._id)}

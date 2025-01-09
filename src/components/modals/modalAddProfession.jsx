@@ -1,5 +1,5 @@
 import React from "react";
-import AddProfessionForm from "../pages/forms/AddProfessionForm";
+import ProfessionForm from "../pages/forms/ProfessionForm";
 
 function modalAddProfession() {
   return (
@@ -15,7 +15,7 @@ function modalAddProfession() {
           </button> */}
         </div>
 
-        <AddProfessionForm />
+        <ProfessionForm />
       </div>
     </dialog>
   );

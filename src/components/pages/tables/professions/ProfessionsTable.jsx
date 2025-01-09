@@ -3,7 +3,7 @@ import ProfessionsTableRow from "./ProfessionsTableRow";
 import { ActionContext } from "../../../contexts/ActionContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import Button from "../../../ui/Button";
+import AddButton from "../../../ui/AddButton";
 import { showSuccessToast, showErrorToast } from "../../../../lib/Toast";
 
 function ProfessionsTable({ professions }) {
@@ -28,7 +28,7 @@ function ProfessionsTable({ professions }) {
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden w-[50%] m-auto mt-6">
       <div className="px-6 py-4 bg-amber-50 border-b border-amber-200 flex justify-items-start items-center">
-        <Button
+        <AddButton
           onClick={() => handleAddProfession()}
           type="button"
           name="Add Profession"

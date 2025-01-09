@@ -4,6 +4,8 @@ import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SelectBox from "./SelectBox";
 import { showErrorToast, showSuccessToast } from "../../../lib/Toast";
+import InputField from "../../ui/InputField";
+import CloseButton from "../../ui/CloseButton";
 
 const initialValues = {
   employeeName: "",
@@ -12,7 +14,7 @@ const initialValues = {
   employeeId: "",
 };
 
-function EditEmployeeForm() {
+function EmployeeForm() {
   // Body OF Component run => useState implemented =>
   // useEffect for Side Effect when component Mounting =>
   // setState Values => rerender body of Component =>
@@ -40,6 +42,7 @@ function EditEmployeeForm() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get_employee"] });
       document.getElementById("employee_modal").close();
+      setValues(initialValues);
       showSuccessToast("Employee added successfully");
     },
     onError: () => {
@@ -59,7 +62,6 @@ function EditEmployeeForm() {
     e.preventDefault();
     try {
       emp ? mutate({ values, id: values?._id }) : addMutate(values);
-      setValues(initialValues);
     } catch (error) {
       console.log(error);
     }
@@ -94,60 +96,32 @@ function EditEmployeeForm() {
         {/* Personal Information Section */}
         <div className="bg-white p-6 rounded-xl shadow-sm space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label
-                className="block text-sm font-medium text-amber-700 mb-1"
-                htmlFor="employeeName"
-              >
-                Name
-              </label>
-              <input
-                name="employeeName"
-                id="employeeName"
-                type="text"
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                placeholder="Enter first name"
-                value={values?.employeeName}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div>
-              <label
-                className="block text-sm font-medium text-amber-700 mb-1"
-                htmlFor="employeeEmail"
-              >
-                Email
-              </label>
-              <input
-                name="employeeEmail"
-                id="employeeEmail"
-                type="email"
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                placeholder="Enter email address"
-                value={values?.employeeEmail}
-                onChange={handleChange}
-              />
-            </div>
-
-            {!emp && (
-              <div>
-                <label
-                  className="block text-sm font-medium text-amber-700 mb-1"
-                  htmlFor="employeePassword"
-                >
-                  Password
-                </label>
-                <input
-                  name="employeePassword"
-                  id="employeePassword"
-                  type="password"
-                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                  placeholder="Enter your password"
-                  value={values?.employeePassword}
-                  onChange={handleChange}
-                />
-              </div>
+            
+          <InputField
+            label="Name"
+            name="employeeName"
+            type="text"
+            placeholder="Enter first name"
+            value={values?.employeeName}
+            onChange={handleChange}
+          />
+          <InputField
+            label="Email"
+            name="employeeEmail"
+            type="email"
+            placeholder="Enter email address"
+            value={values?.employeeEmail}
+            onChange={handleChange}
+          />
+          {!emp && (
+            <InputField
+            label="Password"
+            name="employeePassword"
+            type="password"
+            placeholder="Enter password"
+            value={values?.employeePassword}
+            onChange={handleChange}
+          />
             )}
             <div>
               <label
@@ -168,13 +142,10 @@ function EditEmployeeForm() {
 
         {/* Submit Button */}
         <div className="flex justify-end space-x-4">
-          <button
-            type="button"
-            className="px-6 py-2 border-2 border-amber-600 text-amber-600 rounded-xl hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
-            onClick={handleCancel}
-          >
-            Cancel
-          </button>
+        <CloseButton
+            modalId={"employee_modal"}
+            onCancel={() => {!emp && setValues(initialValues);}}
+          />
           <button
             type="submit"
             className="px-6 py-2 bg-amber-600 text-white rounded-xl hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
@@ -191,4 +162,4 @@ function EditEmployeeForm() {
   );
 }
 
-export default EditEmployeeForm;
+export default EmployeeForm;
