@@ -103,7 +103,7 @@ function App() {
             path="addprofession"
             lazy={async () => ({
               Component: (
-                await import("./components/pages/forms/AddProfessionForm")
+                await import("./components/pages/forms/ProfessionForm")
               ).default,
             })}
           />

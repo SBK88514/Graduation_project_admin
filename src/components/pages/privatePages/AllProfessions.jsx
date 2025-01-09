@@ -37,7 +37,7 @@ function AllProfessions() {
       )}
 
       {isError && <div>{error}</div>}
-      {data && !data.AllProfession.length && (
+      {data && !data?.AllProfession.length && (
         <p>No Categories Yet, please add Categories</p>
       )}
       {data && data?.AllProfession.length && !isLoading && (

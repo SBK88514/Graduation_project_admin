@@ -3,13 +3,13 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import Paginaiton from "../ui/Paginaiton";
 import useSuggestions from "../hooks/useSuggestions";
-import SearchInput from "../pages/tables/managers/SearchInput";
+import SearchInput from "../ui/SearchInput";
 import CardSelected from "./CardSelected";
 import ExportButton from "../ui/ExportButton.jsx";
 import { ActionContext } from "../contexts/ActionContext.jsx";
 import { exportToXL } from "../../lib/Index.jsx";
 import WaveLoader from "../ui/WaveLoader.jsx";
-import Button from "../ui/Button";
+import AddButton from "../ui/AddButton.jsx";
 import { Filter, ChevronDown } from "lucide-react";
 import SelectBox from "../pages/forms/SelectBox.jsx";
 exportToXL;
@@ -101,7 +101,7 @@ function CardIssues() {
           </h1>
         </div>
         <div className="flex gap-3">
-          <Button name="Add New Issue" onClick={() => handleAddIssue()} />
+          <AddButton name="Add New Issue" onClick={() => handleAddIssue()} />
         </div>
         <div>
           <select

@@ -1,5 +1,5 @@
 import React from "react";
-import EditEmployeeForm from "../pages/forms/EditEmployeeForm";
+import EditEmployeeForm from "../pages/forms/EmployeeForm";
 
 function EmployeeModal() {
   return (

@@ -6,6 +6,7 @@ import SelectBox from "./SelectBox";
 import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { showSuccessToast, showErrorToast } from "../../../lib/Toast";
+import CloseButton from "../../ui/CloseButton";
 
 const initialValues = {
   issue_building: "",
@@ -102,19 +103,7 @@ function IssueForm() {
     e.target.value = "";
   };
 
-  function handleCancel() {
-    // if (!iss) {
-    //   setValues(initialValues);
-    //   document.getElementById("issue_modal").close();
-    // } else {
-    //   setIss(null);
-    // }
-    document.getElementById("issue_modal").close();
-    {
-      !iss ? setValues(initialValues) : setIss(null);
-    }
-    console.log("values", values);
-  }
+  
   return (
     <div className=" w-full p-4 flex items-center justify-center ">
       <div className="bg-orange-50 p-4 md:p-6 rounded-2xl shadow-lg w-full max-w-4xl h-[85vh] flex flex-col">
@@ -339,15 +328,13 @@ function IssueForm() {
 
             {/* Submit Buttons */}
             <div className="flex justify-end space-x-4 pt-4">
-              <button
-                type="button"
-                className="px-6 py-2 border-2 border-amber-600 text-amber-600 rounded-xl hover:bg-amber-50 focus:outline-none focus:ring-2
-               focus:ring-amber-500 focus:ring-offset-2 transition-colors
-                duration-200"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
+              <CloseButton
+                modalId={"issue_modal"}
+                onCancel={() => {
+                  !iss ? setValues(initialValues) : setIss(null);
+                }}
+              />
+
               <button
                 type="submit"
                 className="px-6 py-2 bg-amber-600 text-white 

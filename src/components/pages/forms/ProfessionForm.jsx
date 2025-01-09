@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { showSuccessToast, showErrorToast } from "../../../lib/Toast";
+import InputField from "../../ui/InputField";
+import CloseButton from "../../ui/CloseButton";
 
-function AddProfessionForm() {
+function ProfessionForm() {
   const [profession_name, setProfession_name] = useState("");
   const queryClient = useQueryClient();
 
@@ -28,11 +30,7 @@ function AddProfessionForm() {
     mutate({ profession_name });
   };
 
-  function handleCancel() {
-    setProfession_name("");
-    document.getElementById("profession_modal").close();
-  }
-
+  
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
@@ -42,36 +40,23 @@ function AddProfessionForm() {
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="bg-white p-6 rounded-xl shadow-sm space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label
-                className="block text-sm font-medium text-amber-700 mb-1"
-                htmlFor="profession_name"
-              >
-                Profession Name
-              </label>
-              <input
-                name="profession_name"
-                id="profession_name"
-                type="text"
-                value={profession_name}
-                onChange={(e) => setProfession_name(e.target.value)}
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                placeholder="Enter Profession"
-              />
-            </div>
+            <InputField
+              label="Profession Name"
+              name="profession_name"
+              type="text"
+              placeholder="Enter Profession"
+              value={profession_name}
+              onChange={(e) => setProfession_name(e.target.value)}
+            />
           </div>
         </div>
 
         <div className="flex justify-end space-x-4">
-          <button
-            type="button"
-            className="px-6 py-2 border-2 border-amber-600
-             text-amber-600 rounded-xl hover:bg-amber-50
-              focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
-            onClick={handleCancel}
-          >
-            Cancel
-          </button>
+          <CloseButton
+            modalId={"profession_modal"}
+            onCancel={() => setProfession_name("")}
+          />
+
           <button
             type="submit"
             className="px-6 py-2 bg-amber-600 text-white rounded-xl hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors duration-200"
@@ -84,4 +69,4 @@ function AddProfessionForm() {
   );
 }
 
-export default AddProfessionForm;
+export default ProfessionForm;

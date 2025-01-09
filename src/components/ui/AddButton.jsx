@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function Button(props) {
+function AddButton(props) {
   return (
     <NavLink to={props.link} className="flex justify-between items-center ">
       <button
@@ -29,4 +29,4 @@ function Button(props) {
   );
 }
 
-export default Button;
+export default AddButton;
