@@ -103,7 +103,6 @@ function IssueForm() {
     e.target.value = "";
   };
 
-  
   return (
     <div className=" w-full p-4 flex items-center justify-center ">
       <div className="bg-orange-50 p-4 md:p-6 rounded-2xl shadow-lg w-full max-w-4xl h-[85vh] flex flex-col">

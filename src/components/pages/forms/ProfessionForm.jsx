@@ -30,7 +30,6 @@ function ProfessionForm() {
     mutate({ profession_name });
   };
 
-  
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">

@@ -96,32 +96,31 @@ function EmployeeForm() {
         {/* Personal Information Section */}
         <div className="bg-white p-6 rounded-xl shadow-sm space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
-          <InputField
-            label="Name"
-            name="employeeName"
-            type="text"
-            placeholder="Enter first name"
-            value={values?.employeeName}
-            onChange={handleChange}
-          />
-          <InputField
-            label="Email"
-            name="employeeEmail"
-            type="email"
-            placeholder="Enter email address"
-            value={values?.employeeEmail}
-            onChange={handleChange}
-          />
-          {!emp && (
             <InputField
-            label="Password"
-            name="employeePassword"
-            type="password"
-            placeholder="Enter password"
-            value={values?.employeePassword}
-            onChange={handleChange}
-          />
+              label="Name"
+              name="employeeName"
+              type="text"
+              placeholder="Enter first name"
+              value={values?.employeeName}
+              onChange={handleChange}
+            />
+            <InputField
+              label="Email"
+              name="employeeEmail"
+              type="email"
+              placeholder="Enter email address"
+              value={values?.employeeEmail}
+              onChange={handleChange}
+            />
+            {!emp && (
+              <InputField
+                label="Password"
+                name="employeePassword"
+                type="password"
+                placeholder="Enter password"
+                value={values?.employeePassword}
+                onChange={handleChange}
+              />
             )}
             <div>
               <label
@@ -142,9 +141,11 @@ function EmployeeForm() {
 
         {/* Submit Button */}
         <div className="flex justify-end space-x-4">
-        <CloseButton
+          <CloseButton
             modalId={"employee_modal"}
-            onCancel={() => {!emp && setValues(initialValues);}}
+            onCancel={() => {
+              !emp && setValues(initialValues);
+            }}
           />
           <button
             type="submit"

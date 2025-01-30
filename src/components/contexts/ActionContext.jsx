@@ -67,12 +67,10 @@ function ActionProvider({ children }) {
     }
   }
 
-
   function handleAddIssue() {
     document.getElementById("issue_modal").showModal();
-    setIss(null);    
-  } 
-
+    setIss(null);
+  }
 
   function handleEditIssue(issue) {
     console.log(issue);
@@ -88,8 +86,7 @@ function ActionProvider({ children }) {
     mutationKey: ["put_in_history"],
     mutationFn: async (id) => await axios.post(`issues/deleteissue/${id}`),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({queryKey: ["get_issues"]})
-      
+      queryClient.invalidateQueries({ queryKey: ["get_issues"] });
     },
     onError: () => {},
   });

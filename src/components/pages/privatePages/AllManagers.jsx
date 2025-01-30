@@ -35,7 +35,7 @@ function AllManagers() {
 
   async function downloadXl() {
     const result = await getAllDetails("/users/manager/getallmanagers");
-    
+
     if (!result) return;
 
     const prepareDataForExcel = result.map((item) => {
@@ -45,7 +45,7 @@ function AllManagers() {
         "Manager Email": item.manager_email,
         permission: item.permission,
         "Created At": item.createdAt,
-        "Updated At": item.updatedAt,       
+        "Updated At": item.updatedAt,
       };
     });
 
@@ -55,15 +55,15 @@ function AllManagers() {
   return (
     <div className="w-[80%] mx-auto mt-5 p-4 shadow-md rounded-xl mb-6 animate-slide-down">
       <Header
-      title="Manager Management"
-      downloadFn={downloadXl}
-      setSearchInput={setSearchInput}
-      suggestions={suggestions}
-      suggestionKey={"manager_name"}
-      onClick={(current) => handleEditManager({ ...current, bySearch: true })}
-      addBtnName="Add New Manager"
-      onAdd={handleAddManager}
-    />
+        title="Manager Management"
+        downloadFn={downloadXl}
+        setSearchInput={setSearchInput}
+        suggestions={suggestions}
+        suggestionKey={"manager_name"}
+        onClick={(current) => handleEditManager({ ...current, bySearch: true })}
+        addBtnName="Add New Manager"
+        onAdd={handleAddManager}
+      />
 
       {isLoading && (
         <div className="flex justify-center items-center h-[50vh]">

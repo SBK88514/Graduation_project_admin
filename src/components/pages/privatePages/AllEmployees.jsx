@@ -21,7 +21,8 @@ function AllEmployees() {
   // const openModal = () => setIsModalOpen(true);
   // const closeModal = () => setIsModalOpen(false);
 
-  const { handleAddEmployee, getAllDetails, handleEditEmployee } = useContext(ActionContext);
+  const { handleAddEmployee, getAllDetails, handleEditEmployee } =
+    useContext(ActionContext);
 
   const url = `/users/employee/getallempolyees?page=${page}&limit=${limit}`;
   const [searchInput, setSearchInput] = useState("");
@@ -37,36 +38,36 @@ function AllEmployees() {
   });
 
   async function downloadXl() {
-      const result = await getAllDetails("/users/employee/getallempolyees");
-      console.log(result);
-  
-      if (!result) return;
-  
-      const prepareDataForExcel = result.map((item) => {
-        return {
-          id: item._id,
-          "Employee Name": item.employeeName,
-          "Employee Email": item.employeeEmail,
-          "Verified": item.verify ? "Yes" : "No",
-          "Created At": item.createdAt,
-          "Updated At": item.updatedAt,       
-        };
-      });
+    const result = await getAllDetails("/users/employee/getallempolyees");
+    console.log(result);
 
+    if (!result) return;
 
-      exportToXL(prepareDataForExcel, "employeesSheet");
-    }
+    const prepareDataForExcel = result.map((item) => {
+      return {
+        id: item._id,
+        "Employee Name": item.employeeName,
+        "Employee Email": item.employeeEmail,
+        Verified: item.verify ? "Yes" : "No",
+        "Created At": item.createdAt,
+        "Updated At": item.updatedAt,
+      };
+    });
+
+    exportToXL(prepareDataForExcel, "employeesSheet");
+  }
 
   return (
     <div className="w-[80%] mx-auto mt-5 p-4 shadow-md rounded-xl mb-6 animate-slide-down">
-      
       <Header
         title="Employee Management"
         downloadFn={downloadXl}
         setSearchInput={setSearchInput}
         suggestions={suggestions}
         suggestionKey={"employeeName"}
-        onClick={(current) => handleEditEmployee({ ...current, bySearch: true })}
+        onClick={(current) =>
+          handleEditEmployee({ ...current, bySearch: true })
+        }
         addBtnName="Add New Employee"
         onAdd={handleAddEmployee}
       />

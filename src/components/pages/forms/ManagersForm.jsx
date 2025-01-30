@@ -51,11 +51,9 @@ function ManagerForm() {
   const { user } = useContext(AuthContext);
   const [values, setValues] = useState(null);
 
-  
-
   function handleChange(e) {
     const { value, name } = e.target;
-      setValues({ ...values, [name]: value });
+    setValues({ ...values, [name]: value });
   }
 
   function handlesubmit(e) {
@@ -71,7 +69,6 @@ function ManagerForm() {
     setValues({ ...man });
   }, [man]);
 
-
   return (
     <div className="bg-orange-50 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold text-amber-900 mb-6 text-center">
@@ -82,50 +79,53 @@ function ManagerForm() {
         {/* Personal Information Section */}
         <div className="bg-white p-6 rounded-xl shadow-sm space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <InputField
-            label="Name"
-            name="manager_name"
-            type="text"
-            placeholder="Enter first name"
-            value={values?.manager_name}
-            onChange={handleChange}
-          />
-            
-          <InputField
-            label="Email"
-            name="manager_email"
-            type="email"
-            placeholder="Enter email address"
-            value={values?.manager_email}
-            onChange={handleChange}
-          />
-           
-            {(!man || user?.manager_email === values?.manager_email) && 
-            ( <div>
-              <label
-                className="block text-sm font-medium text-amber-700 mb-1"
-                htmlFor="manager_password"
-              >
-                Password
-              </label>
-              <input
-                name="manager_password"
-                id="manager_password"
-                type="password"
-                className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                placeholder="Enter your password"
-                value={values?.manager_password}
-                onChange={handleChange}
-              />
-            </div>)}
+            <InputField
+              label="Name"
+              name="manager_name"
+              type="text"
+              placeholder="Enter first name"
+              value={values?.manager_name}
+              onChange={handleChange}
+            />
+
+            <InputField
+              label="Email"
+              name="manager_email"
+              type="email"
+              placeholder="Enter email address"
+              value={values?.manager_email}
+              onChange={handleChange}
+            />
+
+            {(!man || user?.manager_email === values?.manager_email) && (
+              <div>
+                <label
+                  className="block text-sm font-medium text-amber-700 mb-1"
+                  htmlFor="manager_password"
+                >
+                  Password
+                </label>
+                <input
+                  name="manager_password"
+                  id="manager_password"
+                  type="password"
+                  className="w-full rounded-xl border-2 border-amber-200 bg-amber-50 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  placeholder="Enter your password"
+                  value={values?.manager_password}
+                  onChange={handleChange}
+                />
+              </div>
+            )}
           </div>
         </div>
 
         {/* Submit Button */}
         <div className="flex justify-end space-x-4">
-        <CloseButton
+          <CloseButton
             modalId={"manager_modal"}
-            onCancel={() => {!man && setValues(initialValues);}}
+            onCancel={() => {
+              !man && setValues(initialValues);
+            }}
           />
           {man?.bySearch && (
             <button

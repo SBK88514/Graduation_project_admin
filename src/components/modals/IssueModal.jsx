@@ -4,13 +4,12 @@ import { useContext } from "react";
 import { ActionContext } from "../contexts/ActionContext";
 
 function IssueModal() {
+  const { setIss } = useContext(ActionContext);
 
-    const { setIss} = useContext(ActionContext);
-  
   function handleCancel() {
     document.getElementById("issue_modal").close();
 
-    setIss(null)
+    setIss(null);
   }
   return (
     <dialog id="issue_modal" className="modal">
@@ -26,7 +25,7 @@ function IssueModal() {
           </button> */}
         </div>
 
-        <IssueForm/>
+        <IssueForm />
       </div>
     </dialog>
   );

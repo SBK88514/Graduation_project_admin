@@ -4,38 +4,34 @@ import { ActionContext } from "../contexts/ActionContext";
 // import { ActionContext } from "../../contexts/ActionContext";
 
 const useFetch = (url) => {
-    const [data, setData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState("");
-    const {toggleRequest} = useContext(ActionContext)
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState("");
+  const { toggleRequest } = useContext(ActionContext);
 
-   
+  async function getRequest() {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.get(url);
 
-
-    async function getRequest() {
-        try {
-            setIsLoading(true)
-            const { data } = await axios.get(url);
-
-            if (data.success) {
-                console.log(data)
-                setData(data.data)
-            }
-        } catch (error) {
-            console.log(error)
-            const err = error.response.data.error;
-            setIsError(err);
-        }
-        finally {
-            setIsLoading(false)
-        }
+      if (data.success) {
+        console.log(data);
+        setData(data.data);
+      }
+    } catch (error) {
+      console.log(error);
+      const err = error.response.data.error;
+      setIsError(err);
+    } finally {
+      setIsLoading(false);
     }
+  }
 
-    useEffect(() => {
-        getRequest();
-    }, [toggleRequest]);
+  useEffect(() => {
+    getRequest();
+  }, [toggleRequest]);
 
-    return [data, isLoading, isError];
+  return [data, isLoading, isError];
 };
 
 export default useFetch;
