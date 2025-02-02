@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import Paginaiton from "../ui/Paginaiton";
+import Pagination from "../ui/Pagination.jsx";
 import useSuggestions from "../hooks/useSuggestions";
 import SearchInput from "../ui/SearchInput";
 import CardSelected from "./CardSelected";
@@ -10,9 +10,8 @@ import { ActionContext } from "../contexts/ActionContext.jsx";
 import { exportToXL } from "../../lib/Index.jsx";
 import WaveLoader from "../ui/WaveLoader.jsx";
 import AddButton from "../ui/AddButton.jsx";
-import { Filter, ChevronDown } from "lucide-react";
 import SelectBox from "../pages/forms/SelectBox.jsx";
-exportToXL;
+
 function CardIssues() {
   const { getAllDetails, handleEditIssue, mutatePutInHistory, handleAddIssue } =
     useContext(ActionContext);
@@ -20,17 +19,17 @@ function CardIssues() {
   const [limit] = useState(3);
 
   const [statusFilter, setStatusFilter] = useState("all");
-  const [statusFilterStatus, setStatusFilterStatus] = useState("all");
+  const [urgencyFilter, setUrgencyFilter] = useState("all");
   const [professionFilter, setProfessionFilter] = useState("all");
 
-  const url = `/issues/getAllIssues?page=${page}&limit=${limit}&search=${statusFilter}&status=${statusFilterStatus}&profession=${professionFilter}`;
+  const url = `/issues/getAllIssues?page=${page}&limit=${limit}&status=${statusFilter}&urgency=${urgencyFilter}&profession=${professionFilter}`;
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [
       "get_issues",
       page,
       statusFilter,
-      statusFilterStatus,
+      urgencyFilter,
       professionFilter,
     ],
     queryFn: async () => (await axios.get(url)).data,
@@ -108,7 +107,7 @@ function CardIssues() {
             className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
             id="status"
             name="issue_status"
-            onChange={(e) => setStatusFilterStatus(e.target.value)}
+            onChange={(e) => setStatusFilter(e.target.value)}
           >
             <option value="">Filter Status</option>
             <option value="all">All</option>
@@ -123,7 +122,7 @@ function CardIssues() {
             className="w-full rounded-lg border-2 border-amber-200 bg-amber-50 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
             id="urgency"
             name="issue_urgency"
-            onChange={(e) => setStatusFilter(e.target.value)}
+            onChange={(e) => setUrgencyFilter(e.target.value)}
           >
             <option value="">Filter Urgency</option>
             <option value="all">All</option>
@@ -374,7 +373,7 @@ function CardIssues() {
       </div>
 
       {data?.count > limit && (
-        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+        <Pagination listLength={data?.count} limit={limit} setPage={setPage} />
       )}
     </div>
   );

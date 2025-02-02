@@ -31,7 +31,6 @@ function IssuesHistory() {
 
   //   async function downloadXl() {
   //     const result = await getAllDetails("/issues/getAllIssues");
-  //     console.log(result);
 
   //     if (!result) return;
 

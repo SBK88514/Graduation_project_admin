@@ -15,12 +15,6 @@ import EmployeeModal from "./components/modals/employeeModal";
 import ModalManager from "./components/modals/ModalManager";
 import ModalAddProfession from "./components/modals/modalAddProfession";
 
-//import mainPage components
-import Offices from "./components/pages/publicPages/mainPage/Offices";
-import ContactPage from "./components/pages/publicPages/mainPage/ContactPage";
-import AboutPage from "./components/pages/publicPages/mainPage/AboutPage";
-import LeadershipTeam from "./components/pages/publicPages/mainPage/LeadershipTeam";
-import { Component } from "lucide-react";
 import BackgroundLayout from "./components/ui/backgroundLayout";
 import IssueModal from "./components/modals/IssueModal";
 
@@ -29,8 +23,6 @@ function ProtectedRoute({ isAuth }) {
 }
 
 function Root({ isAuth }) {
-  console.log(isAuth);
-
   return (
     <>
       <BackgroundLayout>

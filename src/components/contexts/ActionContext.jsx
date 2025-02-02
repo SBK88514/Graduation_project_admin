@@ -13,13 +13,12 @@ function ActionProvider({ children }) {
   async function deleteEmployee(id) {
     try {
       const { data } = await axios.delete(`/users/employee/delete/${id}`);
-      console.log(data);
+
       if (data.success) {
         setToggleRequest(!toggleRequest);
         showSuccessToast(data.message);
       }
     } catch (error) {
-      console.log(error);
       const err = error.response.data.error;
       showErrorToast(err);
     }
@@ -29,7 +28,6 @@ function ActionProvider({ children }) {
     mutationKey: "delete_manager",
     mutationFn: async (id) => axios.delete(`users/manager/delete/${id}`),
     onSuccess: (data) => {
-      // console.log(data)
       showSuccessToast(data.message);
       queryClient.invalidateQueries({ queryKey: ["get_managers"] });
       document.getElementById("manager_modal").close();
@@ -63,6 +61,7 @@ function ActionProvider({ children }) {
       return data;
     } catch (error) {
       console.log(error);
+
       return false;
     }
   }
@@ -73,7 +72,6 @@ function ActionProvider({ children }) {
   }
 
   function handleEditIssue(issue) {
-    console.log(issue);
     document.getElementById("issue_modal").showModal();
     setIss(issue);
   }

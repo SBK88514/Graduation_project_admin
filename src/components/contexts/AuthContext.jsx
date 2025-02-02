@@ -6,7 +6,6 @@ import ActionProvider from "./ActionContext";
 export const AuthContext = createContext();
 
 function AuthProvider({ children }) {
-  // console.log(children)
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -29,7 +28,7 @@ function AuthProvider({ children }) {
   async function authUser() {
     try {
       const { data } = await axios.get("/users/auth");
-      console.log(data);
+
       if (data.success) {
         setIsAuth(true);
         setUser(data.user);
