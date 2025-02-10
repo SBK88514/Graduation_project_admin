@@ -82,7 +82,8 @@ function ActionProvider({ children }) {
   }
   const { mutate: mutatePutInHistory } = useMutation({
     mutationKey: ["put_in_history"],
-    mutationFn: async (id) => await axios.post(`issues/deleteissue/${id}`),
+    mutationFn: async (id) =>
+      await axios.post(`issues/deleteAndArchiveIssue/${id}`),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["get_issues"] });
     },

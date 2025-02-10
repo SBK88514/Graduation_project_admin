@@ -54,11 +54,7 @@ function IssueForm() {
     },
 
     onError: (error) => {
-      console.error(
-        "Error adding issue:",
-        error.response?.data || error.message
-      );
-      showErrorToast("Failed to add issue");
+      showErrorToast(error.response.data.message);
     },
   });
 
