@@ -3,7 +3,7 @@ import EmployeesTable from "../tables/employees/EmployeesTable";
 import Header from "../../ui/Header";
 import NotEmployees from "./NotEmployees";
 import axios from "axios";
-import Paginaiton from "../../ui/Paginaiton";
+import Pagination from "../../ui/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import Button from "../../ui/AddButton.jsx";
 import SearchInput from "../../ui/SearchInput.jsx";
@@ -86,7 +86,7 @@ function AllEmployees() {
         !isLoading && <EmployeesTable employees={data.allEmployees} />
       )}
       {data?.count > limit && (
-        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+        <Pagination listLength={data?.count} limit={limit} setPage={setPage} />
       )}
     </div>
   );

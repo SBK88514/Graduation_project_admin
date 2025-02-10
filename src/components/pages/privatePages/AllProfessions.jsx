@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import ProfessionsTable from "../tables/professions/ProfessionsTable";
-import Paginaiton from "../../ui/Paginaiton";
+import Pagination from "../../ui/Pagination";
 import WaveLoader from "../../ui/WaveLoader";
 
 function AllProfessions() {
@@ -20,7 +20,6 @@ function AllProfessions() {
     }),
   });
 
-  // הדפס את הנתונים בקונסול
   useEffect(() => {
     if (data) {
       console.log("All Professions:", data.AllProfession);
@@ -44,7 +43,7 @@ function AllProfessions() {
         <ProfessionsTable professions={data.AllProfession} />
       )}
       {data?.count > limit && (
-        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+        <Pagination listLength={data?.count} limit={limit} setPage={setPage} />
       )}
     </div>
   );

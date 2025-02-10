@@ -242,7 +242,7 @@ function IssuesHistory() {
 
         {/* You can duplicate the card here for more issues */}
       </div>
-      {/* <Paginaiton listLength={history?.count} limit={limit} setPage={setPage} /> */}
+      {/* <Pagination listLength={history?.count} limit={limit} setPage={setPage} /> */}
     </div>
   );
 }

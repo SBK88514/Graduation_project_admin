@@ -5,7 +5,7 @@ import ManagersTable from "../tables/managers/ManagerTable";
 import { useQuery } from "@tanstack/react-query";
 import SearchInput from "../../ui/SearchInput.jsx";
 import { debounce, exportToXL } from "../../../lib";
-import Paginaiton from "../../ui/Paginaiton";
+import Pagination from "../../ui/Pagination";
 import useSuggestions from "../../hooks/useSuggestions";
 import { ActionContext } from "../../contexts/ActionContext";
 import Button from "../../ui/AddButton.jsx";
@@ -79,7 +79,7 @@ function AllManagers() {
         <ManagersTable managers={data.AllManagers} />
       )}
       {data?.count > limit && (
-        <Paginaiton listLength={data?.count} limit={limit} setPage={setPage} />
+        <Pagination listLength={data?.count} limit={limit} setPage={setPage} />
       )}
     </div>
   );
