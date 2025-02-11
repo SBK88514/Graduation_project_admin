@@ -1,20 +1,21 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import Pagination from "../ui/Pagination.jsx";
 import useSuggestions from "../hooks/useSuggestions";
-import SearchInput from "../ui/SearchInput";
 import CardSelected from "./CardSelected";
-import ExportButton from "../ui/ExportButton.jsx";
 import { ActionContext } from "../contexts/ActionContext.jsx";
 import { exportToXL } from "../../lib/Index.jsx";
-import WaveLoader from "../ui/WaveLoader.jsx";
-import AddButton from "../ui/AddButton.jsx";
 import SelectBox from "../pages/forms/SelectBox.jsx";
+import Pagination from "../ui/Pagination.jsx";
+import ExportButton from "../ui/ExportButton.jsx";
+import SearchInput from "../ui/SearchInput";
+import AddButton from "../ui/AddButton.jsx";
+import WaveLoader from "../ui/WaveLoader.jsx";
 
 function CardIssues() {
   const { getAllDetails, handleEditIssue, mutatePutInHistory, handleAddIssue } =
     useContext(ActionContext);
+
   const [page, setPage] = useState(1);
   const [limit] = useState(3);
 
@@ -25,17 +26,11 @@ function CardIssues() {
   const url = `/issues/getAllIssues?page=${page}&limit=${limit}&status=${statusFilter}&urgency=${urgencyFilter}&profession=${professionFilter}`;
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: [
-      "get_issues",
-      page,
-      statusFilter,
-      urgencyFilter,
-      professionFilter,
-    ],
+    queryKey: ["issues", page, statusFilter, urgencyFilter, professionFilter],
     queryFn: async () => (await axios.get(url)).data,
     select: (data) => ({
-      Allissues: data.data,
-      count: data.count,
+      issues: data.data,
+      totalCount: data.count,
     }),
   });
 
@@ -54,7 +49,7 @@ function CardIssues() {
       [issueId]: prev[issueId] === 0 ? maxLength - 1 : (prev[issueId] || 0) - 1,
     }));
   };
-  // search input issues
+
   const [suggestions, setSearchInput] = useSuggestions("issues");
   const [selected, setSelected] = useState(null);
 
@@ -109,7 +104,9 @@ function CardIssues() {
             name="issue_status"
             onChange={(e) => setStatusFilter(e.target.value)}
           >
-            <option value="">Filter Status</option>
+            <option value="" disabled selected>
+              Filter by Status
+            </option>
             <option value="all">All</option>
             <option value="New">New</option>
             <option value="In process">In process</option>
@@ -124,7 +121,9 @@ function CardIssues() {
             name="issue_urgency"
             onChange={(e) => setUrgencyFilter(e.target.value)}
           >
-            <option value="">Filter Urgency</option>
+            <option value="" disabled selected>
+              Filter by Urgency
+            </option>
             <option value="all">All</option>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -142,6 +141,7 @@ function CardIssues() {
           />
         </div>
       </div>
+
       <div className="flex flex-wrap gap-4 justify-evenly">
         {isLoading && (
           <div className="flex justify-center items-center h-[50vh]">
@@ -151,8 +151,11 @@ function CardIssues() {
 
         {isError && <div>{error}</div>}
         {!selected &&
-          data?.Allissues?.map((issue) => (
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-3xl shadow-xl w-80">
+          data?.issues?.map((issue) => (
+            <div
+              key={issue._id}
+              className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-3xl shadow-xl w-80"
+            >
               {/* Location Pills */}
               <div className="flex space-x-2 mb-3">
                 <div className="bg-white px-3 py-1.5 rounded-xl shadow-md flex items-center space-x-2 border border-amber-100">
@@ -278,18 +281,14 @@ function CardIssues() {
                   {issue?.issue_images.length}
                 </div>
               </div>
+
               {/* Issue Details */}
-              {/* <div className="bg-white rounded-xl p-4 shadow-md border border-amber-100 h-60"> */}
               <div className="bg-white rounded-xl p-4 shadow-md border border-amber-100 h-[180px] flex flex-col">
-                {/* <div className="flex items-center justify-between mb-3"> */}
                 <div className="flex items-center justify-between mb-3">
                   <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium border border-yellow-200">
                     {issue.issue_status}
                   </span>
-                  <span
-                    className="px-3 py-1 bg-yellow-100 text-yellow-800
-                   rounded-full text-xs font-medium border border-yellow-200"
-                  >
+                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium border border-yellow-200">
                     {issue.issue_profession?.profession_name}
                   </span>
 
@@ -307,15 +306,10 @@ function CardIssues() {
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <span className="text-xs">2h ago</span>
                   </div>
                 </div>
 
-                <div
-                  className="flex-1 overflow-y-auto hover:overflow-y-scroll pr-2
-                 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-amber-100 [&::-webkit-scrollbar-track]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-amber-500
-                 [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:hover:bg-amber-600"
-                >
+                <div className="flex-1 overflow-y-auto hover:overflow-y-scroll pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-amber-100 [&::-webkit-scrollbar-track]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-amber-500 [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:hover:bg-amber-600">
                   <h3 className="text-base font-bold text-amber-900">
                     {issue.issue_description}
                   </h3>
@@ -348,7 +342,7 @@ function CardIssues() {
                       type="button"
                       className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium"
                     >
-                      Reamove
+                      Remove
                     </button>
                   )}
 
@@ -362,6 +356,8 @@ function CardIssues() {
               </div>
             </div>
           ))}
+
+        {/* TODO chart but it'sn't working */}
         {selected && (
           <CardSelected
             selected={selected}
@@ -372,8 +368,12 @@ function CardIssues() {
         )}
       </div>
 
-      {data?.count > limit && (
-        <Pagination listLength={data?.count} limit={limit} setPage={setPage} />
+      {data?.totalCount > limit && (
+        <Pagination
+          listLength={data?.totalCount}
+          limit={limit}
+          setPage={setPage}
+        />
       )}
     </div>
   );

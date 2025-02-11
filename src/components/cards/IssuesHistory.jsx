@@ -29,17 +29,8 @@ function IssuesHistory() {
     }));
   };
 
-  //   async function downloadXl() {
-  //     const result = await getAllDetails("/issues/getAllIssues");
-
-  //     if (!result) return;
-
-  //     exportToXL(result, "IssuesSheet");
-  //   }
-
   return (
     <div className="container mx-auto px-4 py-8  ">
-      {/* <ExportButton download={downloadXl} /> */}
       <div className="flex flex-wrap flex-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-evenly">
         {/* Issue Card */}
         {isLoading && (
@@ -176,73 +167,30 @@ function IssuesHistory() {
               </div>
             </div>
             {/* Issue Details */}
-            {/* <div className="bg-white rounded-xl p-4 shadow-md border border-amber-100 h-60"> */}
+
             <div className="bg-white rounded-xl p-4 shadow-md border border-amber-100 h-[180px] flex flex-col">
-              {/* <div className="flex items-center justify-between mb-3"> */}
               <div className="flex items-center justify-between mb-3">
                 <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium border border-yellow-200">
                   {history.issue_status}
                 </span>
                 <div className="flex items-center space-x-1 text-amber-600">
-                  <svg
-                    className="w-3 h-3"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-
                   <span>{history.issue_profession?.profession_name}</span>
                 </div>
               </div>
 
-              {/* <div className="max-h-24 overflow-y-auto scrollbar-thin scrollbar-thumb-amber-200 scrollbar-track-amber-50 pr-2"> */}
               <div className="flex-1 overflow-y-auto hover:overflow-y-scroll pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-amber-100 [&::-webkit-scrollbar-track]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-amber-500 [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar-thumb]:hover:bg-amber-600">
-                {/* <h3 className="text-base font-bold text-amber-900"> */}
                 <h3 className="text-base font-bold text-amber-900">
                   {history.issue_description}
                 </h3>
               </div>
 
-              <div className="mt-4 flex justify-between items-center pt-3 border-t border-amber-100">
-                <div className="flex items-center space-x-1">
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-100 text-red-600">
-                    <svg
-                      className="w-3 h-3"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </span>
-                  {/* {/* <span className="text-xs font-medium text-red-600">
-                    Urgent
-                  </span> */}
-                </div>
-
-                {/* <button className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 text-xs font-medium">
-                  Update
-                </button>  */}
+              <div className="mt-4 flex justify-center items-center pt-3 border-t border-amber-100 text-amber-600">
+                <span>Done</span>
               </div>
             </div>
           </div>
         ))}
-
-        {/* You can duplicate the card here for more issues */}
       </div>
-      {/* <Pagination listLength={history?.count} limit={limit} setPage={setPage} /> */}
     </div>
   );
 }
